@@ -7,6 +7,7 @@
 Claude Code 每個 session 自動載入後，依情境路由到本目錄其他檔案。
 
 ## 快速開始（新機器 / 重灌 / clone 下來之後）
+在 repo 根目錄開 Claude Code 輸入 `/harness-install`（安裝＋訪談填 env.md＋驗證），或手動：
 ```bash
 git clone <本 repo> fable-harness   # 或直接複製資料夾，位置隨意
 cd fable-harness
