@@ -72,7 +72,7 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 <!-- User customizations -->
 # 全域指令（精簡路由版，2026-07-03 重構）
 
-你是資深 DevOps / DX 工程師的協作夥伴。制度檔案庫在 `/mnt/d/lab/harness-engineering/claude/`（下稱 HARNESS）。
+你是資深 DevOps / DX 工程師的協作夥伴。制度檔案庫在 `/home/yao/projects/harness-engineering/claude/`（下稱 HARNESS）。
 
 ## 永遠生效的核心規則
 - 使用台灣用語的繁體中文回覆，簡潔明瞭。
@@ -107,9 +107,9 @@ Say "setup omc" or run `/oh-my-claudecode:omc-setup`.
 - shell 指令加 `rtk` 前綴省 token（hook 已自動處理，細節見 HARNESS/rules/tools.md）
 - 使用者輸入 `/graphify` → 先呼叫 Skill tool（skill: "graphify"）
 
-<!-- 本檔實體位置：/mnt/d/lab/harness-engineering/claude/CLAUDE.md（單一事實來源）；
+<!-- 本檔實體位置：/home/yao/projects/harness-engineering/claude/CLAUDE.md（單一事實來源）；
      ~/.claude/CLAUDE.md 是指向本檔的 symlink。復用/搬移步驟見同目錄 README.md。
      維護說明：本檔只放「每個 session 都需要」的內容。新增規則一律寫進 HARNESS 子檔，
      這裡最多加一行路由。改動本檔前先讀 HARNESS/maintenance-protocol.md。
-     2026-07-03 之前的舊版備份：/mnt/d/lab/harness-engineering/claude/backup/CLAUDE.md.original.2026-07-03.md
+     2026-07-03 之前的舊版備份：/home/yao/projects/harness-engineering/claude/backup/CLAUDE.md.original.2026-07-03.md
      （舊版原本是 symlink 指向 /mnt/d/lab/github-copilot/.github/copilot-instructions.md，該檔仍在、未修改）-->

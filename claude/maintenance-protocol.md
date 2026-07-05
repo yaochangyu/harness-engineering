@@ -25,7 +25,7 @@
 - 刪除 backup/ 目錄下的任何檔案。
 
 ## 2. 改檔前的固定動作
-1. 備份：`cp {檔案} /mnt/d/lab/harness-engineering/claude/backup/{檔名}.{YYYY-MM-DD}.md`
+1. 備份：`cp {檔案} /home/yao/projects/harness-engineering/claude/backup/{檔名}.{YYYY-MM-DD}.md`
    （同日多次修改，備份一次即可）。
 2. 改完 read-back 驗證（重新讀取、確認改動落地且沒破壞其他段落）。
 3. 在該檔案底部「變更紀錄」加一行：`- YYYY-MM-DD：改了什麼、為什麼（session 主題）`。
@@ -59,7 +59,7 @@
 
 任何會動到 `~/.claude/` 的安裝（框架、外掛、Claude Code 升級）做完後，跑：
 ```
-bash /mnt/d/lab/harness-engineering/claude/check-harness.sh
+python3 /home/yao/projects/harness-engineering/claude/check_harness.py
 ```
 它會檢查：入口 symlink 是否被覆蓋、事實來源是否被 append 汙染、
 `~/.claude/rules/` 是否冒出新的自動載入檔、制度庫關鍵檔是否齊全。
@@ -72,4 +72,4 @@ bash /mnt/d/lab/harness-engineering/claude/check-harness.sh
 
 ## 變更紀錄
 - 2026-07-03：建檔（Fable 5 session）。
-- 2026-07-04：新增第 5 節「安裝工具後的固定動作」與 check-harness.sh（Fable 5 session）。
+- 2026-07-04：新增第 5 節「安裝工具後的固定動作」與 check-harness.py（Fable 5 session）。

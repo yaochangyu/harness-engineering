@@ -1,0 +1,14 @@
+[project]
+name = "harness-engineering"
+version = "0.1.0"
+description = "Claude Code 制度檔案庫（harness）"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+harness-install = "claude.install:main"
+harness-check = "claude.check_harness:main"
+harness-uninstall = "claude.uninstall:main"
+
+[tool.uv]
+managed = true

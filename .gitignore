@@ -1,3 +1,10 @@
 # 個人備份與本機狀態，不進版控
 claude/backup/
 .omc/
+
+# Python 構建產物
+claude/__pycache__/
+*.egg-info/
+dist/
+build/
+uv.lock
