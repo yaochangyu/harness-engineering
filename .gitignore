@@ -1,6 +1,7 @@
 # 個人備份與本機狀態，不進版控
 claude/backup/
 .omc/
+.omo/
 
 # Python 構建產物
 claude/__pycache__/
