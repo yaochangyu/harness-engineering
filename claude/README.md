@@ -23,7 +23,7 @@ python3 claude/install.py
 手動等效步驟（symlink 不可用的環境才需要）：
 1. 改 `CLAUDE.md` 開頭那行 HARNESS 路徑定義為實際位置。
 2. `ln -sf {實際位置}/CLAUDE.md ~/.claude/CLAUDE.md`（或退而求其次 cp，但要記住 repo 是正本）。
-3. 驗證：`python3 check-harness.py` 全綠即完成。
+3. 驗證：`python3 claude/check_harness.py` 全綠即完成。
 
 | 檔案 | 內容 | 誰讀、何時讀 |
 |---|---|---|
