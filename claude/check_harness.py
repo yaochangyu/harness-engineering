@@ -7,6 +7,8 @@ def main():
     harness = Path(__file__).parent.resolve()
     entry = Path.home() / ".claude" / "CLAUDE.md"
     gemini_entry = Path.home() / ".gemini" / "GEMINI.md"
+    copilot_entry1 = Path.home() / ".github" / "copilot-instructions.md"
+    copilot_entry2 = Path.home() / ".copilot" / "copilot-instructions.md"
     src = harness / "CLAUDE.md"
     problems = 0
 
@@ -41,6 +43,22 @@ def main():
             print(f"  └─ 3. 還原入口：ln -sf {src} {gemini_entry}")
         else:
             print(f"  └─ 修復：ln -sf {src} {gemini_entry}")
+
+    for copilot_entry in [copilot_entry1, copilot_entry2]:
+        if copilot_entry.is_symlink() and Path(copilot_entry.resolve()) == Path(src.resolve()):
+            print(f"[OK] Copilot 入口 symlink 正常：{copilot_entry} → {src}")
+        else:
+            problems = 1
+            print(f"[問題] {copilot_entry} 不再指向制度庫（可能被安裝器覆蓋成普通檔案）")
+            if copilot_entry.exists() and not copilot_entry.is_symlink():
+                print("  ├─ 以下是安裝器寫入的內容與制度庫版本的差異（> 開頭為安裝器新增）：")
+                os.system(f"diff {src} {copilot_entry} 2>/dev/null | head -40 | sed 's/^/  │ /' || true")
+                print("  ├─ 修復步驟：")
+                print(f"  │  1. 有價值的新增內容 → 搬到 {harness}/rules/ 新子檔，並在 {src} 路由表加一行")
+                print(f"  │  2. 先備份安裝器版本：cp {copilot_entry} {harness}/backup/copilot-instructions.md.installer.$(date +%F).md")
+                print(f"  └─ 3. 還原入口：ln -sf {src} {copilot_entry}")
+            else:
+                print(f"  └─ 修復：ln -sf {src} {copilot_entry}")
 
     lines = sum(1 for _ in open(src)) if src.exists() else 0
     if lines <= 60:

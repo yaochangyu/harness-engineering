@@ -40,10 +40,10 @@ python3 claude/install.py
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/graphify/LLM wiki/寫作 skills | 用到對應工具時 |
 | env.example.md | 個人環境配置範本（實際值填在 `~/.claude/env.md`，不進版控） | 新機器安裝後填一次 |
 | select-cli-tools.py | 互動式 AI CLI 工具選擇器（Python，跨平台） | install.py 自動執行 |
-| install.py | 安裝：運行 Python 選擇器、偵測位置、改路由路徑、建立與關聯 AI Agent symlink (CLAUDE/GEMINI)、建 env.md、跑檢查 | clone/搬移後跑一次 |
+| install.py | 安裝：運行 Python 選擇器、偵測位置、改路由路徑、建立與關聯 AI Agent symlink (CLAUDE/GEMINI/COPILOT)、建 env.md、跑檢查 | clone/搬移後跑一次 |
 | check_harness.py | 健康檢查：symlink、汙染、新增自動載入檔、缺檔 | 安裝任何 Claude 相關工具後跑一次 |
 | uninstall.py | 解除安裝：移除 symlink、還原備份 | 不需要 harness 時執行 |
 | backup/ | 舊版 CLAUDE.md 等備份，**不可刪**；已從版控排除（.gitignore） | 需要還原時 |
 
-搬移本目錄時：只需更新 `~/.claude/CLAUDE.md` 或 `~/.gemini/GEMINI.md` 開頭的 HARNESS 路徑定義。
-還原舊制度：`ln -sf /mnt/d/lab/github-copilot/.github/copilot-instructions.md ~/.claude/CLAUDE.md`，Gemini 亦同理。
+搬移本目錄時：只需更新 `~/.claude/CLAUDE.md`、`~/.gemini/GEMINI.md` 或 `~/.copilot/copilot-instructions.md` 等開合的 HARNESS 路徑定義。
+還原舊制度：`ln -sf /mnt/d/lab/github-copilot/.github/copilot-instructions.md ~/.claude/CLAUDE.md`，其餘 Agent 亦同理。

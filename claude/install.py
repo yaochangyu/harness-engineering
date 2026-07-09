@@ -11,6 +11,8 @@ def main():
     src = harness / "CLAUDE.md"
     entry = Path.home() / ".claude" / "CLAUDE.md"
     gemini_entry = Path.home() / ".gemini" / "GEMINI.md"
+    copilot_entry1 = Path.home() / ".github" / "copilot-instructions.md"
+    copilot_entry2 = Path.home() / ".copilot" / "copilot-instructions.md"
     cli_dir = Path.home() / ".claude" / "cli"
     
     if not src.exists():
@@ -89,6 +91,26 @@ def main():
             gemini_entry.unlink(missing_ok=True)
             shutil.copy(src, gemini_entry)
         print(f"[OK] 已建立：~/.gemini/GEMINI.md → {src}")
+    
+    # 建立 Copilot 入口軟連結
+    for copilot_entry in [copilot_entry1, copilot_entry2]:
+        copilot_entry.parent.mkdir(parents=True, exist_ok=True)
+        if copilot_entry.is_symlink() and Path(copilot_entry.resolve()) == Path(src.resolve()):
+            print(f"[OK] Copilot 入口 symlink ({copilot_entry.name}) 已存在且正確，無需變更")
+        else:
+            if copilot_entry.exists() and not copilot_entry.is_symlink():
+                backup_dir = harness / "backup"
+                backup_dir.mkdir(parents=True, exist_ok=True)
+                bak = backup_dir / f"copilot-instructions.md.replaced.{datetime.now().strftime('%Y-%m-%d')}.md"
+                shutil.copy(copilot_entry, bak)
+                print(f"[備份] 原本的 {copilot_entry} → {bak}")
+            try:
+                copilot_entry.unlink(missing_ok=True)
+                copilot_entry.symlink_to(src)
+            except OSError:
+                copilot_entry.unlink(missing_ok=True)
+                shutil.copy(src, copilot_entry)
+            print(f"[OK] 已建立：{copilot_entry} → {src}")
     
     if not selected_tools:
         print("")
