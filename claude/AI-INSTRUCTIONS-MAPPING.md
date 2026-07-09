@@ -20,16 +20,16 @@
 | **Copilot** | `%USERPROFILE%\.github\copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | Hard Link / SymLink |
 | **Copilot** | `%USERPROFILE%\.copilot\copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | Hard Link / SymLink |
 | **Claude** | `%USERPROFILE%\.claude\CLAUDE.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink (WSL path) |
-| **Gemini** | `%USERPROFILE%\.gemini\GEMINI.md` | ⚠️ 源檔未找到 | （需建立） |
+| **Gemini / Antigravity** | `%USERPROFILE%\.gemini\GEMINI.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` (WSL) | SymLink |
 
-### WSL/Linux 用戶家目錄映射（由 link-ai-instructions.ps1 bash 段建立）
+### WSL/Linux 用戶家目錄映射（由 install.py 建立）
 
 | AI 代理 | 位置 | 指向 | 類型 | 狀態 |
 |--------|------|------|------|------|
-| **Copilot** | `~/.github/copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | SymLink | ✅ 已建立 |
-| **Copilot** | `~/.copilot/copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | SymLink | ✅ 已建立 |
+| **Copilot** | `~/.github/copilot-instructions.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
+| **Copilot** | `~/.copilot/copilot-instructions.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
 | **Claude** | `~/.claude/CLAUDE.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
-| **Gemini** | `~/.gemini/GEMINI.md` | ⚠️ 源檔未找到 | SymLink | ❌ 待建立 |
+| **Gemini / Antigravity** | `~/.gemini/GEMINI.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
 | **Hermes** | `~/.hermes/SOUL.md` | ⚠️ 源檔未找到 | SymLink | ❌ 待建立 |
 
 ## harness-engineering 完整結構
@@ -104,8 +104,8 @@
 | 平台 | 編輯位置 | 實際指向 |
 |-----|--------|--------|
 | Windows | `%USERPROFILE%\.copilot\copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` |
-| WSL/Linux | `~/.copilot/copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` |
-| 源檔位置 | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | ← 直接編輯這個 |
+| WSL/Linux | `~/.copilot/copilot-instructions.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` |
+| 源檔位置 | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | ← 直接編輯這個（Windows 下為 `/mnt/d/...`） |
 
 ### 查詢場景 2：「我要編輯 Claude 的制度檔」
 
@@ -133,12 +133,11 @@
 **現狀**：
 - Windows 期望位置：`%USERPROFILE%\.gemini\GEMINI.md`
 - WSL 期望位置：`~/.gemini/GEMINI.md`
-- 源檔位置：**未找到**
+- 源檔位置：已連結至此 repo 的 `claude/CLAUDE.md`
 
 **需要**：
-- [ ] 找到或建立 Gemini 指令檔源
-- [ ] 確認應放在哪個 repo（github-copilot 或 harness-engineering）
-- [ ] 重新執行 link-ai-instructions.ps1 建立 symlink
+- [x] 找到或建立 Gemini 指令檔源 (已完成，與 Claude Code 共用 `CLAUDE.md`)
+- [ ] 重新執行 link-ai-instructions.ps1 建立 Windows 端的 symlink
 
 ### 2. Hermes 指令檔
 
@@ -153,6 +152,6 @@
 
 ### 3. 其他 AI 代理指令檔
 
-目前 PowerShell 腳本中只有 Copilot/Claude/Gemini/Hermes，但環境中還有：
+目前環境中還有：
 - Codex CLI ✅ （已在 `~/.claude/cli/`）
-- Antigravity CLI ❓ （需確認是否需要指令檔）
+- Antigravity CLI ✅ （已與 Gemini 共用 `~/.gemini/GEMINI.md` 連結至 `CLAUDE.md`）
