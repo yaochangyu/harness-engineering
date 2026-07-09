@@ -10,6 +10,7 @@ def main():
     harness = Path(__file__).parent.resolve()
     src = harness / "CLAUDE.md"
     entry = Path.home() / ".claude" / "CLAUDE.md"
+    gemini_entry = Path.home() / ".gemini" / "GEMINI.md"
     cli_dir = Path.home() / ".claude" / "cli"
     
     if not src.exists():
@@ -69,6 +70,25 @@ def main():
             entry.unlink(missing_ok=True)
             shutil.copy(src, entry)
         print(f"[OK] 已建立：~/.claude/CLAUDE.md → {src}")
+    
+    # 建立 Gemini 入口軟連結
+    Path.home().joinpath(".gemini").mkdir(parents=True, exist_ok=True)
+    if gemini_entry.is_symlink() and Path(gemini_entry.resolve()) == Path(src.resolve()):
+        print(f"[OK] Gemini 入口 symlink 已存在且正確，無需變更")
+    else:
+        if gemini_entry.exists() and not gemini_entry.is_symlink():
+            backup_dir = harness / "backup"
+            backup_dir.mkdir(parents=True, exist_ok=True)
+            bak = backup_dir / f"GEMINI.md.replaced.{datetime.now().strftime('%Y-%m-%d')}.md"
+            shutil.copy(gemini_entry, bak)
+            print(f"[備份] 原本的 ~/.gemini/GEMINI.md → {bak}")
+        try:
+            gemini_entry.unlink(missing_ok=True)
+            gemini_entry.symlink_to(src)
+        except OSError:
+            gemini_entry.unlink(missing_ok=True)
+            shutil.copy(src, gemini_entry)
+        print(f"[OK] 已建立：~/.gemini/GEMINI.md → {src}")
     
     if not selected_tools:
         print("")

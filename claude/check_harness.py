@@ -6,6 +6,7 @@ from pathlib import Path
 def main():
     harness = Path(__file__).parent.resolve()
     entry = Path.home() / ".claude" / "CLAUDE.md"
+    gemini_entry = Path.home() / ".gemini" / "GEMINI.md"
     src = harness / "CLAUDE.md"
     problems = 0
 
@@ -25,6 +26,21 @@ def main():
             print(f"  └─ 3. 還原入口：ln -sf {src} {entry}")
         else:
             print(f"  └─ 修復：ln -sf {src} {entry}")
+
+    if gemini_entry.is_symlink() and Path(gemini_entry.resolve()) == Path(src.resolve()):
+        print(f"[OK] Gemini 入口 symlink 正常：~/.gemini/GEMINI.md → {src}")
+    else:
+        problems = 1
+        print("[問題] ~/.gemini/GEMINI.md 不再指向制度庫（可能被安裝器覆蓋成普通檔案）")
+        if gemini_entry.exists() and not gemini_entry.is_symlink():
+            print("  ├─ 以下是安裝器寫入的內容與制度庫版本的差異（> 開頭為安裝器新增）：")
+            os.system(f"diff {src} {gemini_entry} 2>/dev/null | head -40 | sed 's/^/  │ /' || true")
+            print("  ├─ 修復步驟：")
+            print(f"  │  1. 有價值的新增內容 → 搬到 {harness}/rules/ 新子檔，並在 {src} 路由表加一行")
+            print(f"  │  2. 先備份安裝器版本：cp {gemini_entry} {harness}/backup/GEMINI.md.installer.$(date +%F).md")
+            print(f"  └─ 3. 還原入口：ln -sf {src} {gemini_entry}")
+        else:
+            print(f"  └─ 修復：ln -sf {src} {gemini_entry}")
 
     lines = sum(1 for _ in open(src)) if src.exists() else 0
     if lines <= 60:
