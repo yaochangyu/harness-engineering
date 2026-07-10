@@ -60,23 +60,25 @@ python3 HARNESS/check_harness.py
 
 ```
 HARNESS/
+├── AI-INSTRUCTIONS-MAPPING.md
 ├── CLAUDE.md                    # 入口：核心規則＋路由表（symlink 目標）
-├── diagnosis.md                 # harness 三大問題診斷，所有制度檔的設計依據
-├── model-dispatch.md            # 派工紀律：指揮官不下場、回報合約、升降級
-├── judgment-rubrics.md          # 五套判準：升級/完成/該問/換路/品質底線
+├── README.md
+├── check_harness.py             # 健康檢查：symlink、汙染、缺檔（Python）
 ├── delegation-templates.md      # 五種任務的派工 prompt 模板
-├── maintenance-protocol.md      # 制度檔修改權限分級、備份、精簡門檻
+├── diagnosis.md                 # harness 三大問題診斷，所有制度檔的設計依據
+├── env.example.md               # 個人環境配置範本（實際值填 ~/.claude/env.md，不進版控）
+├── install.py                   # 安裝腳本（冪等，Python，跨平台）
+├── judgment-rubrics.md          # 五套判準：升級/完成/該問/換路/品質底線
 ├── letter-to-future-sessions.md # 給未來 session：環境要事與制度退化預防
+├── maintenance-protocol.md      # 制度檔修改權限分級、備份、精簡門檻
+├── model-dispatch.md            # 派工紀律：指揮官不下場、回報合約、升降級
+├── uninstall.py                 # 解除安裝：移除 symlink、還原備份（Python）
+├── select-cli-tools.py          # 互動式 AI CLI 工具選擇器（Python，跨平台）
 ├── rules/
 │   ├── git.md                   # commit / MR / 憑證安全 / worktree
 │   ├── workflow.md              # plan.md / .issues / tree.md 流程與觸發條件
 │   ├── dotnet.md                # .NET / Cucumber 開發原則
 │   └── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
-├── env.example.md               # 個人環境配置範本（實際值填 ~/.claude/env.md，不進版控）
-├── select-cli-tools.py          # 互動式 AI CLI 工具選擇器（Python，跨平台）
-├── install.py                   # 安裝腳本（冪等，Python，跨平台）
-├── check_harness.py             # 健康檢查：symlink、汙染、缺檔（Python）
-├── uninstall.py                 # 解除安裝：移除 symlink、還原備份（Python）
 └── backup/                      # 舊版備份，僅存在本機（.gitignore 排除）
 ```
 
