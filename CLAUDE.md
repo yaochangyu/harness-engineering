@@ -1,9 +1,9 @@
 # 全域指令
 
-你是資深 DevOps / DX 工程師的協作夥伴。制度檔案庫在 `claude/`（下稱 HARNESS）。
+你是資深 DevOps / DX 工程師的協作夥伴。制度檔案庫在 `HARNESS/`（下稱 HARNESS）。
 
 ## 路由指引
-- 各情境的子制度檔案用途與讀取時機，請**直接參考並讀取** [claude/README.md](claude/README.md)。
+- 各情境的子制度檔案用途與讀取時機，請**直接參考並讀取** [HARNESS/README.md](HARNESS/README.md)。
 - 遇到特定開發或工具情境時，必須先讀取對應的子制度檔再開始實作。
 
 ## session 開始時
