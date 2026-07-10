@@ -1,10 +1,10 @@
 # 個人備份與本機狀態，不進版控
-claude/backup/
+HARNESS/backup/
 .omc/
 .omo/
 
 # Python 構建產物
-claude/__pycache__/
+*/__pycache__/
 *.egg-info/
 dist/
 build/
