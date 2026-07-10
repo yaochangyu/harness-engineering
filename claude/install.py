@@ -13,6 +13,7 @@ def main():
     gemini_entry = Path.home() / ".gemini" / "GEMINI.md"
     copilot_entry1 = Path.home() / ".github" / "copilot-instructions.md"
     copilot_entry2 = Path.home() / ".copilot" / "copilot-instructions.md"
+    opencode_entry = Path.home() / ".config" / "opencode" / "AGENTS.md"
     cli_dir = Path.home() / ".claude" / "cli"
     
     if not src.exists():
@@ -111,6 +112,25 @@ def main():
                 copilot_entry.unlink(missing_ok=True)
                 shutil.copy(src, copilot_entry)
             print(f"[OK] 已建立：{copilot_entry} → {src}")
+    
+    # 建立 OpenCode 入口軟連結
+    opencode_entry.parent.mkdir(parents=True, exist_ok=True)
+    if opencode_entry.is_symlink() and Path(opencode_entry.resolve()) == Path(src.resolve()):
+        print(f"[OK] OpenCode 入口 symlink ({opencode_entry.name}) 已存在且正確，無需變更")
+    else:
+        if opencode_entry.exists() and not opencode_entry.is_symlink():
+            backup_dir = harness / "backup"
+            backup_dir.mkdir(parents=True, exist_ok=True)
+            bak = backup_dir / f"AGENTS.md.replaced.{datetime.now().strftime('%Y-%m-%d')}.md"
+            shutil.copy(opencode_entry, bak)
+            print(f"[備份] 原本的 {opencode_entry} → {bak}")
+        try:
+            opencode_entry.unlink(missing_ok=True)
+            opencode_entry.symlink_to(src)
+        except OSError:
+            opencode_entry.unlink(missing_ok=True)
+            shutil.copy(src, opencode_entry)
+        print(f"[OK] 已建立：{opencode_entry} → {src}")
     
     if not selected_tools:
         print("")
