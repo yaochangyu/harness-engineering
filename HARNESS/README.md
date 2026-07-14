@@ -37,6 +37,7 @@ python3 claude/install.py
 | rules/git.md | commit/MR/憑證安全/worktree | 做 git 操作時 |
 | rules/workflow.md | plan.md/.issues/tree.md 流程＋觸發條件 | 多步驟實作時 |
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
+| rules/python.md | Python 開發原則（虛擬環境用 uv） | 使用 Python 開發 / 寫腳本 |
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/graphify/LLM wiki/寫作 skills | 用到對應工具時 |
 | env.example.md | 個人環境配置範本（實際值填在 `~/.claude/env.md`，不進版控） | 新機器安裝後填一次 |
 | select-cli-tools.py | 互動式 AI CLI 工具選擇器（Python，跨平台） | install.py 自動執行 |

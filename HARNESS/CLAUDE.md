@@ -22,6 +22,7 @@
 | 實作功能（多檔案/多步驟）→ plan.md、.issues、tree.md 流程 | rules/workflow.md |
 | git commit / MR / 憑證 / worktree | rules/git.md |
 | .NET / Cucumber 開發 | rules/dotnet.md |
+| 使用 Python 開發 / 寫腳本 | rules/python.md |
 | rtk / ticket CLI / Google Workspace / graphify / LLM wiki / 中文寫作 skills | rules/tools.md |
 | 新 session 第一次接手這個環境 | letter-to-future-sessions.md |
 
