@@ -18,27 +18,29 @@ TOOL_PACKAGES = {
     "opencode": ["opencode", "oh-my-claudecode"],
     "gemini": ["gemini", "google-gemini-cli"],
     "hermes": ["hermes"],
-    "antigravity": ["antigravity", "codex-antigravity"],
+    "antigravity": ["antigravity", "codex-antigravity", "agy"],
 }
 
 
 def discover_tool_in_path() -> Dict[str, str]:
     """Scan PATH for installed tools."""
     tools = {}
-    for tool_name in TOOL_PACKAGES.keys():
-        try:
-            result = subprocess.run(
-                ["which", tool_name],
-                capture_output=True,
-                text=True,
-                timeout=2,
-            )
-            if result.returncode == 0:
-                path = result.stdout.strip()
-                if os.path.isfile(path) and os.access(path, os.X_OK):
-                    tools[tool_name] = path
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            pass
+    for tool_name, pkgs in TOOL_PACKAGES.items():
+        for cmd in [tool_name] + pkgs:
+            try:
+                result = subprocess.run(
+                    ["which", cmd],
+                    capture_output=True,
+                    text=True,
+                    timeout=2,
+                )
+                if result.returncode == 0:
+                    path = result.stdout.strip()
+                    if os.path.isfile(path) and os.access(path, os.X_OK):
+                        tools[tool_name] = path
+                        break
+            except (subprocess.TimeoutExpired, FileNotFoundError):
+                pass
     return tools
 
 

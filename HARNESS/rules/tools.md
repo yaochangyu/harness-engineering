@@ -62,6 +62,21 @@
 - 寫中文長文（文件、部落格、報告）時考慮 `stop-slop-zh-tw`（去 AI 腔）
   與 `write-yaochangyu-style`（使用者文風）。
 
+## 網頁探索工具選擇
+需要自動化探索網頁時，按優先順序選擇：
+1. **agent-browser** — 適合複雜的多步驟網頁互動、表單填寫、深入探索
+2. **webwright** — 微軟出品，支援多瀏覽器測試，適合測試導向的網頁檢驗
+3. **playwright** — 通用自動化工具，跨平臺，適合快速測試
+
+### 安裝
+若尚未安裝，可透過 skills add 指令安裝（選擇上述工具時確認是否安裝）：
+```bash
+npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser
+npx skills add https://github.com/microsoft/webwright --skill webwright
+npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli
+```
+
 ## 變更紀錄
 - 2026-07-04：內網位址、公司專案路徑抽到 `~/.claude/env.md`，本檔改用佔位符（公開 repo 去識別化）。
 - 2026-07-14：ctx7/context7 條目加上關係說明與呼叫優先順序（優先用全域 `ctx7`，找不到才 fallback `npx`）。
+- 2026-07-15：新增網頁探索工具選擇指南（agent-browser/webwright/playwright）。
