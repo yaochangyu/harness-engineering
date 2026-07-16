@@ -62,21 +62,57 @@
 - 寫中文長文（文件、部落格、報告）時考慮 `stop-slop-zh-tw`（去 AI 腔）
   與 `write-yaochangyu-style`（使用者文風）。
 
-## 網頁探索工具選擇
+## 網頁探索工具選擇（Web Automation Tools）
 需要自動化探索網頁時，按優先順序選擇：
 1. **agent-browser** — 適合複雜的多步驟網頁互動、表單填寫、深入探索
-2. **webwright** — 微軟出品，支援多瀏覽器測試，適合測試導向的網頁檢驗
+2. **webwright** — 微軟出品，LLM-powered 瀏覽器 agent 框架，適合高階網頁任務自動化
 3. **playwright** — 通用自動化工具，跨平臺，適合快速測試
 
-### 安裝
-若尚未安裝，可透過 skills add 指令安裝（選擇上述工具時確認是否安裝）：
+### 安裝方式（按工具區分，因為涉及不同生態）
+
+#### agent-browser（NPM）
 ```bash
-npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser
-npx skills add https://github.com/microsoft/webwright --skill webwright
-npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli
+npm install -g agent-browser
+# 或用 npx 直接執行（無需全域安裝）
+npx agent-browser --help
 ```
+**特點**: CLI 工具，Vercel 出品；無需編寫程式碼，直接執行命令進行瀏覽器操作（open, click, type, screenshot, eval 等）。
+**適用**: 自動化簡單至中等複雜度的網頁任務、互動測試。
+
+#### webwright（Python）
+```bash
+# 用 uv（推薦，專案已配置）
+uv pip install webwright playwright
+
+# 或用系統 pip（需虛擬環境）
+python3 -m venv .venv
+source .venv/bin/activate
+pip install webwright playwright
+```
+**特點**: Python 框架，微軟出品；LLM 驅動的瀏覽器 agent，以程式碼為中心；支援長地平線 web 任務。
+**適用**: 複雜的多步驟 web 自動化、AI 代理開發、需要程式邏輯的網頁任務。
+**官方資源**:
+- GitHub: https://github.com/microsoft/Webwright
+- 文件: https://microsoft.github.io/Webwright
+- 部落格: https://www.microsoft.com/en-us/research/articles/webwright-a-terminal-is-all-you-need-for-web-agents/
+
+#### playwright（NPM / Python）
+```bash
+# Node.js
+npm install -D playwright
+npx playwright install chromium
+
+# Python（用 uv）
+uv pip install playwright
+
+# 或系統 pip
+pip install playwright
+```
+**特點**: 跨平臺、多語言支援（Node.js / Python / .NET）；最廣泛使用的瀏覽器自動化工具。
+**適用**: 通用網頁測試、快速原型開發、效能分析。
 
 ## 變更紀錄
 - 2026-07-04：內網位址、公司專案路徑抽到 `~/.claude/env.md`，本檔改用佔位符（公開 repo 去識別化）。
 - 2026-07-14：ctx7/context7 條目加上關係說明與呼叫優先順序（優先用全域 `ctx7`，找不到才 fallback `npx`）。
 - 2026-07-15：新增網頁探索工具選擇指南（agent-browser/webwright/playwright）。
+- 2026-07-16：修正 webwright 安裝方式。Webwright 是 Python 框架（不是 npm 套件），應用 `pip install webwright`；agent-browser 是 npm 全域套件；三個工具分屬不同生態，詳細安裝指令已更新。
