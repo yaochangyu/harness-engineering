@@ -111,8 +111,37 @@ pip install playwright
 **特點**: 跨平臺、多語言支援（Node.js / Python / .NET）；最廣泛使用的瀏覽器自動化工具。
 **適用**: 通用網頁測試、快速原型開發、效能分析。
 
+### 實踐驗證（2026-07-16）
+三個工具並行探索 https://www.104.com.tw/ 實驗結果：
+
+#### agent-browser（NPM CLI）
+- ✅ 執行成功（2 分鐘完成）
+- 方式：Bash 腳本呼叫 CLI 命令（open, screenshot, snapshot, eval）
+- 優點：無需編寫程式碼，直接命令操作；支援豐富的互動（drag, upload, keyboard 等）
+- 輸出：JavaScript 評估結果、DOM snapshot、截圖
+
+#### webwright（Python 框架）
+- ✅ 執行成功（9 分鐘完成，含安裝時間）
+- 方式：Python 非同步代碼 + Playwright 後端
+- 安裝注意：系統 Python 限制（PEP 668），需 `--break-system-packages`；推薦用虛擬環境隔離
+- 官方版本：v0.0.7（GitHub: microsoft/Webwright）
+- 優點：LLM-driven，適合複雜多步驟自動化；支援長地平線任務程式碼化
+
+#### playwright（Node.js / Python）
+- ✅ 執行成功（9 分鐘完成）
+- 方式：Node.js 非同步 API，支援 Chromium / Firefox / WebKit
+- 優點：功能完整（效能指標、無障礙樹、多瀏覽器）；文檔和社區最完善
+- 輸出：詳細的結構化資訊（meta、主要元素、互動元素、效能計時）
+
+#### 共同發現
+- 三個工具都遇到 Cloudflare 驗證頁面（104.com.tw 的反爬蟲機制）
+- 並行執行無衝突，各工具結果已分別存放驗證
+- 建議：若要突破 Cloudflare，需實現 JavaScript challenge 或使用 API 密鑰
+
 ## 變更紀錄
 - 2026-07-04：內網位址、公司專案路徑抽到 `~/.claude/env.md`，本檔改用佔位符（公開 repo 去識別化）。
 - 2026-07-14：ctx7/context7 條目加上關係說明與呼叫優先順序（優先用全域 `ctx7`，找不到才 fallback `npx`）。
 - 2026-07-15：新增網頁探索工具選擇指南（agent-browser/webwright/playwright）。
-- 2026-07-16：修正 webwright 安裝方式。Webwright 是 Python 框架（不是 npm 套件），應用 `pip install webwright`；agent-browser 是 npm 全域套件；三個工具分屬不同生態，詳細安裝指令已更新。
+- 2026-07-16：
+  - 修正 webwright 安裝方式。Webwright 是 Python 框架（不是 npm 套件），應用 `pip install webwright`；agent-browser 是 npm 全域套件；三個工具分屬不同生態，詳細安裝指令已更新。
+  - 新增實踐驗證章節：並行探索 104.com.tw，三個工具執行結果對比、安裝注意事項、各自優缺點文檔化。
