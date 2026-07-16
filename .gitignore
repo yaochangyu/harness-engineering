@@ -2,6 +2,7 @@
 HARNESS/backup/
 .omc/
 .omo/
+.idea/
 
 # Python 構建產物
 */__pycache__/
