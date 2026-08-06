@@ -41,7 +41,7 @@ description: 安裝並初始化本 repo 的 harness 制度庫（symlink、個人
 ## 步驟 2：跑安裝腳本
 
 ```bash
-python3 claude/install.py
+python3 HARNESS/install.py
 ```
 
 腳本是冪等的，會自動：
@@ -50,11 +50,11 @@ python3 claude/install.py
 - 備份既有的 `~/.claude/CLAUDE.md`
 - 建立入口 symlink
 - 根據選擇在 `~/.claude/cli/` 建立 CLI 工具的 symlink
-- `~/.claude/env.md` 不存在時從 `claude/env.example.md` 複製範本
+- `~/.claude/env.md` 不存在時從 `HARNESS/env.example.md` 複製範本
 - 跑健康檢查
 
 若腳本失敗，把錯誤原文貼給使用者，不要腦補修法；
-symlink 不可用的環境（少見）改走 `claude/README.md` 的手動步驟。
+symlink 不可用的環境（少見）改走 `HARNESS/README.md` 的手動步驟。
 
 ## 步驟 3：訪談並填寫個人環境配置
 
@@ -77,7 +77,7 @@ symlink 不可用的環境（少見）改走 `claude/README.md` 的手動步驟�
 ## 步驟 4：驗證
 
 ```bash
-python3 claude/check_harness.py
+python3 HARNESS/check_harness.py
 ```
 
 - 全綠 → 繼續步驟 5。
@@ -91,5 +91,5 @@ python3 claude/check_harness.py
 1. 入口是 `~/.claude/CLAUDE.md`（symlink 到本 repo），每個 session 自動載入。
 2. 核心機制是路由表：命中情境才讀對應子檔，不要一次全讀。
 3. 紅線：內網位址、公司資訊、憑證只能寫 `~/.claude/env.md`，不可寫進 repo（公開的）。
-4. 客製化入口：改制度檔前先讀 `claude/maintenance-protocol.md`。
-5. 之後任何 Claude 相關工具安裝／升級後，重跑 `python3 claude/check-harness.py`。
+4. 客製化入口：改制度檔前先讀 `HARNESS/maintenance-protocol.md`。
+5. 之後任何 Claude 相關工具安裝／升級後，重跑 `python3 HARNESS/check_harness.py`。
