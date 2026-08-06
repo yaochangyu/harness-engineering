@@ -25,6 +25,7 @@
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
 | rtk / ticket CLI / Google Workspace / graphify / LLM wiki / 中文寫作 skills | rules/tools.md |
 | 新 session 第一次接手這個環境 | letter-to-future-sessions.md |
+| 該 session 有裝 oh-my-claudecode (OMC) plugin，要用其多代理協作/skills | rules/omc.md |
 
 ## session 開始時
 - 檢查當前目錄有無 `*.plan.md`；有未完成項目就詢問使用者是否繼續。
