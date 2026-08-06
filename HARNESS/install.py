@@ -30,7 +30,7 @@ def main():
     
     old_path = None
     if src.exists():
-        for line in src.read_text().splitlines():
+        for line in src.read_text(encoding="utf-8").splitlines():
             if "（下稱 HARNESS）" in line:
                 import re
                 match = re.search(r"`([^`]+)`（下稱 HARNESS）", line)
@@ -49,10 +49,10 @@ def main():
             if not f.is_file():
                 continue
             try:
-                content = f.read_text()
+                content = f.read_text(encoding="utf-8")
                 if old_path in content:
                     content = content.replace(old_path, str(harness))
-                    f.write_text(content)
+                    f.write_text(content, encoding="utf-8")
                     print(f"       已改寫：{f}")
             except Exception:
                 pass

@@ -60,7 +60,7 @@ def main():
             else:
                 print(f"  └─ 修復：ln -sf {src} {copilot_entry}")
 
-    lines = sum(1 for _ in open(src)) if src.exists() else 0
+    lines = sum(1 for _ in open(src, encoding="utf-8")) if src.exists() else 0
     if lines <= 60:
         print(f"[OK] 制度庫 CLAUDE.md 為 {lines} 行（門檻 60）")
     else:

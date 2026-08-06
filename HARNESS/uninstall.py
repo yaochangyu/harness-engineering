@@ -61,7 +61,7 @@ def main():
             restore = original_files[0]
 
     if restore and not entry.exists():
-        entry.write_text(restore.read_text())
+        entry.write_text(restore.read_text(encoding="utf-8"), encoding="utf-8")
         print(f"[還原] {restore} → ~/.claude/CLAUDE.md")
     elif not restore:
         print("[提示] backup/ 沒有可還原的備份，~/.claude/CLAUDE.md 維持不存在")
@@ -72,7 +72,7 @@ def main():
         gemini_restore = gemini_replaced_files[0]
 
     if gemini_restore and not gemini_entry.exists():
-        gemini_entry.write_text(gemini_restore.read_text())
+        gemini_entry.write_text(gemini_restore.read_text(encoding="utf-8"), encoding="utf-8")
         print(f"[還原] {gemini_restore} → ~/.gemini/GEMINI.md")
     elif not gemini_restore:
         print("[提示] backup/ 沒有可還原的備份，~/.gemini/GEMINI.md 維持不存在")
@@ -85,7 +85,7 @@ def main():
     for copilot_entry in [copilot_entry1, copilot_entry2]:
         if copilot_restore and not copilot_entry.exists():
             copilot_entry.parent.mkdir(parents=True, exist_ok=True)
-            copilot_entry.write_text(copilot_restore.read_text())
+            copilot_entry.write_text(copilot_restore.read_text(encoding="utf-8"), encoding="utf-8")
             print(f"[還原] {copilot_restore} → {copilot_entry}")
         elif not copilot_restore:
             print(f"[提示] backup/ 沒有可還原的備份，{copilot_entry} 維持不存在")
