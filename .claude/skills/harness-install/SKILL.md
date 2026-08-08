@@ -50,6 +50,8 @@ python3 HARNESS/install.py
 - 備份既有的 `~/.claude/CLAUDE.md`
 - 建立入口 symlink
 - 根據選擇在 `~/.claude/cli/` 建立 CLI 工具的 symlink
+- 列出 `skills-manifest.txt` 的全域 skills 安裝清單，詢問是否安裝（y/N，預設不裝）；
+  同意才逐條跑 `npx skills add ... -g -y -a '*'`，單條失敗不中斷，最後印成功/失敗統計
 - `~/.claude/env.md` 不存在時從 `HARNESS/env.example.md` 複製範本
 - 跑健康檢查
 

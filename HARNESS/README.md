@@ -11,7 +11,7 @@ Claude Code 每個 session 自動載入後，依情境路由到本目錄其他�
 ```bash
 git clone <本 repo> fable-harness   # 或直接複製資料夾，位置隨意
 cd fable-harness
-python3 claude/install.py
+python3 HARNESS/install.py
 ```
 `install.py` 會自動：運行 AI CLI 工具選擇器、偵測 repo 實際位置並改寫 CLAUDE.md 的 HARNESS 路徑（位置變了才改）、
 備份既有的 `~/.claude/CLAUDE.md`（若有）、建立 symlink、
@@ -23,7 +23,7 @@ python3 claude/install.py
 手動等效步驟（symlink 不可用的環境才需要）：
 1. 改 `CLAUDE.md` 開頭那行 HARNESS 路徑定義為實際位置。
 2. `ln -sf {實際位置}/CLAUDE.md ~/.claude/CLAUDE.md`（或退而求其次 cp，但要記住 repo 是正本）。
-3. 驗證：`python3 claude/check_harness.py` 全綠即完成。
+3. 驗證：`python3 HARNESS/check_harness.py` 全綠即完成。
 
 | 檔案 | 內容 | 誰讀、何時讀 |
 |---|---|---|
@@ -41,7 +41,9 @@ python3 claude/install.py
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/graphify/LLM wiki/寫作 skills | 用到對應工具時 |
 | env.example.md | 個人環境配置範本（實際值填在 `~/.claude/env.md`，不進版控） | 新機器安裝後填一次 |
 | select-cli-tools.py | 互動式 AI CLI 工具選擇器（Python，跨平台） | install.py 自動執行 |
-| install.py | 安裝：運行 Python 選擇器、偵測位置、改路由路徑、建立與關聯 AI Agent symlink (CLAUDE/GEMINI/COPILOT)、建 env.md、跑檢查 | clone/搬移後跑一次 |
+| skills-manifest.txt | 全域 skills 安裝清單（`repo,skill`，一行一條） | install-skills.py 讀取；要增減 skill 改這檔即可 |
+| install-skills.py | 列出 skills-manifest.txt 清單、詢問確認後跑 `npx skills add ... -g -y -a '*'` 逐條安裝到全域 | install.py 自動執行 |
+| install.py | 安裝：運行 Python 選擇器、偵測位置、改路由路徑、建立與關聯 AI Agent symlink (CLAUDE/GEMINI/COPILOT)、建 env.md、詢問並安裝全域 skills、跑檢查 | clone/搬移後跑一次 |
 | check_harness.py | 健康檢查：symlink、汙染、新增自動載入檔、缺檔 | 安裝任何 Claude 相關工具後跑一次 |
 | uninstall.py | 解除安裝：移除 symlink、還原備份 | 不需要 harness 時執行 |
 | backup/ | 舊版 CLAUDE.md 等備份，**不可刪**；已從版控排除（.gitignore） | 需要還原時 |

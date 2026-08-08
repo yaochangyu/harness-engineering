@@ -178,7 +178,13 @@ def main():
                         print(f"[OK] 已建立：~/.claude/cli/{tool} → {path}")
                 except Exception:
                     print(f"[警告] {tool} 未找到或未安裝，跳過")
-    
+
+    print("")
+    try:
+        subprocess.run([sys.executable, str(harness / "install-skills.py")])
+    except Exception:
+        print("[警告] skills 安裝腳本執行失敗，跳過")
+
     env_file = Path.home() / ".claude" / "env.md"
     if not env_file.exists():
         env_example = harness / "env.example.md"

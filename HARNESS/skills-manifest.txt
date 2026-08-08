@@ -1,0 +1,26 @@
+# 全域 skills 安裝清單（install-skills.py 讀取）
+# 格式：<repo>,<skill>　每行一條，# 開頭為註解
+# skill 欄位可用 '*' 代表該 repo 全部 skills（等同 npx skills add <repo> --all 的 --skill 部分）
+https://github.com/anthropics/skills,skill-creator
+https://github.com/upstash/context7,find-docs
+https://github.com/microsoft/webwright,webwright
+https://github.com/microsoft/playwright-cli,playwright-cli
+https://github.com/nextlevelbuilder/ui-ux-pro-max-skill,*
+https://github.com/vercel-labs/agent-browser,agent-browser
+https://github.com/github/awesome-copilot,chrome-devtools
+https://github.com/github/awesome-copilot,postgresql-code-review
+https://github.com/github/awesome-copilot,postgresql-optimization
+https://github.com/wshobson/agents,postgresql-table-design
+https://github.com/github/awesome-copilot,sql-code-review
+https://github.com/github/awesome-copilot,sql-optimization
+https://github.com/github/awesome-copilot,sql-server-table-reconciliation
+https://github.com/github/awesome-copilot,prd
+https://github.com/github/awesome-copilot,prompt-optimizer
+https://github.com/aws/agent-toolkit-for-aws,amazon-aurora-postgresql
+https://github.com/hackmdio/hackmd-cli,hackmd-cli
+https://github.com/cloudflare/security-audit-skill,security-audit
+https://github.com/mattpocock/skills,grill-me
+https://github.com/mattpocock/skills,grill-with-docs
+https://github.com/mattpocock/skills,to-spec
+https://github.com/mattpocock/skills,to-prd
+https://github.com/microsoft/azure-skills,azure-ai
