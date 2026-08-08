@@ -14,7 +14,7 @@ Claude Code 制度檔案庫（harness）。目的：把高階模型的判斷力�
 ## 快速開始（新機器 / 重灌 / clone 之後）
 
 最省事的方式：在 repo 目錄開 Claude Code，輸入 `/harness-install`。
-安裝精靈（`.claude/skills/harness-install/`）會跑安裝腳本、訪談並填好個人環境配置
+安裝精靈（`skills/harness-install/`）會跑安裝腳本、訪談並填好個人環境配置
 （`~/.claude/env.md`）、跑健康檢查、最後給你一分鐘導覽。
 
 手動方式：
@@ -35,8 +35,9 @@ python3 HARNESS/install.py
    - **Copilot CLI**：建立 `~/.github/copilot-instructions.md` 與 `~/.copilot/copilot-instructions.md` 軟連結。
 3. 備份既有的提示詞實體檔案（若存在）。
 4. 偵測 repo 實際位置，位置變了就改寫制度檔內的 HARNESS 路徑。
-5. 建立個人環境配置檔 `~/.claude/env.md`（若不存在時從 `env.example.md` 複製）。
-6. 跑一次健康檢查。
+5. 列出全域 skills 安裝清單（`HARNESS/skills-manifest.txt`），詢問是否安裝；同意才逐條安裝到全域。
+6. 建立個人環境配置檔 `~/.claude/env.md`（若不存在時從 `env.example.md` 複製）。
+7. 跑一次健康檢查。
 
 ## 個人配置與公開範圍
 
@@ -59,6 +60,11 @@ python3 HARNESS/check_harness.py
 ## 目錄結構
 
 ```
+skills/
+└── harness-install/             # Claude Code 專案層級 skill：安裝精靈
+    ├── SKILL.md
+    └── CLI-TOOLS-GUIDE.md
+
 HARNESS/
 ├── AI-INSTRUCTIONS-MAPPING.md
 ├── CLAUDE.md                    # 入口：核心規則＋路由表（symlink 目標）
@@ -68,17 +74,22 @@ HARNESS/
 ├── diagnosis.md                 # harness 三大問題診斷，所有制度檔的設計依據
 ├── env.example.md               # 個人環境配置範本（實際值填 ~/.claude/env.md，不進版控）
 ├── install.py                   # 安裝腳本（冪等，Python，跨平台）
+├── install-skills.py            # 全域 skills 安裝腳本（讀 skills-manifest.txt）
+├── skills-manifest.txt          # 全域 skills 安裝清單
 ├── judgment-rubrics.md          # 五套判準：升級/完成/該問/換路/品質底線
 ├── letter-to-future-sessions.md # 給未來 session：環境要事與制度退化預防
 ├── maintenance-protocol.md      # 制度檔修改權限分級、備份、精簡門檻
 ├── model-dispatch.md            # 派工紀律：指揮官不下場、回報合約、升降級
+├── plan-template.md             # 實作計畫範本
 ├── uninstall.py                 # 解除安裝：移除 symlink、還原備份（Python）
 ├── select-cli-tools.py          # 互動式 AI CLI 工具選擇器（Python，跨平台）
 ├── rules/
 │   ├── git.md                   # commit / MR / 憑證安全 / worktree
 │   ├── workflow.md              # plan.md / .issues / tree.md 流程與觸發條件
 │   ├── dotnet.md                # .NET / Cucumber 開發原則
-│   └── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
+│   ├── python.md                # Python 開發原則（uv）
+│   ├── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
+│   └── omc.md                   # oh-my-claudecode (OMC) 多代理協作層
 └── backup/                      # 舊版備份，僅存在本機（.gitignore 排除）
 ```
 

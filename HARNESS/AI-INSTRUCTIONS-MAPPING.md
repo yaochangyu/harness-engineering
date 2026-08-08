@@ -11,7 +11,7 @@
 | **Copilot** | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | 10.1K | GitHub Copilot 主要指令檔 |
 | **Copilot (舊版)** | `/mnt/d/lab/github-copilot/.github/copilot-instructions-old.md` | 5.6K | 備份/舊版本 |
 | **通用準則** | `/mnt/d/lab/github-copilot/.github/通用準則.md` | 1.0K | 共用指導原則 |
-| **Claude** | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | 主入口 | harness 制度檔 |
+| **Claude** | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | 主入口 | harness 制度檔 |
 
 ### Windows 用戶家目錄映射（由 link-ai-instructions.ps1 建立）
 
@@ -19,33 +19,37 @@
 |--------|------|------|------|
 | **Copilot** | `%USERPROFILE%\.github\copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | Hard Link / SymLink |
 | **Copilot** | `%USERPROFILE%\.copilot\copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` | Hard Link / SymLink |
-| **Claude** | `%USERPROFILE%\.claude\CLAUDE.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink (WSL path) |
-| **Gemini / Antigravity** | `%USERPROFILE%\.gemini\GEMINI.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` (WSL) | SymLink |
+| **Claude** | `%USERPROFILE%\.claude\CLAUDE.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | SymLink (WSL path) |
+| **Gemini / Antigravity** | `%USERPROFILE%\.gemini\GEMINI.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` (WSL) | SymLink |
 
 ### WSL/Linux 用戶家目錄映射（由 install.py 建立）
 
 | AI 代理 | 位置 | 指向 | 類型 | 狀態 |
 |--------|------|------|------|------|
-| **Copilot** | `~/.github/copilot-instructions.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
-| **Copilot** | `~/.copilot/copilot-instructions.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
-| **Claude** | `~/.claude/CLAUDE.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
-| **Gemini / Antigravity** | `~/.gemini/GEMINI.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | SymLink | ✅ 已建立 |
+| **Copilot** | `~/.github/copilot-instructions.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | SymLink | ✅ 已建立 |
+| **Copilot** | `~/.copilot/copilot-instructions.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | SymLink | ✅ 已建立 |
+| **Claude** | `~/.claude/CLAUDE.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | SymLink | ✅ 已建立 |
+| **Gemini / Antigravity** | `~/.gemini/GEMINI.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | SymLink | ✅ 已建立 |
 | **Hermes** | `~/.hermes/SOUL.md` | ⚠️ 源檔未找到 | SymLink | ❌ 待建立 |
 
 ## harness-engineering 完整結構
 
 ```
 /home/yao/projects/harness-engineering/
-├── claude/
+├── HARNESS/
 │   ├── CLAUDE.md                          # ← Claude 主指令檔（symlink 目標）
+│   ├── AI-INSTRUCTIONS-MAPPING.md         # 本檔：AI 代理指令檔位置對應表
 │   ├── diagnosis.md                       # 問題診斷
 │   ├── model-dispatch.md                  # 派工紀律
 │   ├── judgment-rubrics.md                # 判準表
 │   ├── delegation-templates.md            # 派工範本
 │   ├── maintenance-protocol.md            # 維護協議
 │   ├── letter-to-future-sessions.md       # 未來 session 說明
+│   ├── plan-template.md                   # 實作計畫範本
 │   ├── env.example.md                     # 環境配置範本
 │   ├── install.py                        # 安裝腳本
+│   ├── install-skills.py                 # 全域 skills 安裝腳本
+│   ├── skills-manifest.txt               # 全域 skills 安裝清單
 │   ├── check_harness.py                  # 健康檢查
 │   ├── uninstall.py                      # 解除安裝
 │   ├── select-cli-tools.py                # CLI 工具選擇器
@@ -54,19 +58,19 @@
 │       ├── git.md                         # Git 操作規則
 │       ├── workflow.md                    # 工作流程
 │       ├── dotnet.md                      # .NET 開發
+│       ├── python.md                      # Python 開發（uv）
 │       ├── tools.md                       # 工具使用
-│       └── context7.md                    # Context7 配置
-├── .claude/
-│   └── skills/
-│       └── harness-install/
-│           ├── SKILL.md                   # Skill 定義
-│           └── CLI-TOOLS-GUIDE.md         # 使用指南
+│       └── omc.md                         # OMC 多代理協作層
+├── skills/
+│   └── harness-install/
+│       ├── SKILL.md                       # Skill 定義
+│       └── CLI-TOOLS-GUIDE.md             # 使用指南
 └── README.md                              # 專案說明
 
 ↓ Symlink 到
 
 ~/.claude/
-├── CLAUDE.md → /home/yao/projects/harness-engineering/claude/CLAUDE.md
+├── CLAUDE.md → /home/yao/projects/harness-engineering/HARNESS/CLAUDE.md
 ├── cli/
 │   ├── claude → /home/yao/.local/bin/claude
 │   ├── codex → /home/yao/.nvm/versions/.../bin/codex
@@ -104,16 +108,16 @@
 | 平台 | 編輯位置 | 實際指向 |
 |-----|--------|--------|
 | Windows | `%USERPROFILE%\.copilot\copilot-instructions.md` | `/mnt/d/lab/github-copilot/.github/copilot-instructions.md` |
-| WSL/Linux | `~/.copilot/copilot-instructions.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` |
-| 源檔位置 | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | ← 直接編輯這個（Windows 下為 `/mnt/d/...`） |
+| WSL/Linux | `~/.copilot/copilot-instructions.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` |
+| 源檔位置 | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | ← 直接編輯這個（Windows 下為 `/mnt/d/...`） |
 
 ### 查詢場景 2：「我要編輯 Claude 的制度檔」
 
 | 平台 | 編輯位置 | 實際指向 |
 |-----|--------|--------|
 | Windows | `%USERPROFILE%\.claude\CLAUDE.md` | → WSL path |
-| WSL/Linux | `~/.claude/CLAUDE.md` | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` |
-| 源檔位置 | `/home/yao/projects/harness-engineering/claude/CLAUDE.md` | ← 直接編輯這個 |
+| WSL/Linux | `~/.claude/CLAUDE.md` | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` |
+| 源檔位置 | `/home/yao/projects/harness-engineering/HARNESS/CLAUDE.md` | ← 直接編輯這個 |
 
 ### 查詢場景 3：「我要用某個 AI CLI 工具」
 
@@ -133,7 +137,7 @@
 **現狀**：
 - Windows 期望位置：`%USERPROFILE%\.gemini\GEMINI.md`
 - WSL 期望位置：`~/.gemini/GEMINI.md`
-- 源檔位置：已連結至此 repo 的 `claude/CLAUDE.md`
+- 源檔位置：已連結至此 repo 的 `HARNESS/CLAUDE.md`
 
 **需要**：
 - [x] 找到或建立 Gemini 指令檔源 (已完成，與 Claude Code 共用 `CLAUDE.md`)

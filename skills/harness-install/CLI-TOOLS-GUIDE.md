@@ -88,7 +88,7 @@
 ```
 請輸入選擇: (按 Enter)
 → 跳過 CLI symlink，只做核心安裝
-之後手動執行：bash ~/projects/harness-engineering/claude/select-cli-tools.sh
+之後手動執行：python3 ~/projects/harness-engineering/HARNESS/select-cli-tools.py
 ```
 
 ### 情境 4：安裝了新工具後重跑
@@ -123,5 +123,5 @@ rm -rf ~/.claude/cli/
 
 若要重新配置：
 ```bash
-bash ~/projects/harness-engineering/claude/install.sh --cli-tools="copilot=/path/to/copilot"
+python3 ~/projects/harness-engineering/HARNESS/install.py --cli-tools="copilot=/path/to/copilot"
 ```

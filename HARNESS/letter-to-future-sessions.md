@@ -35,7 +35,7 @@ plan.md 儀式、Cucumber 中文步驟、ticket CLI、Clean Architecture agent�
    預防：驗收條件必須要求「輸出原文節錄」當證據；回報裡沒有原文證據＝未驗證。
 4. **升級濫用**：什麼都丟 opus，成本爆炸；或相反，捨不得升級，在 haiku 上重試到死。
    預防：judgment-rubrics.md 第 1 節的判準是硬規則——命中就升、沒命中就不升，兩輪封頂。
-5. **檔案搬家造成路由斷鏈**：`/home/yao/projects/harness-engineering/claude/` 被移動或改名後，所有路由失效。
+5. **檔案搬家造成路由斷鏈**：`/home/yao/projects/harness-engineering/HARNESS/` 被移動或改名後，所有路由失效。
    預防：搬家時同步更新 `~/.claude/CLAUDE.md` 開頭的 HARNESS 定義那一行即可（全部路由都經由它）。
 
 ## 誠實條款：制度補不了的事（原文照抄自 judgment-rubrics.md，遇到就照做）
