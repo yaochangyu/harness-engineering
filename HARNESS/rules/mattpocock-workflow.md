@@ -63,6 +63,7 @@ sequenceDiagram
 * **若有缺少，必須主動打字詢問使用者選擇安裝範圍（Project 或 Global）**：
   - **Project**: `npx skills add https://github.com/mattpocock/skills -s <missing_skills> -y -a '*'`
   - **Global**: `npx skills add https://github.com/mattpocock/skills -s <missing_skills> -g -y -a '*'`
+* **文件型輸入前處理**：若這次工作會分析 PDF / Office / 圖片等文件，先遵循 `rules/preprocess.md` 的 markitdown 規則。
 
 ### 階段一：對齊與領域設計 (Alignment)
 1. **磨礪對齊**：
@@ -82,10 +83,10 @@ sequenceDiagram
 
 ### 階段三：實作與 TDD 循環 (Implementation Loop)
 1. **動手前準備**：
-   * 檢查 `.issues/` 目錄下有無對應的失敗紀錄，避免重複踩坑。
+    * 檢查 `.issues/` 目錄下有無對應的失敗紀錄，避免重複踩坑。
 2. **步驟執行（每次只走一步）**：
-   * 更新狀態為 `🟦 進行中`。
-   * 載入 `/tdd` 規約：確認 Seam 接縫 -> 寫紅燈測試 -> 寫綠燈最小實作。
+    * 更新狀態為 `🟦 進行中`。
+    * 載入 `/tdd` 規約：確認 Seam 接縫 -> 寫紅燈測試 -> 寫綠燈最小實作。
 3. **維護樹狀結構**：
    * 任何檔案結構異動，同步更新 `@tree.md`。
 4. **請示確認**：
@@ -108,3 +109,4 @@ sequenceDiagram
 - 2026-08-09：補上與 rules/workflow.md 的分工說明；`skills/mattpocock-workflow/SKILL.md` 精簡為索引，
   本檔改為唯一權威 SOP 來源，避免雙份維護 drift；`HARNESS/CLAUDE.md` 路由表補上本檔一行；
   確認所需 7 個子技能（含 code-review 雙軸審查）已全域安裝於 `~/.agents/skills/`，非命名衝突。
+- 2026-08-09：markitdown 前處理移到 `rules/preprocess.md`，本檔僅在文件型輸入工作時引用。

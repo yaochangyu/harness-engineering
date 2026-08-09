@@ -57,3 +57,4 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 
 ## 變更紀錄
 - 2026-08-09：新增與 mattpocock-workflow.md 的分工說明，避免兩套流程觸發條件重疊時無所適從。
+- 2026-08-09：移除 markitdown 前處理段，改由 rules/preprocess.md 統一處理文件分析前置流程。
