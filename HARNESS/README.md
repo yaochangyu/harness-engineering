@@ -11,7 +11,7 @@ Claude Code 每個 session 自動載入後，依情境路由到本目錄其他�
 ```bash
 git clone <本 repo> fable-harness   # 或直接複製資料夾，位置隨意
 cd fable-harness
-python3 HARNESS/install.py
+uv run HARNESS/install.py
 ```
 `install.py` 會自動：運行 AI CLI 工具選擇器、偵測 repo 實際位置並改寫 CLAUDE.md 的 HARNESS 路徑（位置變了才改）、
 備份既有的 `~/.claude/CLAUDE.md`（若有）、建立 symlink、
@@ -23,7 +23,7 @@ python3 HARNESS/install.py
 手動等效步驟（symlink 不可用的環境才需要）：
 1. 改 `CLAUDE.md` 開頭那行 HARNESS 路徑定義為實際位置。
 2. `ln -sf {實際位置}/CLAUDE.md ~/.claude/CLAUDE.md`（或退而求其次 cp，但要記住 repo 是正本）。
-3. 驗證：`python3 HARNESS/check_harness.py` 全綠即完成。
+3. 驗證：`uv run HARNESS/check_harness.py` 全綠即完成。
 
 | 檔案 | 內容 | 誰讀、何時讀 |
 |---|---|---|

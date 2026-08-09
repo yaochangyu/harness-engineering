@@ -41,7 +41,7 @@ description: 安裝並初始化本 repo 的 harness 制度庫（symlink、個人
 ## 步驟 2：跑安裝腳本
 
 ```bash
-python3 HARNESS/install.py
+uv run HARNESS/install.py
 ```
 
 腳本是冪等的，會自動：
@@ -79,7 +79,7 @@ symlink 不可用的環境（少見）改走 `HARNESS/README.md` 的手動步驟
 ## 步驟 4：驗證
 
 ```bash
-python3 HARNESS/check_harness.py
+uv run HARNESS/check_harness.py
 ```
 
 - 全綠 → 繼續步驟 5。
@@ -94,4 +94,4 @@ python3 HARNESS/check_harness.py
 2. 核心機制是路由表：命中情境才讀對應子檔，不要一次全讀。
 3. 紅線：內網位址、公司資訊、憑證只能寫 `~/.claude/env.md`，不可寫進 repo（公開的）。
 4. 客製化入口：改制度檔前先讀 `HARNESS/maintenance-protocol.md`。
-5. 之後任何 Claude 相關工具安裝／升級後，重跑 `python3 HARNESS/check_harness.py`。
+5. 之後任何 Claude 相關工具安裝／升級後，重跑 `uv run HARNESS/check_harness.py`。

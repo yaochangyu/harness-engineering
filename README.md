@@ -22,7 +22,7 @@ Claude Code 制度檔案庫（harness）。目的：把高階模型的判斷力�
 ```bash
 git clone <本 repo> fable-harness   # 位置隨意
 cd fable-harness
-python3 HARNESS/install.py
+uv run HARNESS/install.py
 # 然後編輯 ~/.claude/env.md 填入實際值（範本會自動複製過去）
 ```
 
@@ -54,7 +54,7 @@ python3 HARNESS/install.py
 安裝任何 Claude 相關工具或升級 Claude Code 後，跑一次健康檢查確認 harness 仍生效：
 
 ```bash
-python3 HARNESS/check_harness.py
+uv run HARNESS/check_harness.py
 ```
 
 ## 目錄結構
@@ -99,7 +99,7 @@ HARNESS/
 
 - 要修改任何制度檔，先讀 `HARNESS/maintenance-protocol.md`。
 - `CLAUDE.md` 超過 60 行即為警訊；新規則一律進 `rules/` 子檔並在路由表加一行。
-- 搬移 repo 後重跑 `python3 HARNESS/install.py` 即可，路徑會自動改寫。
+- 搬移 repo 後重跑 `uv run HARNESS/install.py` 即可，路徑會自動改寫。
 - 所有腳本均為 Python（`*.py`），支援 Windows/WSL/Linux，無外部依賴。
 
 ## 命令行工具

@@ -59,7 +59,7 @@
 
 任何會動到 `~/.claude/` 的安裝（框架、外掛、Claude Code 升級）做完後，跑：
 ```
-python3 /home/yao/projects/harness-engineering/HARNESS/check_harness.py
+uv run /home/yao/projects/harness-engineering/HARNESS/check_harness.py
 ```
 它會檢查：入口 symlink 是否被覆蓋、事實來源是否被 append 汙染、
 `~/.claude/rules/` 是否冒出新的自動載入檔、制度庫關鍵檔是否齊全。

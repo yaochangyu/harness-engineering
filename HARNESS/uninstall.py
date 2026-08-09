@@ -91,7 +91,7 @@ def main():
             print(f"[提示] backup/ 沒有可還原的備份，{copilot_entry} 維持不存在")
 
     print("")
-    print(f"解除安裝完成。repo 與 backup/ 皆未刪除，重新安裝請執行：python3 {harness}/install.py")
+    print(f"解除安裝完成。repo 與 backup/ 皆未刪除，重新安裝請執行：uv run {harness}/install.py")
 
 if __name__ == "__main__":
     main()
