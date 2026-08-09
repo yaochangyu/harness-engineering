@@ -10,11 +10,15 @@
 
 ## ctx7 / context7（查函式庫文件）
 - 官方文件／repo：https://github.com/upstash/context7（`ctx7` 是其官方 CLI，兩個名字指同一個工具）。
-- 詳細使用規則（查詢步驟、fallback 條件等）已在 `~/.claude/rules/context7.md` 自動載入，不要在別處重複維護。
-- 呼叫優先順序：先用 `command -v ctx7` 確認是否有全域安裝的 `ctx7` 指令；
-  有就直接呼叫 `ctx7 ...`（比 `npx ctx7@latest` 快，不用每次重新解析/下載）；
-  找不到才 fallback 用 `npx ctx7@latest ...`，並告知使用者可 `npm install -g ctx7` 全域安裝以省掉 npx 開銷。
-  不可因為沒裝就默默跳過 Context7 或改用 web search。
+- 安裝方式：裝成全域 skill `find-docs`，指令
+  `npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`。
+  此條目已列在 `skills-manifest.txt`，跑 `install-skills.py` 會自動安裝，不需另外手動裝。
+- skill 與 CLI 不是二選一：`find-docs` 是觸發層（告訴 agent 何時該查、怎麼下 query），
+  底層執行仍是 `npx ctx7@latest library` / `npx ctx7@latest docs` 兩段式查詢。
+  所以裝了 skill 之後照 skill 指示走即可，不必再自己組指令；
+  skill 不存在時才手動呼叫 `npx ctx7@latest ...`（有全域 `ctx7` 就直接用，省 npx 開銷）。
+- 詳細查詢步驟、錯誤處理等規則以 `find-docs` skill 內容為準，不要在別處重複維護。
+- 不可因為沒裝就默默跳過 Context7 或改用 web search。
 
 ## ticket 工具
 - 所有 ticket 操作用 `<TICKET_CLI>`（實際工具名與使用說明位置見 `~/.claude/env.md`）。
@@ -26,6 +30,19 @@
 ## graphify
 - 使用者輸入 `/graphify` 時，先呼叫 Skill tool（`skill: "graphify"`）再做其他事。
 - Skill 位置：`~/.claude/skills/graphify/SKILL.md`。
+- 官方 repo：https://github.com/Graphify-Labs/graphify
+  **注意套件名稱**：PyPI 上是 `graphifyy`（雙 y），不是 `graphify`；其他 `graphify*` 套件非官方。
+  安裝完後終端機指令仍是 `graphify`。
+- 安裝（新環境沒有這個 skill 時）：
+  ```bash
+  uv tool install graphifyy      # 推薦；替代方案 pipx install graphifyy
+  graphify install               # 註冊為全域 skill（僅當前 repo 用 --project）
+  ```
+  - Mac/Windows 避免直接 `pip install graphifyy`：安裝路徑常跟 skill 執行時解析的 Python 環境不一致，
+    會導致 `ModuleNotFoundError`。
+  - 免安裝直接跑：`uvx --from graphifyy graphify install`
+    （不可直接 `uvx graphify ...`——`uv tool run` 會把第一個字當套件名找，套件實際叫 `graphifyy`）。
+  - 額外功能（PDF / MCP server / Neo4j 等）：`uv tool install "graphifyy[pdf]"` / `"[mcp]"` / `"[all]"`。
 
 ## LLM Wiki
 - 知識庫路徑 `<WIKI_ROOT>` 見 `~/.claude/env.md`；操作規則見 `<WIKI_ROOT>/CLAUDE.md`。
@@ -145,3 +162,9 @@ pip install playwright
 - 2026-07-16：
   - 修正 webwright 安裝方式。Webwright 是 Python 框架（不是 npm 套件），應用 `pip install webwright`；agent-browser 是 npm 全域套件；三個工具分屬不同生態，詳細安裝指令已更新。
   - 新增實踐驗證章節：並行探索 104.com.tw，三個工具執行結果對比、安裝注意事項、各自優缺點文檔化。
+- 2026-08-09：graphify 章節補上安裝腳本（官方 repo、PyPI 套件名為 `graphifyy` 非 `graphify`、
+  `uv tool install` / `uvx` 用法、Mac/Windows 避免直接 `pip install` 的注意事項）。
+- 2026-08-09：ctx7/context7 章節改以全域 skill `find-docs` 為主要安裝與使用方式
+  （`npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`，已列在 `skills-manifest.txt`）。
+  原因：查證 `find-docs` SKILL.md 後確認它就是 Context7 官方 skill，底層仍呼叫 `ctx7` CLI，
+  兩者是同一套機制的觸發層與執行層，不是兩個獨立工具；改寫後避免每次自行組指令、規則也不再兩處維護。
