@@ -10,6 +10,10 @@
 * 使用者要求進行高階軟體工程重構、複雜功能開發（跨多檔案/多模組）。
 * 使用者在會話中提及「高階工作流」、「設計對齊」、「雙軸審查」或使用 `/mattpocock-workflow` 指令。
 
+**與 [rules/workflow.md](workflow.md) 的分工**：兩者觸發條件在「多檔案/多步驟」上有重疊，預設先用
+`rules/workflow.md`（單一 plan.md 追蹤）。只有當任務需要先盤問對齊設計邊界、TDD 紅綠切片、或雙軸審查時，
+才升級到本流程——本流程是在 `rules/workflow.md` 的 plan.md 機制上疊加對齊/TDD/審查階段，不是另一套平行機制。
+
 ---
 
 ## 端到端執行流程
@@ -101,3 +105,6 @@ sequenceDiagram
 
 ## 變更紀錄
 - 2026-08-09：建檔，作為 HARNESS 制度庫融合 Matt Pocock 技能庫的進階擴充工作流。
+- 2026-08-09：補上與 rules/workflow.md 的分工說明；`skills/mattpocock-workflow/SKILL.md` 精簡為索引，
+  本檔改為唯一權威 SOP 來源，避免雙份維護 drift；`HARNESS/CLAUDE.md` 路由表補上本檔一行；
+  確認所需 7 個子技能（含 code-review 雙軸審查）已全域安裝於 `~/.agents/skills/`，非命名衝突。

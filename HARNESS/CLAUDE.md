@@ -20,6 +20,7 @@
 | 撰寫派工 prompt | delegation-templates.md |
 | 要修改 HARNESS 制度檔或 CLAUDE.md 本身 | maintenance-protocol.md |
 | 實作功能（多檔案/多步驟）→ plan.md、.issues、tree.md 流程 | rules/workflow.md |
+| 跨模組複雜重構、需先盤問對齊設計/TDD紅綠/雙軸審查 | rules/mattpocock-workflow.md |
 | git commit / MR / 憑證 / worktree | rules/git.md |
 | .NET / Cucumber 開發 | rules/dotnet.md |
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
@@ -36,3 +37,6 @@
   內網/公司/個人資訊**只能**寫在 `~/.claude/env.md`，不可寫進 HARNESS 制度檔（repo 是公開的）。
 - shell 指令加 `rtk` 前綴省 token（hook 已自動處理，細節見 rules/tools.md）
 - 使用者輸入 `/graphify` → 先呼叫 Skill tool（skill: "graphify"）
+
+## 變更紀錄
+- 2026-08-09：路由表新增 rules/mattpocock-workflow.md 一行（使用者已明確確認此路由表變更）。
