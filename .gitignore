@@ -1,5 +1,6 @@
 # 個人備份與本機狀態，不進版控
 HARNESS/backup/
+.agents/
 .omc/
 .omo/
 .idea/
