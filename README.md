@@ -123,6 +123,23 @@ HARNESS/
 * **透過 Harness 制度庫自動安裝**：
   若執行 `uv run HARNESS/install-skills.py`，安裝器會自動讀取 [`HARNESS/skills-manifest-workflow.txt`](HARNESS/skills-manifest-workflow.txt) 並提示安裝。
 
+### 3. 技能更新與刪除方式 (Update & Remove)
+
+* **更新技能 (Update)**：更新已安裝之技能至遠端 Git 最新版本
+  ```bash
+  npx skills update
+  ```
+
+* **刪除/解除安裝技能 (Remove)**：
+  * **刪除全域技能**：
+    ```bash
+    npx skills remove <skill_name> -g
+    ```
+  * **刪除專案本機技能**：
+    ```bash
+    npx skills remove <skill_name>
+    ```
+
 ## 維護原則
 
 - 要修改任何制度檔，先讀 `HARNESS/maintenance-protocol.md`。
