@@ -25,6 +25,7 @@
 | .NET / Cucumber 開發 | rules/dotnet.md |
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
 | rtk / ticket CLI / Google Workspace / graphify / LLM wiki / 中文寫作 skills | rules/tools.md |
+| 只要輸入含 PDF / Word / PowerPoint / Excel / 圖片 / HTML / 壓縮包等文件附件，進入 AI 分析前先讀 `rules/preprocess.md` | rules/preprocess.md |
 | 新 session 第一次接手這個環境 | letter-to-future-sessions.md |
 | 該 session 有裝 oh-my-claudecode (OMC) plugin，要用其多代理協作/skills | rules/omc.md |
 
@@ -40,3 +41,4 @@
 
 ## 變更紀錄
 - 2026-08-09：路由表新增 rules/mattpocock-workflow.md 一行（使用者已明確確認此路由表變更）。
+- 2026-08-09：路由表新增 rules/preprocess.md，用於文件 / PDF / Office / 圖片分析前處理。

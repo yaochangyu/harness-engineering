@@ -40,6 +40,7 @@ uv run HARNESS/install.py
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
 | rules/python.md | Python 開發原則（虛擬環境用 uv） | 使用 Python 開發 / 寫腳本 |
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/graphify/LLM wiki/寫作 skills | 用到對應工具時 |
+| rules/preprocess.md | 文件 / PDF / Office / 圖片分析前處理（markitdown） | 任何文件型輸入進 AI 分析前 |
 | env.example.md | 個人環境配置範本（實際值填在 `~/.claude/env.md`，不進版控） | 新機器安裝後填一次 |
 | select-cli-tools.py | 互動式 AI CLI 工具選擇器（Python，跨平台） | install.py 自動執行 |
 | skills-manifest.txt | 全域通用工具類 skills 安裝清單（`repo,skill`，一行一條） | install-skills.py 讀取通用工具清單 |

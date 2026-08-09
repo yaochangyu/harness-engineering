@@ -36,6 +36,7 @@
 
 ### rules/ - 子制度檔案目錄
 - [tools.md](file:///home/yao/projects/harness-engineering/HARNESS/rules/tools.md) - 工具使用規範 (rtk, ctx7 等)
+- [preprocess.md](file:///home/yao/projects/harness-engineering/HARNESS/rules/preprocess.md) - 文件 / PDF / Office / 圖片分析前處理規範
 - [git.md](file:///home/yao/projects/harness-engineering/HARNESS/rules/git.md) - Git commit, MR 與憑證安全規範
 - [workflow.md](file:///home/yao/projects/harness-engineering/HARNESS/rules/workflow.md) - plan.md, .issues, tree.md 工作流程
 - [mattpocock-workflow.md](file:///home/yao/projects/harness-engineering/HARNESS/rules/mattpocock-workflow.md) - 高階軟體工程實作工作流條文
