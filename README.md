@@ -61,9 +61,11 @@ uv run HARNESS/check_harness.py
 
 ```
 skills/
-└── harness-install/             # Claude Code 專案層級 skill：安裝精靈
-    ├── SKILL.md
-    └── CLI-TOOLS-GUIDE.md
+├── harness-install/             # Claude Code 專案層級 skill：安裝精靈
+│   ├── SKILL.md
+│   └── CLI-TOOLS-GUIDE.md
+└── mattpocock-workflow/         # 端到端軟體工程工作流 custom skill
+    └── SKILL.md
 
 HARNESS/
 ├── AI-INSTRUCTIONS-MAPPING.md
@@ -74,8 +76,9 @@ HARNESS/
 ├── diagnosis.md                 # harness 三大問題診斷，所有制度檔的設計依據
 ├── env.example.md               # 個人環境配置範本（實際值填 ~/.claude/env.md，不進版控）
 ├── install.py                   # 安裝腳本（冪等，Python，跨平台）
-├── install-skills.py            # 全域 skills 安裝腳本（讀 skills-manifest.txt）
-├── skills-manifest.txt          # 全域 skills 安裝清單
+├── install-skills.py            # 全域 skills 安裝腳本（讀 skills-manifest*.txt）
+├── skills-manifest.txt          # 全域通用工具 skills 安裝清單
+├── skills-manifest-workflow.txt # 全域工作流程 skills 安裝清單
 ├── judgment-rubrics.md          # 五套判準：升級/完成/該問/換路/品質底線
 ├── letter-to-future-sessions.md # 給未來 session：環境要事與制度退化預防
 ├── maintenance-protocol.md      # 制度檔修改權限分級、備份、精簡門檻
@@ -86,6 +89,7 @@ HARNESS/
 ├── rules/
 │   ├── git.md                   # commit / MR / 憑證安全 / worktree
 │   ├── workflow.md              # plan.md / .issues / tree.md 流程與觸發條件
+│   ├── mattpocock-workflow.md   # 高階軟體工程實作工作流條文（Grilling/Spec/TDD/CodeReview）
 │   ├── dotnet.md                # .NET / Cucumber 開發原則
 │   ├── python.md                # Python 開發原則（uv）
 │   ├── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
@@ -94,6 +98,30 @@ HARNESS/
 ```
 
 各檔案的詳細用途與讀取時機，見 [`HARNESS/README.md`](HARNESS/README.md)。
+
+## 高階工程工作流程與技能安裝 (mattpocock-workflow)
+
+本專案提供整合 **Matt Pocock 技能庫** 與 **Harness 本地規範** 的端到端進階工作流程（含需求磨礪、領域建模、規格拆解、TDD 紅綠切片與雙軸代碼審查）。
+
+### 1. 觸發方式
+* 在 AI 對話中下達 **`/mattpocock-workflow`**。
+* 或對 AI 說明：「*請進行高階工作流/雙軸審查*」，AI 便會自動路由讀取 [`HARNESS/rules/mattpocock-workflow.md`](HARNESS/rules/mattpocock-workflow.md)。
+
+### 2. 所需子技能之 `npx skills` 安裝方式
+當執行高階工作流時，若環境缺乏子技能（`grill-with-docs`, `to-spec`, `to-tickets`, `tdd`, `code-review`, `domain-modeling`, `setup-matt-pocock-skills`），可以使用 `npx skills` 進行安裝：
+
+* **全域安裝 (Global)**：將子技能安裝至全域 (`~/.agents/skills/`)，所有專案皆可調用：
+  ```bash
+  npx skills add https://github.com/mattpocock/skills -s setup-matt-pocock-skills -s grill-with-docs -s to-spec -s to-tickets -s tdd -s code-review -s domain-modeling -g -y -a '*'
+  ```
+
+* **專案本機安裝 (Project)**：僅安裝至當前專案的 `.agents/skills/` 目錄：
+  ```bash
+  npx skills add https://github.com/mattpocock/skills -s setup-matt-pocock-skills -s grill-with-docs -s to-spec -s to-tickets -s tdd -s code-review -s domain-modeling -y -a '*'
+  ```
+
+* **透過 Harness 制度庫自動安裝**：
+  若執行 `uv run HARNESS/install-skills.py`，安裝器會自動讀取 [`HARNESS/skills-manifest-workflow.txt`](HARNESS/skills-manifest-workflow.txt) 並提示安裝。
 
 ## 維護原則
 
