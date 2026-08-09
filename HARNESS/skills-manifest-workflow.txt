@@ -1,0 +1,12 @@
+# 開發工作流程技能清單 (Workflow Skills, 由 install-skills.py 讀取)
+# 格式：<repo>,<skill>　每行一條，# 開頭為註解
+# 用途：提供需求對齊、領域建模、規格拆解、TDD 紅綠循環與雙軸審查等進階工程工作流技能
+
+https://github.com/mattpocock/skills,setup-matt-pocock-skills
+https://github.com/mattpocock/skills,grill-me
+https://github.com/mattpocock/skills,grill-with-docs
+https://github.com/mattpocock/skills,to-spec
+https://github.com/mattpocock/skills,to-tickets
+https://github.com/mattpocock/skills,tdd
+https://github.com/mattpocock/skills,code-review
+https://github.com/mattpocock/skills,domain-modeling

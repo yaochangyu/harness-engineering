@@ -36,13 +36,15 @@ uv run HARNESS/install.py
 | letter-to-future-sessions.md | 環境三要事、制度退化模式與預防、交接狀態 | 新 session 第一次接手時 |
 | rules/git.md | commit/MR/憑證安全/worktree | 做 git 操作時 |
 | rules/workflow.md | plan.md/.issues/tree.md 流程＋觸發條件 | 多步驟實作時 |
+| rules/mattpocock-workflow.md | 高階軟體工程實作工作流（Grilling/Spec/TDD/CodeReview/plan.md） | 多模組重構或使用者要求進階工作流時 |
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
 | rules/python.md | Python 開發原則（虛擬環境用 uv） | 使用 Python 開發 / 寫腳本 |
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/graphify/LLM wiki/寫作 skills | 用到對應工具時 |
 | env.example.md | 個人環境配置範本（實際值填在 `~/.claude/env.md`，不進版控） | 新機器安裝後填一次 |
 | select-cli-tools.py | 互動式 AI CLI 工具選擇器（Python，跨平台） | install.py 自動執行 |
-| skills-manifest.txt | 全域 skills 安裝清單（`repo,skill`，一行一條） | install-skills.py 讀取；要增減 skill 改這檔即可 |
-| install-skills.py | 列出 skills-manifest.txt 清單、詢問確認後跑 `npx skills add ... -g -y -a '*'` 逐條安裝到全域 | install.py 自動執行 |
+| skills-manifest.txt | 全域通用工具類 skills 安裝清單（`repo,skill`，一行一條） | install-skills.py 讀取通用工具清單 |
+| skills-manifest-workflow.txt | 全域開發工作流程類 skills 安裝清單（`repo,skill`，一行一條） | install-skills.py 讀取工作流清單 |
+| install-skills.py | 讀取通用與工作流清單，供使用者選取後跑 `npx skills add ... -g -y -a '*'` 逐條安裝到全域 | install.py 自動執行 |
 | install.py | 安裝：運行 Python 選擇器、偵測位置、改路由路徑、建立與關聯 AI Agent symlink (CLAUDE/GEMINI/COPILOT)、建 env.md、詢問並安裝全域 skills、跑檢查 | clone/搬移後跑一次 |
 | check_harness.py | 健康檢查：symlink、汙染、新增自動載入檔、缺檔 | 安裝任何 Claude 相關工具後跑一次 |
 | uninstall.py | 解除安裝：移除 symlink、還原備份 | 不需要 harness 時執行 |
