@@ -22,5 +22,4 @@ https://github.com/cloudflare/security-audit-skill,security-audit
 https://github.com/mattpocock/skills,grill-me
 https://github.com/mattpocock/skills,grill-with-docs
 https://github.com/mattpocock/skills,to-spec
-https://github.com/mattpocock/skills,to-prd
 https://github.com/microsoft/azure-skills,azure-ai
