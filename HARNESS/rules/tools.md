@@ -12,7 +12,8 @@
 - 官方文件／repo：https://github.com/upstash/context7（`ctx7` 是其官方 CLI，兩個名字指同一個工具）。
 - 安裝方式：裝成全域 skill `find-docs`，指令
   `npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`。
-  此條目已列在 `skills-manifest.txt`，跑 `install-skills.py` 會自動安裝，不需另外手動裝。
+  此條目已列在 `$HARNESS_DIR/skills-manifest.txt`（`$HARNESS_DIR` 解析規則見 `CLAUDE.md` 路由表），
+  跑 `install-skills.py` 會自動安裝，不需另外手動裝。
 - skill 與 CLI 不是二選一：`find-docs` 是觸發層（告訴 agent 何時該查、怎麼下 query），
   底層執行仍是 `npx ctx7@latest library` / `npx ctx7@latest docs` 兩段式查詢。
   所以裝了 skill 之後照 skill 指示走即可，不必再自己組指令；
@@ -43,6 +44,10 @@
   - 免安裝直接跑：`uvx --from graphifyy graphify install`
     （不可直接 `uvx graphify ...`——`uv tool run` 會把第一個字當套件名找，套件實際叫 `graphifyy`）。
   - 額外功能（PDF / MCP server / Neo4j 等）：`uv tool install "graphifyy[pdf]"` / `"[mcp]"` / `"[all]"`。
+
+## playwright-cli
+- 需要安裝 `playwright-cli` skill 時，使用：`npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli`
+- 安裝後依該 skill 的說明使用，不要自行猜測子指令。
 
 ## LLM Wiki
 - 知識庫路徑 `<WIKI_ROOT>` 見 `~/.claude/env.md`；操作規則見 `<WIKI_ROOT>/CLAUDE.md`。
@@ -168,3 +173,5 @@ pip install playwright
   （`npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`，已列在 `skills-manifest.txt`）。
   原因：查證 `find-docs` SKILL.md 後確認它就是 Context7 官方 skill，底層仍呼叫 `ctx7` CLI，
   兩者是同一套機制的觸發層與執行層，不是兩個獨立工具；改寫後避免每次自行組指令、規則也不再兩處維護。
+- 2026-08-10：`skills-manifest.txt` 引用改標註為 `$HARNESS_DIR/skills-manifest.txt`，
+  對應 `CLAUDE.md` 路由表新增的 HARNESS_DIR 動態解析規則，避免跨工作目錄讀取失敗。

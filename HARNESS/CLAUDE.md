@@ -13,6 +13,11 @@
 - git commit message 不可包含 Co-authored-by。
 
 ## 路由表（遇到左欄情境，先讀右欄檔案再動手；不要一次全讀）
+右欄路徑皆相對於 HARNESS 根目錄，不是目前工作目錄。讀取前先解析根目錄
+（同一 session 內解析一次即可重複沿用）：
+`HARNESS_DIR=$(dirname $(readlink -f ~/.claude/CLAUDE.md))`
+再讀取 `$HARNESS_DIR/<右欄路徑>`。
+
 | 情境 | 讀取 |
 |---|---|
 | 要派 subagent、任務需要大量讀檔/掃 repo/查網頁/批次改檔 | model-dispatch.md |
@@ -42,3 +47,7 @@
 ## 變更紀錄
 - 2026-08-09：路由表新增 rules/mattpocock-workflow.md 一行（使用者已明確確認此路由表變更）。
 - 2026-08-09：路由表新增 rules/preprocess.md，用於文件 / PDF / Office / 圖片分析前處理。
+- 2026-08-10：路由表加入 HARNESS_DIR 動態解析規則（`dirname $(readlink -f ~/.claude/CLAUDE.md)`）。
+  原因：路由表右欄原為相對路徑，session 工作目錄不在 harness-engineering repo 內時會讀取失敗；
+  且不能寫死絕對路徑（repo 公開，跨使用者/機器路徑不同）。改用 symlink 動態解析後兩個問題一併解決
+  （使用者已確認此方案）。
