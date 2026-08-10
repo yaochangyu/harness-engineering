@@ -20,6 +20,16 @@
   skill 不存在時才手動呼叫 `npx ctx7@latest ...`（有全域 `ctx7` 就直接用，省 npx 開銷）。
 - 詳細查詢步驟、錯誤處理等規則以 `find-docs` skill 內容為準，不要在別處重複維護。
 - 不可因為沒裝就默默跳過 Context7 或改用 web search。
+- **使用前判斷是否已安裝**（避免假設一定裝好）：
+  1. 先查 skill：`ls ~/.claude/skills/find-docs`（或有裝 OMC plugin 時用 `list_omc_skills`）；
+     目錄不存在 → 視為未裝。
+  2. 再查全域 CLI：`command -v ctx7`。兩者都查無 → 判定 context7 未安裝。
+  3. 未安裝時，告知使用者「context7 尚未安裝」，並提供兩個安裝選項讓使用者選：
+     - 跑 `uv run $HARNESS_DIR/install-skills.py`（安裝 manifest 內全部工具，含 find-docs）
+     - 只裝這個：`npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`
+     等使用者同意才執行安裝指令；安裝完依 `maintenance-protocol.md` 第 5 節跑一次 `check_harness.py`。
+  4. 使用者明確拒絕安裝、或要求先用其他方式時，才能 fallback（例如 web search），
+     且必須在回覆中註明「context7 未安裝，已改用替代方式」，不可默默切換。
 
 ## ticket 工具
 - 所有 ticket 操作用 `<TICKET_CLI>`（實際工具名與使用說明位置見 `~/.claude/env.md`）。
@@ -175,3 +185,6 @@ pip install playwright
   兩者是同一套機制的觸發層與執行層，不是兩個獨立工具；改寫後避免每次自行組指令、規則也不再兩處維護。
 - 2026-08-10：`skills-manifest.txt` 引用改標註為 `$HARNESS_DIR/skills-manifest.txt`，
   對應 `CLAUDE.md` 路由表新增的 HARNESS_DIR 動態解析規則，避免跨工作目錄讀取失敗。
+- 2026-08-10：ctx7/context7 章節新增「使用前判斷是否已安裝」步驟（查 skill 目錄／`command -v ctx7`），
+  未裝時要引導使用者跑 `install-skills.py` 或單獨安裝指令，取得同意才裝，拒絕才能 fallback 且需註明。
+  原因：使用者指出沒跑過 `install-skills.py` 時，這裡沒有具體判斷與引導流程（使用者已確認此修改）。
