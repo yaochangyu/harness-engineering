@@ -41,6 +41,17 @@ fallback：沒有 skill 時改用 CLI
 要更新的檔案：HARNESS/rules/tools.md
 ```
 
+```text
+新增工具：agent-browser
+來源 repo：https://github.com/vercel-labs/agent-browser
+skill 安裝：npx skills add https://github.com/vercel-labs/agent-browser -s agent-browser
+CLI 安裝：npm install -g agent-browser
+agent-browser install
+是否要問範圍：要
+fallback：沒有 skill 時改用 CLI
+要更新的檔案：HARNESS/rules/web-automation.md
+```
+
 如果你只想我照規則自己判斷，也可以說：
 
 > 幫我新增 XXX 工具，照現有 HARNESS 規則處理。
