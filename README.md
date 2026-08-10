@@ -11,6 +11,40 @@ Claude Code 制度檔案庫（harness）。目的：把高階模型的判斷力�
   - **Copilot CLI**：透過 `~/.github/copilot-instructions.md` 與 `~/.copilot/copilot-instructions.md` 軟連結載入。
 - 入口採「精簡路由」設計：只保留永遠生效的核心規則與一張路由表，遇到特定情境（派工、git、.NET、多步驟實作……）才讀對應子檔，避免 context 肥大。
 
+## 新增工具時怎麼說
+
+你可以直接這樣說：
+
+> 幫我把 XXX 工具補進 HARNESS，請更新對應章節，並標明 skill / CLI / 安裝指令 / 是否要先問全域或專案。
+
+最理想格式：
+
+```text
+新增工具：XXX
+來源 repo/文件：...
+skill 安裝：...
+CLI 安裝：...
+是否要問範圍：要 / 不要
+fallback：...
+要更新的檔案：tools.md / web-automation.md / 其他
+```
+
+例如：
+
+```text
+新增工具：foo-cli
+來源 repo：https://github.com/org/foo-cli
+skill 安裝：npx skills add https://github.com/org/foo-cli -s foo-cli
+CLI 安裝：npm install -g @org/foo-cli
+是否要問範圍：要
+fallback：沒有 skill 時改用 CLI
+要更新的檔案：HARNESS/rules/tools.md
+```
+
+如果你只想我照規則自己判斷，也可以說：
+
+> 幫我新增 XXX 工具，照現有 HARNESS 規則處理。
+
 ## 快速開始（新機器 / 重灌 / clone 之後）
 
 最省事的方式：在 repo 目錄開 Claude Code，輸入 `/harness-install`。
@@ -156,3 +190,7 @@ harness-install    # 安裝並配置 harness
 harness-check      # 執行健康檢查
 harness-uninstall  # 解除安裝
 ```
+
+## 變更紀錄
+
+- 2026-08-10：新增「新增工具時怎麼說」段落，提供標準提問格式與範例，方便下次直接照格式描述工具補充需求。
