@@ -30,6 +30,7 @@
 | .NET / Cucumber 開發 | rules/dotnet.md |
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
 | rtk / ticket CLI / Google Workspace / graphify / LLM wiki / 中文寫作 skills | rules/tools.md |
+| 自動化探索或操作網頁（agent-browser / webwright / playwright） | rules/web-automation.md |
 | 只要輸入含 PDF / Word / PowerPoint / Excel / 圖片 / HTML / 壓縮包等文件附件，進入 AI 分析前先讀 `rules/preprocess.md` | rules/preprocess.md |
 | 新 session 第一次接手這個環境 | letter-to-future-sessions.md |
 | 該 session 有裝 oh-my-claudecode (OMC) plugin，要用其多代理協作/skills | rules/omc.md |
@@ -51,3 +52,5 @@
   原因：路由表右欄原為相對路徑，session 工作目錄不在 harness-engineering repo 內時會讀取失敗；
   且不能寫死絕對路徑（repo 公開，跨使用者/機器路徑不同）。改用 symlink 動態解析後兩個問題一併解決
   （使用者已確認此方案）。
+- 2026-08-10：路由表新增 rules/web-automation.md（網頁自動化探索三工具），內容自 rules/tools.md
+  整章搬出，因該檔已達 250 行精簡門檻（使用者已確認此搬檔方案）。
