@@ -116,6 +116,38 @@
   Developer portal（Swagger 文件、Postman collection、社群 SDK）：
   https://hackmd.io/@hackmd-api/developer-portal
 
+## Gemini Notebook / NotebookLM
+檢查項目：skill `notebooklm`（teng-lin）／`nlm-skill`（jacob-bd）；CLI `notebooklm` ／ `nlm`。
+- 同一個 Google 服務有**兩套獨立 client**，都是逆向私有 `batchexecute` API（Google 改端點就會壞）、
+  皆 MIT。CLI 名（`notebooklm` vs `nlm`）與 skill 名（`notebooklm` vs `nlm-skill`）都不衝突，**可並存**。
+- 兩者核心操作都走 HTTP，**平常不開瀏覽器**；瀏覽器只在取得／續期憑證時出現。
+- **選哪個：一律優先 `nlm`（jacob-bd）**，只有 `nlm` 做不到時才換 `notebooklm`（teng-lin）。
+  已查證的換手條件（成立才換）：
+  - 要在 Python 程式裡直接呼叫：`nlm` 只有 CLI／MCP，`services/` 是內部實作無公開契約；
+    `notebooklm` 有 async `NotebookLMClient`，且受公開 API 相容性閘門保護。
+  - 要完全免瀏覽器的長期認證：`nlm` 的 cookie 約 2–4 週到期就得重跑需要 Chrome 的 `nlm login`；
+    `notebooklm` 的 `[headless]` extra 可用 master token 免瀏覽器續期，適合 CI／無顯示主機／cron。
+  - `nlm` 缺該功能、指令失敗、或端點壞掉時的臨時替代。
+  換手前先講明是上列哪一項成立，不可默默改用另一個 client（同 `tools-install-check.md` 第 4 步）。
+- **teng-lin/notebooklm-py**：https://github.com/teng-lin/notebooklm-py
+  - CLI：`pip install "notebooklm-py[browser]"`（PyPI 套件 `notebooklm-py`，指令 `notebooklm`）。
+    `[browser]` 只供互動式 `notebooklm login` 用；`[cookies]`(rookiepy) 在 Python 3.13+ 裝不起來，跳過即可。
+  - skill：`notebooklm skill install --scope user|project --target claude|agents|all`
+    （**先問使用者 scope**）；或 `npx skills add teng-lin/notebooklm-py`。
+  - 認證：`notebooklm login`，驗證要用 `notebooklm auth check --test --json`
+    （少了 `--test` 只驗憑證檔能不能解析，過期 cookie 一樣回 ok，是誤判陷阱）。
+    免瀏覽器路徑：`login --browser-cookies <browser>`／`NOTEBOOKLM_AUTH_JSON`／`[headless]` extra 的 master token。
+- **jacob-bd/gemini-notebook-mcp-cli**：https://github.com/jacob-bd/gemini-notebook-mcp-cli
+  - CLI：`uv tool install notebooklm-mcp-cli`（**PyPI 套件名 ≠ repo 名**，指令 `nlm`）。
+    裝之前先移除 legacy 套件：`uv tool uninstall notebooklm-cli` 與 `notebooklm-mcp-server`。
+  - skill：`nlm skill install <tool> [--level user|project]`（**先問使用者 level**）；
+    tool 可為 `claude-code`／`cursor`／`agents`／`opencode`／`antigravity`／`hermes`／`other`。
+  - MCP 接線：`nlm setup add opencode`（另支援 claude-code／claude-desktop／gemini／cursor／
+    github-copilot／windsurf／cline／codex／antigravity）。
+  - 認證：`nlm login`（CDP 驅動系統既有 Chrome，不必另裝 chromium）；cookie 約 2–4 週過期需重登。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例（含「先問全域還是專案」步驟——
+  兩者的 `--scope`／`--level` 參數即對應）；fallback 為 NotebookLM 官方 web UI。
+
 ## 中文寫作 skills
 檢查項目：skill `stop-slop-zh-tw`；CLI 無。
 - 寫中文長文（文件、部落格、報告）時考慮 `stop-slop-zh-tw`（去 AI 腔）
@@ -186,3 +218,14 @@
 - 2026-08-10：HackMD 章節補上使用者指定的 skill 安裝基底
   `npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli`，並保留 `[-g]`
   作為可選範圍；目的是讓使用者能看見原始安裝路徑，再依回答決定是否加 `-g`（使用者已確認此修改）。
+- 2026-08-10：新增「Gemini Notebook / NotebookLM」章節，納入 teng-lin/notebooklm-py 與
+  jacob-bd/gemini-notebook-mcp-cli 兩個 client。含選擇判準（MCP／opencode／batch 用 `nlm`，
+  Python 嵌入／CI headless 長跑／多帳號用 `notebooklm`，可並存）、各自安裝與認證指令，
+  以及三個陷阱：PyPI 套件名 ≠ repo 名、legacy 套件 `notebooklm-cli`/`notebooklm-mcp-server` 要先移除、
+  `auth check` 少了 `--test` 會讓過期 cookie 誤判為 ok。所有指令與參數查證自兩 repo 原始碼
+  （`cli/skill_cmd.py`、`cli/commands/skill.py`、`cli/commands/setup.py`、`pyproject.toml`），
+  非憑記憶或文件片段（使用者要求納入這兩個工具）。
+- 2026-08-10：「選哪個」由並列情境判準改為**優先序判準**：一律優先 `nlm`（jacob-bd），
+  只有三項換手條件成立才用 `notebooklm`（teng-lin），且換手前要講明原因（使用者指定此優先順序）。
+  同時移除原本「多帳號 profile → `notebooklm`」這條——查證後 `nlm` 也支援
+  （`nlm login --profile work`，v0.9.8 release 主題即 profile isolation），該判準不成立。
