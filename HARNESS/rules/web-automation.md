@@ -24,8 +24,13 @@ agent-browser install    # 首次使用才需要：下載 Chrome for Testing
 # 或用 npx 直接執行（無需全域安裝）
 npx agent-browser --help
 ```
-skill 安裝：`npx skills add https://github.com/vercel-labs/agent-browser -s agent-browser [-g] -y -a '*'`
-（**安裝前先問使用者裝全域還是專案**，依回答決定帶不帶 `-g`，不要自行預設；
+skill 安裝：`npx skills add https://github.com/vercel-labs/agent-browser -s agent-browser`
+CLI 安裝：
+```bash
+npm install -g agent-browser
+agent-browser install
+```
+（**安裝前先問使用者裝全域還是專案**；若你要我再補全域/專案分流，再告訴我。
 已查證 repo 有 `skills/agent-browser/SKILL.md`）。
 **特點**: CLI 工具，Vercel 出品；無需編寫程式碼，直接執行命令進行瀏覽器操作（open, click, type, screenshot, eval 等）。
 **適用**: 自動化簡單至中等複雜度的網頁任務、互動測試。
@@ -92,6 +97,9 @@ pip install playwright
 - 建議：若要突破 Cloudflare，需實現 JavaScript challenge 或使用 API 密鑰
 
 ## 變更紀錄
+- 2026-08-10：agent-browser 段落微調為你提供的 repo / skill / CLI 安裝語法；
+  skill 安裝維持單條，CLI 安裝明列 `npm install -g agent-browser` 與 `agent-browser install`
+  （使用者確認此文案調整）。
 - 2026-08-10：各工具章節補上「檢查項目」標頭，明確標示 skill / CLI 是否存在；
   目的是讓 `tools-install-check.md` 先看章節宣告再決定查哪一項（使用者已確認此修改）。
 - 2026-08-10：自 `rules/tools.md` 整章搬出（原檔 249/250 行、逼近精簡門檻，且本主題與
