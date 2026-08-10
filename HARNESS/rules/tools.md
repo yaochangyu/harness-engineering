@@ -9,9 +9,10 @@
 - `rtk proxy <cmd>`：不過濾但記錄用量。
 
 ## ctx7 / context7（查函式庫文件）
+檢查項目：skill `find-docs`；CLI `ctx7`。
 - 官方文件／repo：https://github.com/upstash/context7（`ctx7` 是其官方 CLI，兩個名字指同一個工具）。
-- 安裝方式：裝成全域 skill `find-docs`，指令
-  `npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`。
+- 安裝方式：裝成 skill `find-docs`，指令
+  `npx skills add https://github.com/upstash/context7 -s find-docs [-g] -y -a '*'`。
   此條目已列在 `$HARNESS_DIR/skills-manifest.txt`（`$HARNESS_DIR` 解析規則見 `CLAUDE.md` 路由表），
   跑 `install-skills.py` 會自動安裝，不需另外手動裝。
 - skill 與 CLI 不是二選一：`find-docs` 是觸發層（告訴 agent 何時該查、怎麼下 query），
@@ -20,25 +21,31 @@
   skill 不存在時才手動呼叫 `npx ctx7@latest ...`（有全域 `ctx7` 就直接用，省 npx 開銷）。
 - 詳細查詢步驟、錯誤處理等規則以 `find-docs` skill 內容為準，不要在別處重複維護。
 - 不可因為沒裝就默默跳過 Context7 或改用 web search。
-- **使用前判斷是否已安裝**（避免假設一定裝好）：
-  1. 先查 skill：`ls ~/.claude/skills/find-docs`（或有裝 OMC plugin 時用 `list_omc_skills`）；
-     目錄不存在 → 視為未裝。
-  2. 再查全域 CLI：`command -v ctx7`。兩者都查無 → 判定 context7 未安裝。
-  3. 未安裝時，告知使用者「context7 尚未安裝」，並提供兩個安裝選項讓使用者選：
-     - 跑 `uv run $HARNESS_DIR/install-skills.py`（安裝 manifest 內全部工具，含 find-docs）
-     - 只裝這個：`npx skills add https://github.com/upstash/context7 -s find-docs -g -y -a '*'`
-     等使用者同意才執行安裝指令；安裝完依 `maintenance-protocol.md` 第 5 節跑一次 `check_harness.py`。
-  4. 使用者明確拒絕安裝、或要求先用其他方式時，才能 fallback（例如 web search），
-     且必須在回覆中註明「context7 未安裝，已改用替代方式」，不可默默切換。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄 `find-docs`
+  （或有裝 OMC plugin 時可用 `list_omc_skills` 代替），全域 CLI `ctx7`；
+  安裝指令二選一：`uv run $HARNESS_DIR/install-skills.py`（裝 manifest 全部工具）或上方 `npx skills add`；
+  安裝完依 `maintenance-protocol.md` 第 5 節跑一次 `check_harness.py`；fallback 為 web search。
 
 ## ticket 工具
 - 所有 ticket 操作用 `<TICKET_CLI>`（實際工具名與使用說明位置見 `~/.claude/env.md`）。
 
 ## Google Workspace
-- 需要 Gmail / Drive / Calendar 操作時，優先用 googleworkspace cli：
-  `https://github.com/googleworkspace/cli`。
+檢查項目：skill 視服務而定（如 `gws-gmail`）；CLI `gws`。
+- 需要 Gmail / Drive / Calendar / Slides / Sheets / Docs 等操作時，優先用 googleworkspace cli
+  （指令名稱 `gws`）：https://github.com/googleworkspace/cli。
+- CLI 安裝：`npm install -g @googleworkspace/cli`（或抓 GitHub Releases 的預編譯二進位檔）。
+- **常用快速路徑**（Gmail/Slides/Sheets/Docs，已查證這四個 skill 存在，不用現查）：
+  `npx skills add https://github.com/googleworkspace/cli -s gws-gmail gws-slides gws-sheets gws-docs [-g] -y -a '*'`。
+- **其他服務走動態查詢，不要憑記憶猜 skill 名稱**：該 repo 有 90+ 個 skill（Drive/Calendar/Chat/Forms/
+  Admin…），本檔不逐一列舉（會過期）。命名慣例固定是 `gws-<服務>`；不確定時先跑
+  `npx skills add https://github.com/googleworkspace/cli --list`（非互動，印出目前完整清單＋一行說明），
+  依使用者需求關鍵字比對找出候選 skill，列給使用者確認要裝哪個，取得同意才裝。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄視所需服務而定
+  （如 Gmail 查 `~/.claude/skills/gws-gmail`），全域 CLI `gws`；未裝時提示上方對應安裝指令
+  （常用四個直接裝，其他先 `--list` 查再裝）；fallback 為 Gmail/Drive/Calendar 的 MCP 工具。
 
 ## graphify
+檢查項目：skill `graphify`；CLI `graphify`。
 - 使用者輸入 `/graphify` 時，先呼叫 Skill tool（`skill: "graphify"`）再做其他事。
 - Skill 位置：`~/.claude/skills/graphify/SKILL.md`。
 - 官方 repo：https://github.com/Graphify-Labs/graphify
@@ -54,10 +61,17 @@
   - 免安裝直接跑：`uvx --from graphifyy graphify install`
     （不可直接 `uvx graphify ...`——`uv tool run` 會把第一個字當套件名找，套件實際叫 `graphifyy`）。
   - 額外功能（PDF / MCP server / Neo4j 等）：`uv tool install "graphifyy[pdf]"` / `"[mcp]"` / `"[all]"`。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄／CLI 皆是 `graphify`；
+  fallback 為停用 graphify 相關操作。
 
 ## playwright-cli
-- 需要安裝 `playwright-cli` skill 時，使用：`npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli`
+- 官方文件：https://github.com/microsoft/playwright-cli
+  （錄製並產生 Playwright 程式碼、檢查 selector、截圖）。
+- 安裝：`npx skills add https://github.com/microsoft/playwright-cli -s playwright-cli [-g] -y -a '*'`
+  （**安裝前先問使用者裝全域還是專案**，依回答決定帶不帶 `-g`，不要自行預設；已查證 repo 有 `skills/playwright-cli/SKILL.md`）。
 - 安裝後依該 skill 的說明使用，不要自行猜測子指令。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例（含「先問全域還是專案」步驟）；
+  skill 目錄 `playwright-cli`；fallback 為 `web-automation.md` 的其他網頁自動化工具。
 
 ## LLM Wiki
 - 知識庫路徑 `<WIKI_ROOT>` 見 `~/.claude/env.md`；操作規則見 `<WIKI_ROOT>/CLAUDE.md`。
@@ -69,7 +83,19 @@
   然後詢問是否需要 ingest 到 wiki。
 
 ## HackMD（hackmd-cli）
+檢查項目：skill `hackmd-cli`；CLI `hackmd-cli`。
 - 官方文件：https://github.com/hackmdio/hackmd-cli（只支援 hackmd.io 官方或 HackMD EE ≥ 1.38.1，不支援 CodiMD）。
+- 安裝方式：優先裝成 skill（觸發層，告訴 agent 何時該用、怎麼下指令），指令
+  `npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli [-g] -y -a '*'`
+  （已查證該 repo 目前只有一個 skill，名稱就是 `hackmd-cli`，`-l/--list` 可自行複查）。
+  底層執行仍需要 `hackmd-cli` 這支二進位檔：`npm install -g @hackmd/hackmd-cli`（查證自官方 README）。
+  只有在偵測不到 `hackmd-cli` 時，才先提醒使用者補裝 CLI，再繼續詢問是否要安裝對應 skill。
+- skill 安裝指令也可直接寫成使用者指定的基底：`npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli`
+  （是否加 `-g` 依使用者回答決定）。
+- 安裝範圍（全域 vs 專案）：`npx skills add` 的 `-g/--global` 決定 skill 裝在使用者層級還是目前專案
+  （不加 `-g` 預設裝專案層級）。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例（含「先問全域還是專案」步驟）；
+  skill 目錄 `hackmd-cli`，全域 CLI `hackmd-cli`；fallback 為官方 REST API 直接呼叫。
 - 指令用法如有不確定（子指令、flag 名稱），先跑 `hackmd-cli --help` 或 `hackmd-cli <command> --help` 確認，
   不要憑記憶或文件片段猜參數；CLI 版本可能與下方摘要不同。
 - 登入：`hackmd-cli login`（access token 由 hackmd.io → Setting → API 建立）；
@@ -91,86 +117,20 @@
   https://hackmd.io/@hackmd-api/developer-portal
 
 ## 中文寫作 skills
+檢查項目：skill `stop-slop-zh-tw`；CLI 無。
 - 寫中文長文（文件、部落格、報告）時考慮 `stop-slop-zh-tw`（去 AI 腔）
   與 `write-yaochangyu-style`（使用者文風）。
-
-## 網頁探索工具選擇（Web Automation Tools）
-需要自動化探索網頁時，按優先順序選擇：
-1. **agent-browser** — 適合複雜的多步驟網頁互動、表單填寫、深入探索
-2. **webwright** — 微軟出品，LLM-powered 瀏覽器 agent 框架，適合高階網頁任務自動化
-3. **playwright** — 通用自動化工具，跨平臺，適合快速測試
-
-### 安裝方式（按工具區分，因為涉及不同生態）
-
-#### agent-browser（NPM）
-```bash
-npm install -g agent-browser
-# 或用 npx 直接執行（無需全域安裝）
-npx agent-browser --help
-```
-**特點**: CLI 工具，Vercel 出品；無需編寫程式碼，直接執行命令進行瀏覽器操作（open, click, type, screenshot, eval 等）。
-**適用**: 自動化簡單至中等複雜度的網頁任務、互動測試。
-
-#### webwright（Python）
-```bash
-# 用 uv（推薦，專案已配置）
-uv pip install webwright playwright
-
-# 或用系統 pip（需虛擬環境）
-python3 -m venv .venv
-source .venv/bin/activate
-pip install webwright playwright
-```
-**特點**: Python 框架，微軟出品；LLM 驅動的瀏覽器 agent，以程式碼為中心；支援長地平線 web 任務。
-**適用**: 複雜的多步驟 web 自動化、AI 代理開發、需要程式邏輯的網頁任務。
-**官方資源**:
-- GitHub: https://github.com/microsoft/Webwright
-- 文件: https://microsoft.github.io/Webwright
-- 部落格: https://www.microsoft.com/en-us/research/articles/webwright-a-terminal-is-all-you-need-for-web-agents/
-
-#### playwright（NPM / Python）
-```bash
-# Node.js
-npm install -D playwright
-npx playwright install chromium
-
-# Python（用 uv）
-uv pip install playwright
-
-# 或系統 pip
-pip install playwright
-```
-**特點**: 跨平臺、多語言支援（Node.js / Python / .NET）；最廣泛使用的瀏覽器自動化工具。
-**適用**: 通用網頁測試、快速原型開發、效能分析。
-
-### 實踐驗證（2026-07-16）
-三個工具並行探索 https://www.104.com.tw/ 實驗結果：
-
-#### agent-browser（NPM CLI）
-- ✅ 執行成功（2 分鐘完成）
-- 方式：Bash 腳本呼叫 CLI 命令（open, screenshot, snapshot, eval）
-- 優點：無需編寫程式碼，直接命令操作；支援豐富的互動（drag, upload, keyboard 等）
-- 輸出：JavaScript 評估結果、DOM snapshot、截圖
-
-#### webwright（Python 框架）
-- ✅ 執行成功（9 分鐘完成，含安裝時間）
-- 方式：Python 非同步代碼 + Playwright 後端
-- 安裝注意：系統 Python 限制（PEP 668），需 `--break-system-packages`；推薦用虛擬環境隔離
-- 官方版本：v0.0.7（GitHub: microsoft/Webwright）
-- 優點：LLM-driven，適合複雜多步驟自動化；支援長地平線任務程式碼化
-
-#### playwright（Node.js / Python）
-- ✅ 執行成功（9 分鐘完成）
-- 方式：Node.js 非同步 API，支援 Chromium / Firefox / WebKit
-- 優點：功能完整（效能指標、無障礙樹、多瀏覽器）；文檔和社區最完善
-- 輸出：詳細的結構化資訊（meta、主要元素、互動元素、效能計時）
-
-#### 共同發現
-- 三個工具都遇到 Cloudflare 驗證頁面（104.com.tw 的反爬蟲機制）
-- 並行執行無衝突，各工具結果已分別存放驗證
-- 建議：若要突破 Cloudflare，需實現 JavaScript challenge 或使用 API 密鑰
+- `stop-slop-zh-tw`：來源 repo https://github.com/kevintsengtw/stop-slop-zh-tw，
+  安裝 `npx skills add https://github.com/kevintsengtw/stop-slop-zh-tw -s stop-slop-zh-tw [-g] -y -a '*'`。
+  **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄 `stop-slop-zh-tw`；
+  fallback 為略過去 AI 腔處理。
+- `write-yaochangyu-style`：無公開 repo，本檔不記錄安裝方式；只能檢查
+  `ls ~/.claude/skills/write-yaochangyu-style` 是否存在，找不到就告知使用者本檔沒有安裝資訊可引導。
 
 ## 變更紀錄
+- 2026-08-10：ctx7 / Google Workspace / graphify / HackMD / stop-slop-zh-tw 章節補上「檢查項目」標頭，
+  明確標示 skill / CLI 是否存在；目的是讓 `tools-install-check.md` 先看章節宣告再決定查哪一項
+  （使用者已確認此修改）。
 - 2026-07-04：內網位址、公司專案路徑抽到 `~/.claude/env.md`，本檔改用佔位符（公開 repo 去識別化）。
 - 2026-07-14：ctx7/context7 條目加上關係說明與呼叫優先順序（優先用全域 `ctx7`，找不到才 fallback `npx`）。
 - 2026-07-15：新增網頁探索工具選擇指南（agent-browser/webwright/playwright）。
@@ -188,3 +148,41 @@ pip install playwright
 - 2026-08-10：ctx7/context7 章節新增「使用前判斷是否已安裝」步驟（查 skill 目錄／`command -v ctx7`），
   未裝時要引導使用者跑 `install-skills.py` 或單獨安裝指令，取得同意才裝，拒絕才能 fallback 且需註明。
   原因：使用者指出沒跑過 `install-skills.py` 時，這裡沒有具體判斷與引導流程（使用者已確認此修改）。
+- 2026-08-10：同一套「使用前判斷是否已安裝」模式套用到 Google Workspace cli（補上指令名稱 `gws`
+  與安裝指令，查證自官方 repo README）、graphify、playwright-cli、hackmd-cli（補安裝指令
+  `npm install -g @hackmd/hackmd-cli`，查證自官方 repo README）、網頁探索工具三件套
+  （agent-browser/webwright/playwright），以及中文寫作 skill `stop-slop-zh-tw`
+  （補來源 repo 與安裝指令，使用者提供）。`write-yaochangyu-style` 因無公開 repo、
+  ticket 工具因屬內網資訊（見 `~/.claude/env.md`），兩者維持不加安裝引導，避免腦補。
+  原因：使用者要求其他工具比照 context7 的判斷+引導安裝流程辦理（使用者已確認此修改）。
+- 2026-08-10：Google Workspace 章節補上 Gmail/Slides/Sheets/Docs 對應 skill
+  （`gws-gmail`/`gws-slides`/`gws-sheets`/`gws-docs`）與安裝指令
+  `npx skills add https://github.com/googleworkspace/cli -s gws-gmail gws-slides gws-sheets gws-docs`
+  （使用者提供指令，並已對照官方 `docs/skills.md` 查證四個 skill 皆存在），
+  使用前判斷步驟同步擴充為先查對應 skill 目錄、再查 `gws` CLI。
+  原因：使用者需要操作 Gmail/Slides/Sheets/Docs，要求未安裝時引導安裝（使用者已確認此修改）。
+- 2026-08-10：HackMD 章節安裝方式改以 `npx skills add ... -s hackmd-cli` 裝 skill 為主
+  （底層仍需 `npm install -g @hackmd/hackmd-cli`），新增「先問使用者要裝全域還是專案」步驟，
+  依回答決定指令帶不帶 `-g`。原因：使用者要求 hackmd-cli 改用 skill 安裝、且讓使用者選安裝範圍
+  （使用者已確認此修改）。
+- 2026-08-10：精簡＋擴充：
+  - 把 6 個工具章節重複的「使用前判斷是否已安裝」4 步驟抽到新檔 `rules/tools-install-check.md`
+    （通用慣例），各章節改成一行引用＋列自己的 skill 目錄/CLI/fallback，省下約 14 行空間
+    （逼近 250 行精簡門檻，使用者已確認此精簡方案）。
+  - Google Workspace 章節新增「常用快速路徑（gws-gmail/slides/sheets/docs 直接裝）
+    + 其他服務用 `npx skills add ... --list` 動態查清單再挑選」規則，避免把 90+ 個 skill 寫死在檔案裡
+    （使用者已確認此設計）。
+- 2026-08-10：playwright-cli 章節補官方 repo 連結與用途，安裝指令由 `--skill playwright-cli` 改為
+  `-s playwright-cli [-g] -y -a '*'`（使用者提供）；`-g` 標為可選並要求安裝前先問使用者範圍，
+  避免把全域寫死。已查證 repo 有 `skills/playwright-cli/SKILL.md`（使用者已確認此修改）。
+- 2026-08-10：「網頁探索工具選擇」整章（agent-browser/webwright/playwright，含實踐驗證）搬到
+  新檔 `rules/web-automation.md`，`CLAUDE.md` 路由表同步加一行；本檔 249 → 167 行。
+  原因：本檔已達 250 行精簡門檻無法再擴充，且該主題與「工具設定」性質不同
+  （使用者已確認此搬檔方案）。
+- 2026-08-10：context7 / Google Workspace / HackMD / stop-slop-zh-tw 四條 `npx skills add` 指令的
+  `-g` 一律改標 `[-g]`（context7 條目並拿掉「裝成**全域** skill」的預設措辭），語意定義寫在
+  `tools-install-check.md` 的 `[-g]` 註記慣例。原因：指令把 `-g` 寫死時 agent 會直接複製執行、
+  跳過該檔要求的「先問使用者裝全域還是專案」，規則與範例矛盾（使用者已確認此修改）。
+- 2026-08-10：HackMD 章節補上使用者指定的 skill 安裝基底
+  `npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli`，並保留 `[-g]`
+  作為可選範圍；目的是讓使用者能看見原始安裝路徑，再依回答決定是否加 `-g`（使用者已確認此修改）。
