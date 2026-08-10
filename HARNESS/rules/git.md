@@ -7,6 +7,8 @@
 - 一律使用 git credential helper 取得憑證，remote URL 保持乾淨（`https://host/group/repo.git`）。
 - credential helper 對應：GitLab 用 `glab auth git-credential`、GitHub 用 `gh auth git-credential`
   （或系統的 credential manager）。
+- `~/.claude/creds/` 只放憑證，不放一般筆記或暫存資料；目錄建議權限 `700`，`.creds` 檔案建議權限 `600`。
+- 不要把 `~/.claude/creds/.creds` 複製到 repo、log、聊天紀錄，或用來做其他可分享備份。
 - GitLab 範例（`<GITLAB_HOST>` 填實際位址，見 `~/.claude/env.md`）：
   ```
   git -c "credential.https://<GITLAB_HOST>.helper=!f() { GITLAB_HOST=<GITLAB_HOST> glab auth git-credential \"$@\"; }; f" clone <url> <dir>
@@ -23,6 +25,7 @@
    使用 GitMoji（如 ✨ → feat）、現在式、主動語態、每行最多 120 字元、不含 code block。
 3. body 使用 markdown 格式。
 4. **不可包含 Co-authored-by**。
+5. 安裝後由 `commit-msg` hook 再次檢查，不通過就拒絕提交。
 
 ## MR description（markdown 格式）
 必含：變更的背景與目的、主要的變更內容、相關 ticket id（如果有的話）。

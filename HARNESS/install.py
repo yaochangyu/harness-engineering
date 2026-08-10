@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 import shutil
+import stat
 
 def main():
     harness = Path(__file__).parent.resolve()
@@ -191,10 +192,9 @@ def main():
         if env_example.exists():
             shutil.copy(env_example, env_file)
             print(f"[建立] {env_file}（從範本複製，請填入實際值）")
-    
+
     print("")
     subprocess.run([sys.executable, str(harness / "check_harness.py")])
 
 if __name__ == "__main__":
     main()
-

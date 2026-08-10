@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+commit_msg_file="$1"
+
+if [ -z "$commit_msg_file" ] || [ ! -f "$commit_msg_file" ]; then
+  echo "commit-msg hook: missing commit message file" >&2
+  exit 1
+fi
+
+if grep -qi 'Co-authored-by' "$commit_msg_file"; then
+  echo "commit-msg hook: commit message must not contain Co-authored-by" >&2
+  exit 1
+fi
+
+exit 0
