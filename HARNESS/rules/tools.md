@@ -129,15 +129,18 @@
     `notebooklm` 的 `[headless]` extra 可用 master token 免瀏覽器續期，適合 CI／無顯示主機／cron。
   - `nlm` 缺該功能、指令失敗、或端點壞掉時的臨時替代。
   換手前先講明是上列哪一項成立，不可默默改用另一個 client（同 `tools-install-check.md` 第 4 步）。
-- **teng-lin/notebooklm-py**：https://github.com/teng-lin/notebooklm-py
-  - CLI：`pip install "notebooklm-py[browser]"`（PyPI 套件 `notebooklm-py`，指令 `notebooklm`）。
+- **teng-lin/notebooklm-py**
+  - repo：`https://github.com/teng-lin/notebooklm-py`
+  - docs：`https://github.com/teng-lin/notebooklm-py/blob/main/docs/installation.md`
+  - CLI：`uv tool install "notebooklm-py[browser]"`（或 `pipx install "notebooklm-py[browser]"`；PyPI 套件 `notebooklm-py`，指令 `notebooklm`）。
     `[browser]` 只供互動式 `notebooklm login` 用；`[cookies]`(rookiepy) 在 Python 3.13+ 裝不起來，跳過即可。
   - skill：`notebooklm skill install --scope user|project --target claude|agents|all`
     （**先問使用者 scope**）；或 `npx skills add teng-lin/notebooklm-py`。
   - 認證：`notebooklm login`，驗證要用 `notebooklm auth check --test --json`
     （少了 `--test` 只驗憑證檔能不能解析，過期 cookie 一樣回 ok，是誤判陷阱）。
     免瀏覽器路徑：`login --browser-cookies <browser>`／`NOTEBOOKLM_AUTH_JSON`／`[headless]` extra 的 master token。
-- **jacob-bd/gemini-notebook-mcp-cli**：https://github.com/jacob-bd/gemini-notebook-mcp-cli
+- **jacob-bd/gemini-notebook-mcp-cli**
+  - repo：`https://github.com/jacob-bd/gemini-notebook-mcp-cli`
   - CLI：`uv tool install notebooklm-mcp-cli`（**PyPI 套件名 ≠ repo 名**，指令 `nlm`）。
     裝之前先移除 legacy 套件：`uv tool uninstall notebooklm-cli` 與 `notebooklm-mcp-server`。
   - skill：`nlm skill install <tool> [--level user|project]`（**先問使用者 level**）；
@@ -147,6 +150,17 @@
   - 認證：`nlm login`（CDP 驅動系統既有 Chrome，不必另裝 chromium）；cookie 約 2–4 週過期需重登。
 - **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例（含「先問全域還是專案」步驟——
   兩者的 `--scope`／`--level` 參數即對應）；fallback 為 NotebookLM 官方 web UI。
+
+## OneDrive
+檢查項目：skill `onedrive`；CLI 無。
+- repo：https://github.com/membranedev/application-skills
+- docs：https://github.com/membranedev/application-skills/blob/main/skills/onedrive/SKILL.md
+- skill：`npx skills add https://github.com/membranedev/application-skills -s onedrive [-g] -y -a '*'`
+  （**先問使用者要裝全域還是專案**，依回答決定帶不帶 `-g`；OneDrive 這條只裝 skill，不另外寫 CLI skill）。
+- 需要真正連 OneDrive 做操作時，改用 Membrane CLI（`npm install -g @membranehq/cli@latest`）做通用外部服務連線，
+  但這不是 OneDrive skill 本身的專屬 CLI。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄 `onedrive`；
+  fallback 為 Microsoft Graph API 或請使用者提供可用 connection。
 
 ## 中文寫作 skills
 檢查項目：skill `stop-slop-zh-tw`；CLI 無。
@@ -229,3 +243,6 @@
   只有三項換手條件成立才用 `notebooklm`（teng-lin），且換手前要講明原因（使用者指定此優先順序）。
   同時移除原本「多帳號 profile → `notebooklm`」這條——查證後 `nlm` 也支援
   （`nlm login --profile work`，v0.9.8 release 主題即 profile isolation），該判準不成立。
+- 2026-08-10：新增 OneDrive 章節，skill 採 `npx skills add ... -s onedrive [-g]` 讓使用者選全域/專案，
+  CLI 記為 `@membranehq/cli`／`membrane`，並列出 login、connection ensure、action list 的基本路徑。
+  依使用者要求把安裝範圍寫成可選項，讓每次都先問。
