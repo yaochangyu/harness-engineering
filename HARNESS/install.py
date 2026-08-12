@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.12"
+# dependencies = []
+# ///
+
+# ─── How to run ───
+# 1. 直接在 repo 內跑：uv run HARNESS/install.py
+# 2. 沒先 clone 也可以：uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HARNESS/install.py
+# 3. 要換來源或落點可加 --repo / --target
+# ──────────────────
+
 import sys
 import os
 import subprocess
@@ -6,6 +17,120 @@ from pathlib import Path
 from datetime import datetime
 import shutil
 import stat
+import tarfile
+import tempfile
+import urllib.error
+import urllib.request
+from typing import TypedDict
+
+DEFAULT_REPO_URL = "https://github.com/yaochangyu/harness-engineering"
+DEFAULT_BRANCH = "main"
+DEFAULT_TARGET_NAME = "harness-engineering"
+BOOTSTRAP_MARKER = ".harness-bootstrap-complete"
+
+
+class BootstrapArgs(TypedDict, total=False):
+    repo: str
+    branch: str
+    tag: str | None
+    target: str
+    git_enabled: bool
+    forwarded_args: list[str]
+
+
+def parse_bootstrap_args(argv: list[str]) -> BootstrapArgs:
+    args: BootstrapArgs = {
+        "repo": DEFAULT_REPO_URL,
+        "branch": DEFAULT_BRANCH,
+        "tag": None,
+        "target": str(Path.cwd() / DEFAULT_TARGET_NAME),
+        "git_enabled": True,
+        "forwarded_args": [],
+    }
+    for arg in argv:
+        if arg.startswith("--repo-url=") or arg.startswith("--repo="):
+            args["repo"] = arg.split("=", 1)[1]
+        elif arg.startswith("--branch="):
+            args["branch"] = arg.split("=", 1)[1]
+        elif arg.startswith("--tag="):
+            args["tag"] = arg.split("=", 1)[1]
+        elif arg.startswith("--target-dir=") or arg.startswith("--target="):
+            args["target"] = arg.split("=", 1)[1]
+        elif arg == "--no-git":
+            args["git_enabled"] = False
+        else:
+            args["forwarded_args"].append(arg)
+    return args
+
+
+def tarball_url(repo: str, branch: str | None = None, tag: str | None = None) -> str:
+    if repo.startswith("file://") or repo.endswith(".tar.gz"):
+        return repo
+    base = repo[:-4] if repo.endswith(".git") else repo
+    if tag and not branch:
+        return f"{base}/archive/refs/tags/{tag}.tar.gz"
+    return f"{base}/archive/refs/heads/{branch or DEFAULT_BRANCH}.tar.gz"
+
+
+def acquire_repo(url: str, target: str, git_enabled: bool = True, branch: str = DEFAULT_BRANCH, tag: str | None = None) -> bool:
+    target_dir = Path(target)
+    harness_install = target_dir / "HARNESS" / "install.py"
+    marker = target_dir / BOOTSTRAP_MARKER
+    if harness_install.exists() or marker.exists():
+        return True
+    if target_dir.exists() and (not target_dir.is_dir() or any(target_dir.iterdir())):
+        print(f"[錯誤] 目標位置已存在且不是 HARNESS repo：{target_dir}")
+        return False
+
+    try:
+        target_dir.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as error:
+        print(f"[錯誤] 無法建立目標位置：{error}")
+        return False
+
+    if git_enabled and shutil.which("git"):
+        try:
+            subprocess.run(["git", "clone", url, str(target_dir)], check=True)
+            return True
+        except (OSError, subprocess.CalledProcessError):
+            print("[警告] git clone 失敗，改用 tarball 下載")
+
+    try:
+        archive_source = tarball_url(url, branch, tag)
+        with urllib.request.urlopen(archive_source, timeout=60) as response:
+            with tempfile.NamedTemporaryFile(suffix=".tar.gz", delete=False) as tmp_file:
+                tmp_file.write(response.read())
+                tmp_path = Path(tmp_file.name)
+        with tempfile.TemporaryDirectory() as extract_root:
+            with tarfile.open(tmp_path, "r:gz") as archive:
+                archive.extractall(extract_root, filter="data")
+            extracted_root = Path(extract_root)
+            roots = [item for item in extracted_root.iterdir()]
+            source_root = roots[0] if len(roots) == 1 and roots[0].is_dir() else extracted_root
+            target_dir.mkdir(parents=True, exist_ok=True)
+            for item in source_root.iterdir():
+                shutil.move(str(item), target_dir / item.name)
+        marker.write_text("ok", encoding="utf-8")
+        tmp_path.unlink(missing_ok=True)
+        return True
+    except (OSError, tarfile.TarError, urllib.error.URLError, urllib.error.HTTPError) as error:
+        print(f"[錯誤] 無法取得 HARNESS repo：{error}")
+        return False
+
+
+def bootstrap(argv: list[str]) -> int:
+    args = parse_bootstrap_args(argv)
+    repo = args["repo"]
+    target = args["target"]
+    print(f"[bootstrap] repo={repo} target={target}")
+    if not acquire_repo(repo, target, args["git_enabled"], args["branch"], args["tag"]):
+        return 1
+    child = Path(target) / "HARNESS" / "install.py"
+    if not child.exists():
+        print(f"[錯誤] 找不到後續安裝腳本：{child}")
+        return 1
+    result = subprocess.run([sys.executable, str(child), *args["forwarded_args"]])
+    return result.returncode
 
 def main():
     harness = Path(__file__).parent.resolve()
@@ -18,8 +143,7 @@ def main():
     cli_dir = Path.home() / ".claude" / "cli"
     
     if not src.exists():
-        print(f"錯誤：找不到 {src}，請在 repo 目錄內執行")
-        sys.exit(1)
+        sys.exit(bootstrap(sys.argv[1:]))
     
     Path.home().joinpath(".claude").mkdir(parents=True, exist_ok=True)
     

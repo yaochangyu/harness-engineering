@@ -40,9 +40,19 @@ description: 安裝並初始化本 repo 的 harness 制度庫（symlink、個人
 
 ## 步驟 2：跑安裝腳本
 
-```bash
-uv run HARNESS/install.py
-```
+先判斷目前目錄下有沒有 `HARNESS/install.py`（代表 repo 是否已落地本機）：
+
+- **repo 已在本機**（`HARNESS/install.py` 存在，例如已手動 `git clone` 過）：
+  ```bash
+  uv run HARNESS/install.py
+  ```
+- **repo 還沒落地**（例如這顆 skill 是透過 `npx skills add ... -g` 全域安裝的，沒有先 clone repo）：
+  改跑免 clone 的 bootstrap 版本，會自動 git clone（失敗則退化成下載 tarball）到目前目錄下的
+  `harness-engineering/`，落地後再串接執行完整安裝流程：
+  ```bash
+  uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HARNESS/install.py
+  ```
+  想換落點或來源可加 `--target=` / `--repo=`，細節見 `HARNESS/install.py` 開頭註解。
 
 腳本是冪等的，會自動：
 - 運行 AI CLI 工具選擇器（互動式選擇要 symlink 的工具）

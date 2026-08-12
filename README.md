@@ -71,6 +71,15 @@ uv run HARNESS/install.py
 # 然後編輯 ~/.claude/env.md 填入實際值（範本會自動複製過去）
 ```
 
+還沒 clone 的話，用 uv 直接跑 GitHub 上的腳本就好：
+
+```bash
+uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HARNESS/install.py
+```
+
+預設會把官方 repo（`yaochangyu/harness-engineering`）clone 到目前目錄下的 `harness-engineering`，
+再對該份執行安裝；想換來源或落點就加 `--repo` / `--target`。已經有本機 repo 的人維持上面的做法即可。
+
 `install.py` 冪等、重跑安全（Python，跨平台），會自動：
 
 1. 運行 AI CLI 工具選擇器，建立選擇之 CLI 工具（如 `opencode`、`antigravity` 等）的 symlink。
@@ -205,3 +214,5 @@ harness-uninstall  # 解除安裝
 ## 變更紀錄
 
 - 2026-08-10：新增「新增工具時怎麼說」段落，提供標準提問格式與範例，方便下次直接照格式描述工具補充需求。
+- 2026-08-11：快速開始補上免 clone 安裝方式（`uv run` 直接執行 raw GitHub 上的 `install.py`），
+  並說明預設 repo 與落點、`--repo` / `--target` 覆寫方式。

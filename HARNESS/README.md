@@ -13,6 +13,13 @@ git clone <本 repo> fable-harness   # 或直接複製資料夾，位置隨意
 cd fable-harness
 uv run HARNESS/install.py
 ```
+
+還沒 clone 也可以直接跑，uv 會自己抓腳本：
+```bash
+uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HARNESS/install.py
+```
+預設會把官方 repo（`yaochangyu/harness-engineering`）clone 到目前目錄下的 `harness-engineering`，
+再對該份執行安裝；要換來源或落點就加 `--repo` / `--target`。已經有本機 repo 的人維持上面的做法即可。
 `install.py` 會自動：運行 AI CLI 工具選擇器、偵測 repo 實際位置並改寫 CLAUDE.md 的 HARNESS 路徑（位置變了才改）、
 備份既有的 `~/.claude/CLAUDE.md`（若有）、建立 symlink、
 `~/.claude/env.md` 不存在時從 `env.example.md` 複製一份、跑一次健康檢查。冪等，重跑安全。
@@ -55,3 +62,7 @@ uv run HARNESS/install.py
 
 搬移本目錄時：只需更新 `~/.claude/CLAUDE.md`、`~/.gemini/GEMINI.md` 或 `~/.copilot/copilot-instructions.md` 等開合的 HARNESS 路徑定義。
 還原舊制度：`ln -sf /mnt/d/lab/github-copilot/.github/copilot-instructions.md ~/.claude/CLAUDE.md`，其餘 Agent 亦同理。
+
+## 變更紀錄
+- 2026-08-11：快速開始補上「免 clone」入口，改用 uv 直接跑 raw GitHub 上的 `install.py`，
+  並說明預設 repo 與落點、`--repo` / `--target` 覆寫方式。

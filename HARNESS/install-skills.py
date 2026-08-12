@@ -39,7 +39,11 @@ def install_entries(category_name, entries):
     for i, (repo, skill) in enumerate(entries, 1):
         print(f"  {i:2}. {skill:32} ← {repo}")
 
-    choice = input(f"\n是否安裝以上【{category_name}】到全域？(y/N): ").strip().lower()
+    try:
+        choice = input(f"\n是否安裝以上【{category_name}】到全域？(y/N): ").strip().lower()
+    except EOFError:
+        print(f"[跳過] {category_name} 無互動輸入")
+        return
     if choice not in ("y", "yes"):
         print(f"[跳過] 未安裝 {category_name}")
         return
