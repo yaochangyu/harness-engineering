@@ -44,6 +44,10 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 - 執行計畫發生錯誤或審查出問題時記錄：失敗的方法、步驟、原因。
 - **動手前先讀對應的 issues 檔**，不要重複使用已失敗過的方法。
 - 格式見 maintenance-protocol.md 的「教訓格式」。
+- **強制檢查點**：plan.md 任一步驟狀態標為 ⚠️（阻塞/失敗）時，必須在同一動作內同步寫入或更新
+  對應的 `.issues/{功能}.issues.md`，該步驟才算處理完畢——⚠️ 只改狀態欄、沒寫 .issues 視為未完成。
+  這條規則本身不驗證是否被遵守；若日後發現某步驟標過 ⚠️ 卻查無對應 .issues 記錄，視為制度退化
+  （見 letter-to-future-sessions.md），下一個發現的 session 應立即回溯補寫。
 
 ## tree.md 維護
 - 專案有 `tree.md` 時：每次新增、刪除、移動檔案或資料夾，都要更新它。
@@ -56,5 +60,9 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 - 更嚴格的完成判準見 judgment-rubrics.md 第 2 節。
 
 ## 變更紀錄
+- 2026-08-12：.issues 段落新增「強制檢查點」：plan.md 步驟標 ⚠️ 時必須同步寫入／更新對應 .issues 檔，
+  否則該步驟不算完成；同時回溯補寫 3 起歷史上未記錄的失敗案例到 `.issues/`
+  （harness-install、windows-encoding、solidify-root-claude）。原因：使用者發現 `.issues` 從未被
+  實際使用過，屬於「驗收形式化」退化模式（見 letter-to-future-sessions.md），使用者已確認此修改。
 - 2026-08-09：新增與 mattpocock-workflow.md 的分工說明，避免兩套流程觸發條件重疊時無所適從。
 - 2026-08-09：移除 markitdown 前處理段，改由 rules/preprocess.md 統一處理文件分析前置流程。

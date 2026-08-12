@@ -5,6 +5,7 @@
 - [pyproject.toml](file:///home/yao/projects/harness-engineering/pyproject.toml) - 專案配置檔
 - [CLAUDE.md](file:///home/yao/projects/harness-engineering/CLAUDE.md) - 實體檔案，內容同步自 `HARNESS/CLAUDE.md`
 - [.archive/](file:///home/yao/projects/harness-engineering/.archive) - 已封存的實作計畫目錄
+- [.issues/](file:///home/yao/projects/harness-engineering/.issues) - 問題/教訓紀錄目錄（harness-install、windows-encoding、solidify-root-claude）
 
 ## skills/ - Claude Code 專案層級 skills
 ### harness-install/
