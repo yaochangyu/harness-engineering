@@ -151,6 +151,22 @@
 - **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例（含「先問全域還是專案」步驟——
   兩者的 `--scope`／`--level` 參數即對應）；fallback 為 NotebookLM 官方 web UI。
 
+## CodeGraph
+檢查項目：skill（在 `.claude/skills/` 底下）；CLI `codegraph`。
+- 官方文件：https://github.com/colbymchenry/codegraph
+- 用途：為 Claude Code / Cursor / Gemini 等 AI 代碼編輯器建立預先索引的代碼知識圖（語義代碼智能），
+  自動同步程式碼異動、100% 本地運行、無需外部 API。
+- CLI 安裝方式：`npm install -g @colbymchenry/codegraph`。
+- skill 安裝（如需要）：檢查 repo `.claude/skills/` 目錄中 SKILL.md；若有對應 Claude Code skill，
+  依該檔指示安裝。查證自官方 repo 後補入具體 skill 安裝指令。
+- 使用步驟（CLI）：
+  1. 安裝 CLI 後運行 `codegraph install` 配置代理。
+  2. 在專案目錄執行 `codegraph init` 建立索引。
+  3. 按 CLI 提示完成設定。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；CLI `codegraph`；
+  若無裝 CLI 則提示 `npm install -g @colbymchenry/codegraph`；若有 skill 則檢查 `~/.claude/skills/`
+  對應目錄；fallback 為使用 `codegraph_explore` MCP 工具（已系統內建）。
+
 ## OneDrive
 檢查項目：skill `onedrive`；CLI 無。
 - repo：https://github.com/membranedev/application-skills
@@ -174,6 +190,9 @@
   `ls ~/.claude/skills/write-yaochangyu-style` 是否存在，找不到就告知使用者本檔沒有安裝資訊可引導。
 
 ## 變更紀錄
+- 2026-08-14：新增 codegraph 條目（全域 CLI 安裝 `npm install -g @colbymchenry/codegraph`；
+  建立預先索引代碼知識圖供 Claude Code / Cursor / Gemini 等 AI 編輯器使用；
+  含使用步驟與 fallback 方案），對應用戶要求全域安裝需求。
 - 2026-08-10：ctx7 / Google Workspace / graphify / HackMD / stop-slop-zh-tw 章節補上「檢查項目」標頭，
   明確標示 skill / CLI 是否存在；目的是讓 `tools-install-check.md` 先看章節宣告再決定查哪一項
   （使用者已確認此修改）。
