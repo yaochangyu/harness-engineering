@@ -189,7 +189,21 @@
 - `write-yaochangyu-style`：無公開 repo，本檔不記錄安裝方式；只能檢查
   `ls ~/.claude/skills/write-yaochangyu-style` 是否存在，找不到就告知使用者本檔沒有安裝資訊可引導。
 
+## pass（password-store）
+檢查項目：CLI `pass`。
+- 標準密碼管理器使用 `pass` (password-store)。
+- `gpg-agent` 快取時間設定為 8 小時（28800 秒），避免頻繁重複輸入 GPG 密碼。
+- 設定檔位置：`~/.gnupg/gpg-agent.conf`，內容設定：
+  ```ini
+  default-cache-ttl 28800
+  max-cache-ttl 28800
+  ```
+- 重新載入設定：`gpgconf --reload gpg-agent`。
+- 檔案權限規範：`~/.gnupg` 目錄設為 `700`，`gpg-agent.conf` 設為 `600`。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；CLI `pass`；fallback 為手動提供密碼或憑證。
+
 ## 變更紀錄
+- 2026-08-14：新增 pass 密碼管理器條目，規範 gpg-agent 快取時間設定為 8 小時（28800 秒）及相關設定與權限要求。
 - 2026-08-14：新增 codegraph 條目（全域 CLI 安裝 `npm install -g @colbymchenry/codegraph`；
   建立預先索引代碼知識圖供 Claude Code / Cursor / Gemini 等 AI 編輯器使用；
   含使用步驟與 fallback 方案），對應用戶要求全域安裝需求。
