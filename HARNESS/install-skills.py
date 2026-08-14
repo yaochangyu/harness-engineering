@@ -36,11 +36,32 @@ def install_entries(category_name, entries):
     print("\n" + "═" * 44)
     print(f"{category_name} 安裝清單（共 {len(entries)} 條）")
     print("═" * 44 + "\n")
+
+    skills_dir = Path.home() / ".claude" / "skills"
+    already_installed = []
+    to_install = []
+
     for i, (repo, skill) in enumerate(entries, 1):
+        skill_path = skills_dir / skill
+        if skill_path.exists() and skill_path.is_dir():
+            already_installed.append((i, skill, repo))
+        else:
+            to_install.append((i, skill, repo))
+
+    # 列出清單（已安裝和待安裝）
+    for i, skill, repo in already_installed:
+        print(f"  {i:2}. {skill:32} ← {repo} [已安裝]")
+    for i, skill, repo in to_install:
         print(f"  {i:2}. {skill:32} ← {repo}")
 
+    if not to_install:
+        print(f"\n[OK] {category_name} 全部已安裝")
+        return
+
+    print(f"\n待安裝：{len(to_install)} 條，已安裝：{len(already_installed)} 條")
+
     try:
-        choice = input(f"\n是否安裝以上【{category_name}】到全域？(y/N): ").strip().lower()
+        choice = input(f"\n是否安裝【{category_name}】中待安裝的項目？(y/N): ").strip().lower()
     except EOFError:
         print(f"[跳過] {category_name} 無互動輸入")
         return
@@ -49,7 +70,7 @@ def install_entries(category_name, entries):
         return
 
     ok, failed = [], []
-    for repo, skill in entries:
+    for i, skill, repo in to_install:
         print(f"\n--- 安裝 {skill}（{repo}）---")
         try:
             result = subprocess.run(
@@ -65,7 +86,7 @@ def install_entries(category_name, entries):
             failed.append(skill)
 
     print("\n" + "═" * 44)
-    print(f"[{category_name} 完成] 成功 {len(ok)} 條，失敗 {len(failed)} 條")
+    print(f"[{category_name} 完成] 新安裝 {len(ok)} 條，失敗 {len(failed)} 條，已有 {len(already_installed)} 條")
     if failed:
         print("失敗清單：" + ", ".join(failed))
     print("═" * 44)
