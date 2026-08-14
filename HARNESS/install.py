@@ -310,6 +310,39 @@ def main():
     except Exception:
         print("[警告] skills 安裝腳本執行失敗，跳過")
 
+    # 檢查並引導安裝 CodeGraph CLI 工具
+    print("")
+    codegraph_path = shutil.which("codegraph")
+    if not codegraph_path:
+        print("═" * 44)
+        print("CodeGraph（代碼索引化工具）")
+        print("═" * 44)
+        print("CodeGraph 為 Claude Code / Cursor 等 AI 編輯器")
+        print("建立預先索引的代碼知識圖，自動同步程式碼異動。")
+        print("")
+        try:
+            choice = input("是否安裝 CodeGraph？(y/N): ").strip().lower()
+            if choice in ("y", "yes"):
+                print("\n--- 安裝 CodeGraph ---")
+                result = subprocess.run(
+                    ["npm", "install", "-g", "@colbymchenry/codegraph"],
+                    timeout=120,
+                )
+                if result.returncode == 0:
+                    print("[成功] CodeGraph 已安裝")
+                    print("後續可執行 codegraph install 配置 MCP 伺服器")
+                else:
+                    print("[錯誤] CodeGraph 安裝失敗，請檢查 npm 是否已安裝")
+            else:
+                print("[略過] CodeGraph 未安裝")
+        except EOFError:
+            print("[略過] CodeGraph 無互動輸入")
+        except Exception as e:
+            print(f"[警告] CodeGraph 安裝出錯：{e}")
+    else:
+        print(f"[OK] CodeGraph 已安裝：{codegraph_path}")
+        print("後續如需配置 MCP 伺服器可執行 codegraph install")
+
     env_file = Path.home() / ".claude" / "env.md"
     if not env_file.exists():
         env_example = harness / "env.example.md"

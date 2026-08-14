@@ -62,6 +62,7 @@ description: 安裝並初始化本 repo 的 harness 制度庫（symlink、個人
 - 根據選擇在 `~/.claude/cli/` 建立 CLI 工具的 symlink
 - 列出 `skills-manifest.txt` 的全域 skills 安裝清單，詢問是否安裝（y/N，預設不裝）；
   同意才逐條跑 `npx skills add ... -g -y -a '*'`，單條失敗不中斷，最後印成功/失敗統計
+- 檢查 CodeGraph 是否已安裝（代碼知識圖工具）；若未安裝則詢問是否要裝
 - `~/.claude/env.md` 不存在時從 `HARNESS/env.example.md` 複製範本
 - 跑健康檢查
 
