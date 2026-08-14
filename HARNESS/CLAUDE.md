@@ -11,6 +11,10 @@
 - 不要用 echo 或任何方式印出環境變數的值，直接在指令中使用 `$VAR`。
 - 憑證集中存放於 `~/.claude/creds/.creds`；禁止把 token 寫進 git remote URL（細節：rules/git.md）。
 - git commit message 不可包含 Co-authored-by。
+- 查詢/理解程式碼時，若專案同時有 `graphify-out/graph.json` 與 `.codegraph/`，兩者並用：
+  graphify 查跨檔案/跨模組的語意關聯與架構全貌（`graphify query`），
+  codegraph 查具體符號的原始碼與呼叫路徑（`codegraph explore` 或 `codegraph_explore` MCP）。
+  只有其中一個存在就只用那一個；兩者都沒有才退回 grep/Read。
 
 ## 路由表（遇到左欄情境，先讀右欄檔案再動手；不要一次全讀）
 右欄路徑皆相對於 HARNESS 根目錄，不是目前工作目錄。讀取前先解析根目錄
@@ -54,3 +58,4 @@
   （使用者已確認此方案）。
 - 2026-08-10：路由表新增 rules/web-automation.md（網頁自動化探索三工具），內容自 rules/tools.md
   整章搬出，因該檔已達 250 行精簡門檻（使用者已確認此搬檔方案）。
+- 2026-08-14：核心規則新增「查詢程式碼時 graphify + codegraph 並用」一條（使用者明確要求）。
