@@ -47,6 +47,8 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
 | rules/python.md | Python 開發原則（虛擬環境用 uv） | 使用 Python 開發 / 寫腳本 |
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/LLM wiki/寫作 skills | 用到對應工具時 |
+| rules/google-workspace.md | Google Workspace 操作與常用 skill | 需要 Gmail / Drive / Calendar / Slides / Sheets / Docs 時 |
+| rules/notebooklm.md | Gemini Notebook / NotebookLM 選用原則 | 需要 NotebookLM 相關操作時 |
 | rules/hackmd.md | HackMD 筆記管理（安裝、認證、常用指令） | 需要 HackMD 筆記操作時 |
 | rules/code-search.md | 程式碼分析／搜尋工具（graphify 知識圖譜、codegraph 結構化搜尋），避免直接用 grep 的判斷準則 | 分析、搜尋既有程式碼時 |
 | rules/web-automation.md | 網頁自動化探索三工具（agent-browser/webwright/playwright）選擇、安裝、實踐驗證 | 需要自動化探索或操作網頁時 |
