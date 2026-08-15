@@ -407,7 +407,7 @@ def main():
     subprocess.run([sys.executable, str(harness / "check_harness.py")])
 
     print("")
-    print("[提示] 程式碼分析／搜尋工具（graphify／codegraph）為選用，未自動安裝；需要時見 HARNESS/rules/code-search.md。")
+    print("[提示] 程式碼分析／搜尋工具（graphify／codegraph／codebase-memory-mcp）為選用，未自動安裝；需要時見 HARNESS/rules/code-search.md。")
 
 if __name__ == "__main__":
     main()

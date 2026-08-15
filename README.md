@@ -147,7 +147,7 @@ HARNESS/
 │   ├── dotnet.md                # .NET / Cucumber 開發原則
 │   ├── python.md                # Python 開發原則（uv）
 │   ├── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
-│   ├── code-search.md           # 程式碼分析／搜尋工具：graphify（知識圖譜）、codegraph（結構化搜尋，避免 grep）
+│   ├── code-search.md           # 程式碼分析／搜尋工具：graphify（知識圖譜）、codegraph／codebase-memory-mcp（結構化搜尋，避免 grep）
 │   └── omc.md                   # oh-my-claudecode (OMC) 多代理協作層
 └── backup/                      # 舊版備份，僅存在本機（.gitignore 排除）
 ```
@@ -219,3 +219,6 @@ harness-uninstall  # 解除安裝
   並說明預設 repo 與落點、`--repo` / `--target` 覆寫方式。
 - 2026-08-15：新增 `rules/code-search.md`，把 graphify 從 `rules/tools.md` 搬過去、新增 codegraph
   章節，訂出「分析/搜尋程式碼優先用 codegraph_explore／graphify，避免直接 grep」的判斷準則。
+- 2026-08-16：新增 `codebase-memory-mcp` 工具支持（MCP server、15 個工具、自動索引）；同步更新 CLAUDE.md
+  常駐規則及 README.md 索引表，確保三工具（graphify／codegraph／codebase-memory-mcp）並列；修復根 README.md
+  檔案樹註解及 install.py 安裝結尾提示，補全工具參考。
