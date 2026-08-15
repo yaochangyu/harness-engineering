@@ -339,8 +339,22 @@ class TestBootstrapIntegration(unittest.TestCase):
             self.skipTest("parse_bootstrap_args not implemented")
         
         args = install.parse_bootstrap_args(['--no-git'])
-        
+
         self.assertFalse(args.get('git_enabled', True))
+
+    @patch.object(install.shutil, 'which', return_value=None)
+    @patch.object(install.subprocess, 'run')
+    @patch('builtins.input', return_value='n')
+    def test_ensure_rtk_installed_prompts_when_missing(self, mock_input, mock_run, mock_which):
+        """Given: rtk is missing, When: ensure_rtk_installed is called, Then: it prompts and skips on no."""
+        if not hasattr(install, 'ensure_rtk_installed'):
+            self.skipTest("ensure_rtk_installed not implemented")
+
+        result = install.ensure_rtk_installed()
+
+        self.assertFalse(result)
+        mock_input.assert_called_once()
+        mock_run.assert_not_called()
 
 
 if __name__ == '__main__':

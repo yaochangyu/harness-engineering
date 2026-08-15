@@ -27,6 +27,8 @@ DEFAULT_REPO_URL = "https://github.com/yaochangyu/harness-engineering"
 DEFAULT_BRANCH = "main"
 DEFAULT_TARGET_NAME = "harness-engineering"
 BOOTSTRAP_MARKER = ".harness-bootstrap-complete"
+RTK_REPO_URL = "https://github.com/rtk-ai/rtk"
+RTK_INSTALL_SCRIPT = "https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh"
 
 
 class BootstrapArgs(TypedDict, total=False):
@@ -131,6 +133,54 @@ def bootstrap(argv: list[str]) -> int:
         return 1
     result = subprocess.run([sys.executable, str(child), *args["forwarded_args"]])
     return result.returncode
+
+
+def ensure_rtk_installed() -> bool:
+    rtk_path = shutil.which("rtk")
+    if rtk_path:
+        print(f"[OK] RTK 已安裝：{rtk_path}")
+        return True
+
+    print("")
+    print("═" * 44)
+    print("RTK（Bash 輸出壓縮工具）")
+    print("═" * 44)
+    print("RTK 會搭配 Bash hook 壓縮命令輸出，減少 agent 讀取的 context。")
+    print("")
+
+    try:
+        choice = input("是否安裝 RTK？(y/N): ").strip().lower()
+    except EOFError:
+        print("[略過] RTK 無互動輸入")
+        return False
+
+    if choice not in ("y", "yes"):
+        print("[略過] RTK 未安裝")
+        return False
+
+    if sys.platform == "darwin" and shutil.which("brew"):
+        command = ["brew", "install", "rtk"]
+    elif shutil.which("cargo"):
+        command = ["cargo", "install", "--git", RTK_REPO_URL]
+    elif shutil.which("sh") and shutil.which("curl"):
+        command = ["sh", "-lc", f"curl -fsSL {RTK_INSTALL_SCRIPT} | sh"]
+    else:
+        print("[錯誤] 找不到可用的安裝方式（brew/cargo/curl+sh）")
+        return False
+
+    print(f"[安裝] {' '.join(command)}")
+    try:
+        result = subprocess.run(command, timeout=600)
+    except (subprocess.TimeoutExpired, FileNotFoundError) as error:
+        print(f"[錯誤] RTK 安裝失敗：{error}")
+        return False
+
+    if result.returncode == 0:
+        print("[成功] RTK 已安裝")
+        return True
+
+    print("[錯誤] RTK 安裝失敗")
+    return False
 
 def main():
     harness = Path(__file__).parent.resolve()
@@ -303,6 +353,9 @@ def main():
                         print(f"[OK] 已建立：~/.claude/cli/{tool} → {path}")
                 except Exception:
                     print(f"[警告] {tool} 未找到或未安裝，跳過")
+
+    print("")
+    ensure_rtk_installed()
 
     print("")
     try:
