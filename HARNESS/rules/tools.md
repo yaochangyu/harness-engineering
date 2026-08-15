@@ -44,25 +44,9 @@
   （如 Gmail 查 `~/.claude/skills/gws-gmail`），全域 CLI `gws`；未裝時提示上方對應安裝指令
   （常用四個直接裝，其他先 `--list` 查再裝）；fallback 為 Gmail/Drive/Calendar 的 MCP 工具。
 
-## graphify
-檢查項目：skill `graphify`；CLI `graphify`。
-- 使用者輸入 `/graphify` 時，先呼叫 Skill tool（`skill: "graphify"`）再做其他事。
-- Skill 位置：`~/.claude/skills/graphify/SKILL.md`。
-- 官方 repo：https://github.com/Graphify-Labs/graphify
-  **注意套件名稱**：PyPI 上是 `graphifyy`（雙 y），不是 `graphify`；其他 `graphify*` 套件非官方。
-  安裝完後終端機指令仍是 `graphify`。
-- 安裝（新環境沒有這個 skill 時）：
-  ```bash
-  uv tool install graphifyy      # 推薦；替代方案 pipx install graphifyy
-  graphify install               # 註冊為全域 skill（僅當前 repo 用 --project）
-  ```
-  - Mac/Windows 避免直接 `pip install graphifyy`：安裝路徑常跟 skill 執行時解析的 Python 環境不一致，
-    會導致 `ModuleNotFoundError`。
-  - 免安裝直接跑：`uvx --from graphifyy graphify install`
-    （不可直接 `uvx graphify ...`——`uv tool run` 會把第一個字當套件名找，套件實際叫 `graphifyy`）。
-  - 額外功能（PDF / MCP server / Neo4j 等）：`uv tool install "graphifyy[pdf]"` / `"[mcp]"` / `"[all]"`。
-- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄／CLI 皆是 `graphify`；
-  fallback 為停用 graphify 相關操作。
+## 程式碼分析／搜尋工具（graphify / codegraph）
+已搬到 `rules/code-search.md`：codegraph（結構化程式碼搜尋，避免 grep）、graphify（知識圖譜）、
+兩者判斷準則都在該檔。
 
 ## playwright-cli
 - 官方文件：https://github.com/microsoft/playwright-cli
@@ -279,3 +263,6 @@
 - 2026-08-10：新增 OneDrive 章節，skill 採 `npx skills add ... -s onedrive [-g]` 讓使用者選全域/專案，
   CLI 記為 `@membranehq/cli`／`membrane`，並列出 login、connection ensure、action list 的基本路徑。
   依使用者要求把安裝範圍寫成可選項，讓每次都先問。
+- 2026-08-15：graphify 整章搬到新檔 `rules/code-search.md`（與新增的 codegraph 章節放一起），本檔改留
+  一行指標。原因：本檔已達 250 行精簡門檻；且「避免 grep、優先用程式碼結構化搜尋」是獨立主題，
+  比照 web-automation.md 的搬檔先例（使用者已確認此方案）。

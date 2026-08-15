@@ -11,10 +11,8 @@
 - 不要用 echo 或任何方式印出環境變數的值，直接在指令中使用 `$VAR`。
 - 憑證集中存放於 `~/.claude/creds/.creds`；禁止把 token 寫進 git remote URL（細節：rules/git.md）。
 - git commit message 不可包含 Co-authored-by。
-- 查詢/理解程式碼時，若專案同時有 `graphify-out/graph.json` 與 `.codegraph/`，兩者並用：
-  graphify 查跨檔案/跨模組的語意關聯與架構全貌（`graphify query`），
-  codegraph 查具體符號的原始碼與呼叫路徑（`codegraph explore` 或 `codegraph_explore` MCP）。
-  只有其中一個存在就只用那一個；兩者都沒有才退回 grep/Read。
+- 查詢/理解程式碼時，優先用 codegraph/graphify 取代 grep/Read；判斷準則、安裝方式見
+  rules/code-search.md、rules/codegraph.md。
 
 ## 路由表（遇到左欄情境，先讀右欄檔案再動手；不要一次全讀）
 右欄路徑皆相對於 HARNESS 根目錄，不是目前工作目錄。讀取前先解析根目錄
@@ -33,11 +31,13 @@
 | git commit / MR / 憑證 / worktree | rules/git.md |
 | .NET / Cucumber 開發 | rules/dotnet.md |
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
-| rtk / ticket CLI / Google Workspace / graphify / LLM wiki / 中文寫作 skills | rules/tools.md |
+| rtk / ticket CLI / Google Workspace / LLM wiki / 中文寫作 skills | rules/tools.md |
+| 分析、搜尋既有程式碼（避免直接用 grep，優先 codegraph_explore／graphify） | rules/code-search.md |
 | 自動化探索或操作網頁（agent-browser / webwright / playwright） | rules/web-automation.md |
 | 只要輸入含 PDF / Word / PowerPoint / Excel / 圖片 / HTML / 壓縮包等文件附件，進入 AI 分析前先讀 `rules/preprocess.md` | rules/preprocess.md |
 | 新 session 第一次接手這個環境 | letter-to-future-sessions.md |
 | 該 session 有裝 oh-my-claudecode (OMC) plugin，要用其多代理協作/skills | rules/omc.md |
+| repo 根目錄有 `.codegraph/` 索引，要理解/定位程式碼符號、呼叫關係 | rules/codegraph.md |
 
 ## session 開始時
 - 檢查當前目錄有無 `*.plan.md`；有未完成項目就詢問使用者是否繼續。
@@ -50,12 +50,7 @@
 - 使用者輸入 `/graphify` → 先呼叫 Skill tool（skill: "graphify"）
 
 ## 變更紀錄
-- 2026-08-09：路由表新增 rules/mattpocock-workflow.md 一行（使用者已明確確認此路由表變更）。
-- 2026-08-09：路由表新增 rules/preprocess.md，用於文件 / PDF / Office / 圖片分析前處理。
-- 2026-08-10：路由表加入 HARNESS_DIR 動態解析規則（`dirname $(readlink -f ~/.claude/CLAUDE.md)`）。
-  原因：路由表右欄原為相對路徑，session 工作目錄不在 harness-engineering repo 內時會讀取失敗；
-  且不能寫死絕對路徑（repo 公開，跨使用者/機器路徑不同）。改用 symlink 動態解析後兩個問題一併解決
-  （使用者已確認此方案）。
-- 2026-08-10：路由表新增 rules/web-automation.md（網頁自動化探索三工具），內容自 rules/tools.md
-  整章搬出，因該檔已達 250 行精簡門檻（使用者已確認此搬檔方案）。
-- 2026-08-14：核心規則新增「查詢程式碼時 graphify + codegraph 並用」一條（使用者明確要求）。
+（2026-08-09～10 的路由表新增／搬檔紀錄已依精簡門檻刪除一次性敘述，完整歷史見 git log HARNESS/CLAUDE.md）
+- 2026-08-14～15：graphify/codegraph 程式碼搜尋整合——新增 rules/code-search.md（判斷準則、graphify 安裝）
+  與 rules/codegraph.md（官方 CODEGRAPH_START/END 區塊、symlink 弄斷風險，比照 rules/omc.md 由路由表參考）；
+  核心規則精簡為 2 行指標，判準統一交給 rules/code-search.md（使用者已確認此精簡方案）。

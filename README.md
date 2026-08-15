@@ -147,6 +147,7 @@ HARNESS/
 │   ├── dotnet.md                # .NET / Cucumber 開發原則
 │   ├── python.md                # Python 開發原則（uv）
 │   ├── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
+│   ├── code-search.md           # 程式碼分析／搜尋工具：graphify（知識圖譜）、codegraph（結構化搜尋，避免 grep）
 │   └── omc.md                   # oh-my-claudecode (OMC) 多代理協作層
 └── backup/                      # 舊版備份，僅存在本機（.gitignore 排除）
 ```
@@ -216,3 +217,5 @@ harness-uninstall  # 解除安裝
 - 2026-08-10：新增「新增工具時怎麼說」段落，提供標準提問格式與範例，方便下次直接照格式描述工具補充需求。
 - 2026-08-11：快速開始補上免 clone 安裝方式（`uv run` 直接執行 raw GitHub 上的 `install.py`），
   並說明預設 repo 與落點、`--repo` / `--target` 覆寫方式。
+- 2026-08-15：新增 `rules/code-search.md`，把 graphify 從 `rules/tools.md` 搬過去、新增 codegraph
+  章節，訂出「分析/搜尋程式碼優先用 codegraph_explore／graphify，避免直接 grep」的判斷準則。

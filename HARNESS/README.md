@@ -46,7 +46,8 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 | rules/mattpocock-workflow.md | 高階軟體工程實作工作流（Grilling/Spec/TDD/CodeReview/plan.md） | 多模組重構或使用者要求進階工作流時 |
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
 | rules/python.md | Python 開發原則（虛擬環境用 uv） | 使用 Python 開發 / 寫腳本 |
-| rules/tools.md | rtk/ctx7/ticket CLI/Workspace/graphify/LLM wiki/寫作 skills | 用到對應工具時 |
+| rules/tools.md | rtk/ctx7/ticket CLI/Workspace/LLM wiki/寫作 skills | 用到對應工具時 |
+| rules/code-search.md | 程式碼分析／搜尋工具（graphify 知識圖譜、codegraph 結構化搜尋），避免直接用 grep 的判斷準則 | 分析、搜尋既有程式碼時 |
 | rules/web-automation.md | 網頁自動化探索三工具（agent-browser/webwright/playwright）選擇、安裝、實踐驗證 | 需要自動化探索或操作網頁時 |
 | rules/tools-install-check.md | 工具安裝前判斷通用慣例（4 步驟：查 skill/查 CLI/引導安裝/fallback），供 rules/tools.md 各章節引用 | rules/tools.md 內任何工具的「使用前判斷是否已安裝」步驟 |
 | rules/preprocess.md | 文件 / PDF / Office / 圖片分析前處理（markitdown） | 任何文件型輸入進 AI 分析前 |
