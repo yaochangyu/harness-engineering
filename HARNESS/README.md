@@ -47,6 +47,7 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
 | rules/python.md | Python 開發原則（虛擬環境用 uv） | 使用 Python 開發 / 寫腳本 |
 | rules/tools.md | rtk/ctx7/ticket CLI/Workspace/LLM wiki/寫作 skills | 用到對應工具時 |
+| rules/hackmd.md | HackMD 筆記管理（安裝、認證、常用指令） | 需要 HackMD 筆記操作時 |
 | rules/code-search.md | 程式碼分析／搜尋工具（graphify 知識圖譜、codegraph 結構化搜尋），避免直接用 grep 的判斷準則 | 分析、搜尋既有程式碼時 |
 | rules/web-automation.md | 網頁自動化探索三工具（agent-browser/webwright/playwright）選擇、安裝、實踐驗證 | 需要自動化探索或操作網頁時 |
 | rules/tools-install-check.md | 工具安裝前判斷通用慣例（4 步驟：查 skill/查 CLI/引導安裝/fallback），供 rules/tools.md 各章節引用 | rules/tools.md 內任何工具的「使用前判斷是否已安裝」步驟 |

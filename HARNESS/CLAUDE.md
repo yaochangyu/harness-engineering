@@ -32,6 +32,7 @@
 | .NET / Cucumber 開發 | rules/dotnet.md |
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
 | rtk / ticket CLI / Google Workspace / LLM wiki / 中文寫作 skills | rules/tools.md |
+| HackMD 筆記管理（安裝、認證、常用指令） | rules/hackmd.md |
 | 分析、搜尋既有程式碼（避免直接用 grep，優先 codegraph_explore／graphify） | rules/code-search.md |
 | 自動化探索或操作網頁（agent-browser / webwright / playwright） | rules/web-automation.md |
 | 只要輸入含 PDF / Word / PowerPoint / Excel / 圖片 / HTML / 壓縮包等文件附件，進入 AI 分析前先讀 `rules/preprocess.md` | rules/preprocess.md |

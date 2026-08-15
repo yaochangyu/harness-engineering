@@ -68,37 +68,12 @@
 
 ## HackMD（hackmd-cli）
 檢查項目：skill `hackmd-cli`；CLI `hackmd-cli`。
-- 官方文件：https://github.com/hackmdio/hackmd-cli（只支援 hackmd.io 官方或 HackMD EE ≥ 1.38.1，不支援 CodiMD）。
-- 安裝方式：優先裝成 skill（觸發層，告訴 agent 何時該用、怎麼下指令），指令
-  `npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli [-g] -y -a '*'`
-  （已查證該 repo 目前只有一個 skill，名稱就是 `hackmd-cli`，`-l/--list` 可自行複查）。
-  底層執行仍需要 `hackmd-cli` 這支二進位檔：`npm install -g @hackmd/hackmd-cli`（查證自官方 README）。
-  只有在偵測不到 `hackmd-cli` 時，才先提醒使用者補裝 CLI，再繼續詢問是否要安裝對應 skill。
-- skill 安裝指令也可直接寫成使用者指定的基底：`npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli`
-  （是否加 `-g` 依使用者回答決定）。
-- 安裝範圍（全域 vs 專案）：`npx skills add` 的 `-g/--global` 決定 skill 裝在使用者層級還是目前專案
-  （不加 `-g` 預設裝專案層級）。
-- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例（含「先問全域還是專案」步驟）；
-  skill 目錄 `hackmd-cli`，全域 CLI `hackmd-cli`；fallback 為官方 REST API 直接呼叫。
-- 指令用法如有不確定（子指令、flag 名稱），先跑 `hackmd-cli --help` 或 `hackmd-cli <command> --help` 確認，
-  不要憑記憶或文件片段猜參數；CLI 版本可能與下方摘要不同。
-- 登入：`hackmd-cli login`（access token 由 hackmd.io → Setting → API 建立）；
-  token 存放與其他憑證一致，放 `~/.claude/creds/.creds`，**不要**寫進 repo 或用 echo 印出，
-  指令中用 `$HMD_API_ACCESS_TOKEN` 環境變數帶入。
-- 若用 HackMD EE（非官方 hackmd.io），API endpoint 存在 `~/.claude/env.md`（用 `$HMD_API_ENDPOINT_URL`）。
-- 常用指令：
-  - 筆記：`hackmd-cli notes` / `notes create --content=... --title=...` / `notes update --noteId=...` / `notes delete --noteId=...`
-    （`create` 可用 pipe：`cat file.md | hackmd-cli notes create`）
-  - 匯出：`hackmd-cli export --noteId=<id>`
-  - 資料夾：`hackmd-cli folders` / `folders create` / `folders update` / `folders delete` / `folders order`
-  - Team 版本：對應指令前綴改 `team-notes` / `team-folders`，需加 `--teamPath=<team>`
-  - 其他：`hackmd-cli teams`（列出所屬 team）、`hackmd-cli whoami`、`hackmd-cli history`
-- 輸出可加 `--output=json`（或 csv/yaml）方便程式化處理。
-- 優先順序：一般操作優先用 `hackmd-cli`（已包好認證與常見指令）；
-  CLI 涵蓋不到的需求（更細的查詢、程式化整合）才直接呼叫 HackMD 官方 REST API。
-- 官方 REST API：預設 endpoint `https://api.hackmd.io/v1`，token-based 認證（同一組 access token）。
-  Developer portal（Swagger 文件、Postman collection、社群 SDK）：
-  https://hackmd.io/@hackmd-api/developer-portal
+- HackMD 筆記與資料夾管理（支援 hackmd.io 官方或 EE ≥ 1.38.1）。
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄 `hackmd-cli`，CLI `hackmd-cli`；
+  未裝時提示 `npm install -g @hackmd/hackmd-cli` 再問是否裝 skill；fallback 為官方 REST API 直接呼叫。
+- 安裝指令：`npx skills add https://github.com/hackmdio/hackmd-cli -s hackmd-cli [-g] -y -a '*'`
+  （**先問全域還是專案**，依回答決定帶不帶 `-g`）。
+- 詳細安裝、認證、常用指令見 `rules/hackmd.md`。
 
 ## Gemini Notebook / NotebookLM
 檢查項目：skill `notebooklm`（teng-lin）／`nlm-skill`（jacob-bd）；CLI `notebooklm` ／ `nlm`。
@@ -266,3 +241,8 @@
 - 2026-08-15：graphify 整章搬到新檔 `rules/code-search.md`（與新增的 codegraph 章節放一起），本檔改留
   一行指標。原因：本檔已達 250 行精簡門檻；且「避免 grep、優先用程式碼結構化搜尋」是獨立主題，
   比照 web-automation.md 的搬檔先例（使用者已確認此方案）。
+- 2026-08-15：HackMD 章節精簡——安裝細節、認證機制搬到新檔 `rules/hackmd.md`，
+  本檔改留核心版（何時用、怎麼裝、fallback）。常用指令因 `hackmd-cli --help` 已足夠而移除。
+  新增路由表條目到 CLAUDE.md 與 README.md。
+  原因：tools.md 篇幅已達上限，避免一次載入不必要資訊，遵循「何時用、怎麼裝、fallback」
+  精簡原則。agent 需要查詢具體指令時直接用 --help（使用者已確認此方案）。
