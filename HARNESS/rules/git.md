@@ -17,6 +17,34 @@
   token 仍走 helper（勿寫進 URL）。
 - 若不得已曾用內嵌 URL，事後立即 `git remote set-url origin <乾淨URL>`，並評估是否輪替該 token。
 
+## gh / glab CLI（GitHub / GitLab 官方指令列工具）
+檢查項目：CLI 而已（`gh`、`glab`），無對應 skill；安裝判斷套用 `tools-install-check.md` 的通用流程
+（`command -v gh`／`command -v glab` 判斷是否已裝）。
+- 用途：開/查 PR・MR、查 issue，以及上方憑證安全段落用到的
+  `gh auth git-credential`／`glab auth git-credential` credential helper。
+- 安裝：
+  - **GitHub CLI（`gh`）**，官方 apt repo（Debian/Ubuntu）：
+    ```bash
+    (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+      && sudo mkdir -p -m 755 /etc/apt/keyrings \
+      && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+      && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+      && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+      && sudo apt update && sudo apt install gh -y
+    ```
+    macOS：`brew install gh`。
+  - **GitLab CLI（`glab`）**，官方不提供 apt repo；優先用 Homebrew（macOS/Linux 皆可）：
+    ```bash
+    brew install glab
+    ```
+    Debian/Ubuntu 無 Homebrew 時，改用社群維護的 WakeMeOps apt repo：
+    ```bash
+    curl -sSL "https://raw.githubusercontent.com/upciti/wakemeops/main/assets/install_repository" | sudo bash
+    sudo apt install glab
+    ```
+- 認證：`gh auth login`／`glab auth login`（互動式設定），設定完成後才能用上方 credential helper 指令。
+- fallback：未安裝時改用 git 原生指令操作，credential helper 段落須改手動設定（不強制要求安裝 gh/glab）。
+
 ## commit message 格式
 1. 若沒有 ticket id，詢問使用者是否需要加上 ticket id。
    - 若有 ticket id，最後一行加上 `Bundle: (ticket id)`。
@@ -37,3 +65,5 @@
 
 ## 變更紀錄
 - 2026-07-04：GitLab 範例的內網位址改為 `<GITLAB_HOST>` 佔位符（公開 repo 去識別化）。
+- 2026-08-15：新增「gh / glab CLI」章節，補齊安裝指令（gh 官方 apt repo；glab 用 Homebrew 或社群
+  WakeMeOps apt repo，官方無自有 apt repo）與 `auth login` 認證步驟，安裝指令已逐一驗證來源。
