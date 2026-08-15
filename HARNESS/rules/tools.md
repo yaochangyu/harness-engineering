@@ -29,7 +29,7 @@
 - 安裝前先套用 `rules/tools-install-check.md`；細節見 `rules/google-workspace.md`。
 - fallback：Gmail / Drive / Calendar 的 MCP 工具。
 
-## 程式碼分析／搜尋工具（graphify / codegraph）
+## 程式碼分析／搜尋工具（graphify / codegraph / codebase-memory-mcp）
 已搬到 `rules/code-search.md`；這裡只保留入口，不放細節。
 
 ## playwright-cli
@@ -84,6 +84,8 @@
 檢查項目：skill `stop-slop-zh-tw`；CLI 無。
 - 長文時再考慮 `stop-slop-zh-tw` 與 `write-yaochangyu-style`。
 - `stop-slop-zh-tw` 有公開 repo；`write-yaochangyu-style` 只檢查本機是否存在。
+- skill 安裝：`npx skills add https://github.com/kevintsengtw/stop-slop-zh-tw -s stop-slop-zh-tw [-g] -y -a '*'`
+- 安裝前先詢問使用者要裝全域還是專案，依回答決定帶不帶 `-g`。
 - fallback 為略過去 AI 腔處理。
 
 ## pass（password-store）
