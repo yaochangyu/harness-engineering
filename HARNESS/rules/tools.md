@@ -1,11 +1,13 @@
 # 工具細則（需要用到該工具時才讀）
 
-## RTK（Rust Token Killer）
+## RTK
 - skill name：無
 - CLI name：`rtk`
 - Bash 指令已由 `rtk hook claude` 自動處理；平常不用手動背規則。
 - 需要省 token 時才加 `rtk`，要看完整輸出時改用原始指令。
 - 串接指令每段各自加前綴：`rtk git add . && rtk git commit -m "msg"`。
+- 安裝方式：優先 `brew install rtk`；Linux/macOS 也可用 `curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh`。
+- 其他方式：`cargo install --git https://github.com/rtk-ai/rtk`；或從 GitHub releases 下載預編譯 binary。
 
 ## ctx7 / context7（查函式庫文件）
 檢查項目：skill `find-docs`；CLI `ctx7`。
