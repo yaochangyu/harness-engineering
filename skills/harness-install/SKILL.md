@@ -69,6 +69,28 @@ description: 安裝並初始化本 repo 的 harness 制度庫（symlink、個人
 若腳本失敗，把錯誤原文貼給使用者，不要腦補修法；
 symlink 不可用的環境（少見）改走 `HARNESS/README.md` 的手動步驟。
 
+### 步驟 2.1：安裝並配置 MCP（例如 Headroom）
+
+若使用者要求額外增加 MCP 伺服器，先安裝對應 CLI，再把 MCP server **個別** 接到目標客戶端：
+
+- **Headroom CLI 安裝**：優先 `uv tool install --python 3.13 "headroom-ai[all]"`；
+  也可用 `pip install "headroom-ai[all]"`。
+- **Headroom MCP 註冊**：`headroom mcp install`。
+- **個別提醒**：Headroom MCP 是按 agent 各自安裝與啟用；Claude Code 與 opencode 要分開看。
+  如果目前用的是 Claude Code，但 `~/.claude/settings.json` / `~/.claude/settings.local.json` 沒有 Headroom MCP，
+  直接提醒使用者：「Claude Code 尚未安裝 Headroom MCP，請先安裝後重啟 Claude Code。」
+- **opencode 手動配置**：確認 `~/.config/opencode/opencode.json` 的 `mcp.headroom` 已啟用：
+  ```json
+  {
+    "headroom": {
+      "type": "local",
+      "command": ["headroom", "mcp", "serve"],
+      "enabled": true
+    }
+  }
+  ```
+  若 `command -v headroom` 回傳的是絕對路徑，也可直接放進 `command` 陣列；配置後重啟 opencode。
+
 ## 步驟 3：訪談並填寫個人環境配置
 
 讀 `~/.claude/env.md`。若仍是範本佔位符（含 `<GITLAB_HOST>` 等字樣），逐項詢問使用者：
