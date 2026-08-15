@@ -11,7 +11,7 @@
 - 不要用 echo 或任何方式印出環境變數的值，直接在指令中使用 `$VAR`。
 - 憑證集中存放於 `~/.claude/creds/.creds`；禁止把 token 寫進 git remote URL（細節：rules/git.md）。
 - git commit message 不可包含 Co-authored-by。
-- 查詢/理解程式碼時，優先用 codegraph/graphify 取代 grep/Read；判斷準則、安裝方式見
+- 查詢/理解程式碼時，優先用 codegraph/codebase-memory-mcp/graphify 取代 grep/Read；判斷準則、安裝方式見
   rules/code-search.md、rules/codegraph.md。
 
 ## 路由表（遇到左欄情境，先讀右欄檔案再動手；不要一次全讀）
