@@ -8,8 +8,7 @@
 ### 可以自行做（不用問使用者）
 - 在專案的 `.issues/` 新增教訓（格式見第 3 節）。
 - 在 judgment-rubrics.md / delegation-templates.md **追加**正反例（不改既有判準本身）。
-- 修正已驗證失效的路徑或指令：先實際確認新路徑存在／新指令可跑，才能改；
-  改完在檔案底部的變更紀錄留一行。
+- 修正已驗證失效的路徑或指令：先實際確認新路徑存在／新指令可跑，才能改。
 - 修錯字。
 
 ### 要先問使用者（提出 diff，等確認）
@@ -28,8 +27,7 @@
 1. 備份：`cp {檔案} /home/yao/projects/harness-engineering/HARNESS/backup/{檔名}.{YYYY-MM-DD}.md`
    （同日多次修改，備份一次即可）。
 2. 改完 read-back 驗證（重新讀取、確認改動落地且沒破壞其他段落）。
-3. 在該檔案底部「變更紀錄」加一行：`- YYYY-MM-DD：改了什麼、為什麼（session 主題）`。
-   沒有變更紀錄段落就建一個。
+3. 不另外維護版本歷史段落。
 
 ## 3. 教訓寫回哪裡、用什麼格式
 
@@ -69,7 +67,3 @@ uv run /home/yao/projects/harness-engineering/HARNESS/check_harness.py
 ## 6. 待整理區（跨專案教訓先丟這裡，滿 5 條就依第 4 節處理）
 
 （目前無）
-
-## 變更紀錄
-- 2026-07-03：建檔（Fable 5 session）。
-- 2026-07-04：新增第 5 節「安裝工具後的固定動作」與 check-harness.py（Fable 5 session）。

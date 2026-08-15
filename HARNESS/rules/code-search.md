@@ -52,16 +52,3 @@ codegraph install   # 把 MCP server 接到 Claude Code / Cursor / Codex 等 age
 - 額外功能（PDF / MCP server / Neo4j 等）：`uv tool install "graphifyy[pdf]"` / `"[mcp]"` / `"[all]"`。
 - **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄／CLI 皆是 `graphify`；
   fallback 為停用 graphify 相關操作。
-
-## 變更紀錄
-- 2026-08-15：新檔，從 `rules/tools.md` 搬出 graphify 章節（該檔已達 250 行精簡門檻）、新增 codegraph
-  章節（CLI/MCP 用法查證自官方 repo README），並訂出「codegraph 優先於 grep、graphify 用於跨文件知識圖譜」
-  的判斷準則（使用者已確認此方案）。codegraph 未在 harness-engineering 這個 repo 執行 `init` 建索引，
-  是否建索引屬使用者決定，不自行執行。（使用者後續已自行對本 repo 執行 `codegraph init`。）
-- 2026-08-15：codegraph 章節補上「`codegraph install`/`upgrade --refresh` 會弄斷入口 symlink」的已知風險
-  與修復步驟——合併自另一個 session 建立、內容重疊的孤兒檔 `rules/codegraph.md`（該檔已刪除，避免
-  兩份文件重複維護）（使用者已確認此合併方案）。
-- 2026-08-15：上一則變更後，確認 codegraph 官方 instructions 短區塊需要每個 session 都能穩定觸發
-  subagent 使用（官方原因：Task-tool subagent 拿不到 MCP initialize instructions，只能靠 instructions
-  檔本身），因此把官方短區塊與 symlink 風險說明改放回 `rules/codegraph.md`（比照 `rules/omc.md`、由
-  `HARNESS/CLAUDE.md` 路由表參考），本檔的 codegraph 章節只保留一行指標，避免重複維護（使用者已確認）。

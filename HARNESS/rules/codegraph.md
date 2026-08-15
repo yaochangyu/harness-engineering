@@ -32,8 +32,3 @@ instructions——官方實測這段區塊存在與否，subagent 主動用 code
    ```
 3. 比對備份內容，若有新的、有價值的說明區塊（例如工具自己塞進去的使用說明），
    評估後搬進對應的 `rules/*.md`，不要留在 `~/.claude/CLAUDE.md` 裡等下次又被覆寫掉。
-
-## 變更紀錄
-- 2026-08-15：建檔（比照 `rules/omc.md` 的作法，由 `HARNESS/CLAUDE.md` 路由表參考本檔，而非把官方區塊
-  塞進核心規則本體）。內容為 `codegraph install` 官方 instructions 區塊原文，加上已知的 symlink 風險與
-  修復步驟（原本暫存於 `rules/code-search.md`，現搬回本檔集中維護）（使用者已確認此方案）。

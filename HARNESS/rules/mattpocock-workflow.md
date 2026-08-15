@@ -103,10 +103,3 @@ sequenceDiagram
    * 將計畫檔移入 `.archive/` 並 commit 封存。
 
 ---
-
-## 變更紀錄
-- 2026-08-09：建檔，作為 HARNESS 制度庫融合 Matt Pocock 技能庫的進階擴充工作流。
-- 2026-08-09：補上與 rules/workflow.md 的分工說明；`skills/mattpocock-workflow/SKILL.md` 精簡為索引，
-  本檔改為唯一權威 SOP 來源，避免雙份維護 drift；`HARNESS/CLAUDE.md` 路由表補上本檔一行；
-  確認所需 7 個子技能（含 code-review 雙軸審查）已全域安裝於 `~/.agents/skills/`，非命名衝突。
-- 2026-08-09：markitdown 前處理移到 `rules/preprocess.md`，本檔僅在文件型輸入工作時引用。

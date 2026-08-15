@@ -47,6 +47,3 @@ plan.md 儀式、Cucumber 中文步驟、ticket CLI、Clean Architecture agent�
 - 交付清單 A–G 全部落檔，收尾三步（對抗審查、read-back、總結）已執行。
 - 未完成、留給使用者決定的事項，見 diagnosis.md 中標註〔待使用者決定〕的三項
   （本機設定檔整理、舊工具遺留檔、MCP 瘦身）。
-
-## 變更紀錄
-- 2026-07-04：去識別化（內網位址與公司工具名改為指向 `~/.claude/env.md`），因 repo 公開（Fable 5 session）。

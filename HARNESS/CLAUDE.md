@@ -51,9 +51,3 @@
   內網/公司/個人資訊**只能**寫在 `~/.claude/env.md`，不可寫進 HARNESS 制度檔（repo 是公開的）。
 - shell 指令加 `rtk` 前綴省 token（hook 已自動處理，細節見 rules/tools.md）
 - 使用者輸入 `/graphify` → 先呼叫 Skill tool（skill: "graphify"）
-
-## 變更紀錄
-（2026-08-09～10 的路由表新增／搬檔紀錄已依精簡門檻刪除一次性敘述，完整歷史見 git log HARNESS/CLAUDE.md）
-- 2026-08-14～15：graphify/codegraph 程式碼搜尋整合——新增 rules/code-search.md（判斷準則、graphify 安裝）
-  與 rules/codegraph.md（官方 CODEGRAPH_START/END 區塊、symlink 弄斷風險，比照 rules/omc.md 由路由表參考）；
-  核心規則精簡為 2 行指標，判準統一交給 rules/code-search.md（使用者已確認此精簡方案）。

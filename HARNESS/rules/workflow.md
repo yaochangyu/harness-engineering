@@ -59,10 +59,4 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 - 詢問使用者是否需要執行測試；需要就執行。
 - 更嚴格的完成判準見 judgment-rubrics.md 第 2 節。
 
-## 變更紀錄
-- 2026-08-12：.issues 段落新增「強制檢查點」：plan.md 步驟標 ⚠️ 時必須同步寫入／更新對應 .issues 檔，
-  否則該步驟不算完成；同時回溯補寫 3 起歷史上未記錄的失敗案例到 `.issues/`
-  （harness-install、windows-encoding、solidify-root-claude）。原因：使用者發現 `.issues` 從未被
-  實際使用過，屬於「驗收形式化」退化模式（見 letter-to-future-sessions.md），使用者已確認此修改。
-- 2026-08-09：新增與 mattpocock-workflow.md 的分工說明，避免兩套流程觸發條件重疊時無所適從。
 - 2026-08-09：移除 markitdown 前處理段，改由 rules/preprocess.md 統一處理文件分析前置流程。

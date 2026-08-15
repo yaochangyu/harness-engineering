@@ -59,6 +59,3 @@
 - `stop-slop-zh-tw`、`write-yaochangyu-style` 等 skills 存在，弱模型應在寫中文長文時主動考慮使用。
 - 專案記憶目錄（`~/.claude/projects/<路徑>/memory/`）是 per-project 的；
   跨專案要沿用的制度只能靠 CLAUDE.md 路由，不要指望記憶機制跨專案生效。
-
-## 變更紀錄
-- 2026-07-04：去識別化（憑證細節與內網資訊移除），因 repo 公開（Fable 5 session）。

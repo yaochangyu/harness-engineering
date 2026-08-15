@@ -62,8 +62,3 @@
 1. 開啟 `git rerere`。
 2. 在其中一個 worktree 執行 `git rebase develop` 並手動解衝突。
 3. 在其他 worktree 執行 `git rebase develop`，git 會自動套用剛才的解法。
-
-## 變更紀錄
-- 2026-07-04：GitLab 範例的內網位址改為 `<GITLAB_HOST>` 佔位符（公開 repo 去識別化）。
-- 2026-08-15：新增「gh / glab CLI」章節，補齊安裝指令（gh 官方 apt repo；glab 用 Homebrew 或社群
-  WakeMeOps apt repo，官方無自有 apt repo）與 `auth login` 認證步驟，安裝指令已逐一驗證來源。

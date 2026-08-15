@@ -66,7 +66,3 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 
 搬移本目錄時：只需更新 `~/.claude/CLAUDE.md`、`~/.gemini/GEMINI.md` 或 `~/.copilot/copilot-instructions.md` 等開合的 HARNESS 路徑定義。
 還原舊制度：`ln -sf /mnt/d/lab/github-copilot/.github/copilot-instructions.md ~/.claude/CLAUDE.md`，其餘 Agent 亦同理。
-
-## 變更紀錄
-- 2026-08-11：快速開始補上「免 clone」入口，改用 uv 直接跑 raw GitHub 上的 `install.py`，
-  並說明預設 repo 與落點、`--repo` / `--target` 覆寫方式。
