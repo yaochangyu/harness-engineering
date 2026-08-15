@@ -23,9 +23,11 @@
 - 所有 ticket 操作用 `<TICKET_CLI>`；實際工具名與用法見 `~/.claude/env.md`。
 
 ## Google Workspace
+- 檢查項目：skill 視服務而定（如 `gws-gmail`）；CLI `gws`。
 - skill name：`gws-gmail` / `gws-slides` / `gws-sheets` / `gws-docs`
 - CLI name：`gws`
-- 細節見 `rules/google-workspace.md`。
+- 安裝前先套用 `rules/tools-install-check.md`；細節見 `rules/google-workspace.md`。
+- fallback：Gmail / Drive / Calendar 的 MCP 工具。
 
 ## 程式碼分析／搜尋工具（graphify / codegraph）
 已搬到 `rules/code-search.md`；這裡只保留入口，不放細節。
@@ -53,9 +55,11 @@
 - 未裝時提示安裝指令；fallback 為官方 REST API。
 
 ## Gemini Notebook / NotebookLM
+- 檢查項目：skill `notebooklm`（teng-lin）／`nlm-skill`（jacob-bd）；CLI `notebooklm` ／ `nlm`。
 - skill name：`notebooklm` / `nlm-skill`
 - CLI name：`notebooklm` / `nlm`
-- 細節見 `rules/notebooklm.md`。
+- 安裝前先套用 `rules/tools-install-check.md`；細節見 `rules/notebooklm.md`。
+- fallback：NotebookLM 官方 web UI。
 
 ## CodeGraph
 檢查項目：CLI `codegraph`；MCP `codegraph_explore`。
