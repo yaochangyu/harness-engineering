@@ -16,6 +16,15 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 ## session 開始時
 - 檢查當前目錄是否有 `*.plan.md`；有未完成項目時，詢問使用者是否繼續處理。
 
+## 階段零：前置技能檢查
+- 啟用本流程前，先盤點這次任務會用到哪些 skill／CLI（依 `rules/tools.md`、`rules/code-search.md`、
+  `rules/web-automation.md` 等對應章節判斷；沒有明確依賴特定 skill 的任務可以跳過本節）。
+- 依 [tools-install-check.md](tools-install-check.md) 的 4 步驟逐一確認是否已安裝。
+- 有缺就主動列出該工具章節記載的安裝指令，並詢問使用者要裝全域還是專案範圍；
+  安裝指令固定用 `npx skills add`（見專案 CLAUDE.md「安裝 skill」），取得同意才實際執行。
+- 使用者明確拒絕安裝時，才改用該工具章節記載的 fallback，並在回報中註明「<工具> 未安裝，已改用替代方式」，
+  不可默默切換或跳過需求。
+
 ## plan.md 流程
 1. 實作前先列計畫：使用 [plan-template.md](../plan-template.md) 作為起點，每步驟用表格追蹤並說明為什麼需要。
    - **只用狀態欄（⬜/🟦/✅/⚠️）追蹤進度，不混用核取方塊**
