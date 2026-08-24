@@ -63,6 +63,10 @@ sequenceDiagram
 * **若有缺少，必須主動打字詢問使用者選擇安裝範圍（Project 或 Global）**：
   - **Project**: `npx skills add https://github.com/mattpocock/skills -s <missing_skills> -y -a '*'`
   - **Global**: `npx skills add https://github.com/mattpocock/skills -s <missing_skills> -g -y -a '*'`
+* **`grilling`（獨立輕量盤問技能）**：與本流程階段一使用的 `grill-with-docs`（會同步寫 CONTEXT.md/ADR）不同，
+  `grilling` 是不寫文件、單純對計畫/決策做「相關性盤問」的獨立技能，來自同一個 repo，同樣用上方指令安裝
+  （已驗證可用）：`npx skills add https://github.com/mattpocock/skills -s grilling -g -y -a '*'`。
+  使用者說「grill me」「grill this」等觸發語但不需要 CONTEXT.md/ADR 產出時，用這個而非 `grill-with-docs`。
 * **文件型輸入前處理**：若這次工作會分析 PDF / Office / 圖片等文件，先遵循 `rules/preprocess.md` 的 markitdown 規則。
 
 ### 階段一：對齊與領域設計 (Alignment)
