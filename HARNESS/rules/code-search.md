@@ -86,6 +86,13 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 - **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；skill 目錄／CLI 皆是 `graphify`；
   fallback 為停用 graphify 相關操作。
 
+## log 線索 → 程式碼定位
+
+從 log／錯誤訊息拿到線索後，依線索類型選查詢方式：
+- **route path／method 名稱／exception class** → 餵給 `codebase-memory-mcp` 的 `search_graph`／`trace_path` 定位對應程式碼。
+- **架構面關聯**（這段程式碼屬於哪個模組、跟哪些其他模組耦合）→ 補用 `graphify query`／`graphify explain`。
+- **判斷是否為近期改動造成** → 用 `codebase-memory-mcp` 的 `detect_changes` 對照該時間點附近的 git 異動。
+
 ## 建立程式碼索引（事件）
 使用者明確要求「建立程式碼索引」（或同義說法）時，同時對目標 repo 執行下列三項，各自套用
 `tools-install-check.md` 判斷是否已安裝，未安裝的項目告知使用者後略過，不要整個事件卡住：
