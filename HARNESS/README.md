@@ -41,7 +41,7 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 | delegation-templates.md | 五種任務的派工 prompt 模板（搜尋/實作/重構/研究/審查） | 主模型，寫派工 prompt 時 |
 | maintenance-protocol.md | 制度檔的修改權限分級、備份、教訓格式、精簡門檻 | 任何要改制度檔的 session |
 | letter-to-future-sessions.md | 環境三要事、制度退化模式與預防、交接狀態 | 新 session 第一次接手時 |
-| rules/git.md | commit/MR/憑證安全/worktree | 做 git 操作時 |
+| rules/git.md | commit/MR/憑證安全/worktree/發 MR-PR 前用 code-review-graph 產出變更影響報告 | 做 git 操作時 |
 | rules/workflow.md | plan.md/.issues/tree.md 流程＋觸發條件 | 多步驟實作時 |
 | rules/mattpocock-workflow.md | 高階軟體工程實作工作流（Grilling/Spec/TDD/CodeReview/plan.md） | 多模組重構或使用者要求進階工作流時 |
 | rules/dotnet.md | .NET/Cucumber 開發原則 | .NET 專案 |
@@ -50,7 +50,7 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 | rules/google-workspace.md | Google Workspace 操作與常用 skill | 需要 Gmail / Drive / Calendar / Slides / Sheets / Docs 時 |
 | rules/notebooklm.md | Gemini Notebook / NotebookLM 選用原則 | 需要 NotebookLM 相關操作時 |
 | rules/hackmd.md | HackMD 筆記管理（安裝、認證、常用指令） | 需要 HackMD 筆記操作時 |
-| rules/code-search.md | 程式碼分析／搜尋工具（codegraph／codebase-memory-mcp 結構化搜尋、graphify 知識圖譜），避免直接用 grep 的判斷準則 | 分析、搜尋既有程式碼時 |
+| rules/code-search.md | 程式碼分析／搜尋工具依範圍選擇：單一專案用 codegraph，跨專案／多 Repo 用 codebase-memory-mcp＋graphify，避免直接用 grep 的判斷準則 | 分析、搜尋既有程式碼時 |
 | rules/web-automation.md | 網頁自動化探索三工具（agent-browser/webwright/playwright）選擇、安裝、實踐驗證 | 需要自動化探索或操作網頁時 |
 | rules/tools-install-check.md | 工具安裝前判斷通用慣例（4 步驟：查 skill/查 CLI/引導安裝/fallback），供 rules/tools.md 各章節引用 | rules/tools.md 內任何工具的「使用前判斷是否已安裝」步驟 |
 | rules/preprocess.md | 文件 / PDF / Office / 圖片分析前處理（markitdown） | 任何文件型輸入進 AI 分析前 |

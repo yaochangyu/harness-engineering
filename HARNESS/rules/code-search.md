@@ -1,9 +1,21 @@
 # 程式碼分析／搜尋工具（避免直接用 grep）
 
 分析、搜尋既有程式碼時，按此順序判斷：
-1. **codegraph** 或 **codebase-memory-mcp** — 純結構化程式碼查詢（找 symbol、呼叫關係、影響範圍、避免 grep+Read 迴圈）優先用；兩者都是結構化程式碼圖，哪個已在該專案建過索引、或該 session 已列出對應 MCP 工具就用哪個，兩者都可用時任選其一，不用糾結誰優先。
-2. **graphify** — 需要跨程式碼＋文件/論文/圖片的知識圖譜、跨 session 持久記憶、Q&A 累積時用。
-3. grep／Read 只在上述都不可用（未安裝、該路徑沒有索引、要找非程式碼文字）時才當 fallback。
+1. **依分析範圍選結構化程式碼查詢工具**（找 symbol、呼叫關係、影響範圍，取代 grep+Read 迴圈）：
+   - **單一專案分析** → **codegraph**、**codebase-memory-mcp**、**graphify** 三者皆適用，且可並行使用
+     （同一次分析視需求同時查多個，不限定只能選一個或依序嘗試）；已建索引/已裝的就直接用，不用糾結優先序。
+   - **跨專案／多 Repo 分析**（同時查兩個以上獨立 repo、或整個工作區）→ 優先用 **codebase-memory-mcp**
+     （`search_graph`／`trace_path`／`list_projects` 等），它是唯一原生支援 multi-project 命名空間與
+     跨服務調用鏈（`CROSS_HTTP_CALLS`）的工具；同時搭配 **graphify** 補跨程式碼＋文件的知識圖譜（見下）。
+     codegraph 不適用此情境（單一 repo 邊界）。
+   - 範圍不確定，或指定工具未安裝／未建索引時，哪個可用就用哪個，不用糾結；都不可用才進第 3 點。
+2. **graphify** — 需要跨程式碼＋文件/論文/圖片的知識圖譜、跨 session 持久記憶、Q&A 累積時用；
+   跨專案分析時依上一點跟 codebase-memory-mcp 併用。
+3. grep／Read 只在上述都不可用時才當 fallback，且不可默默切換：
+   - 該路徑沒有索引，或要找非程式碼文字 → 直接用 grep／Read，不用先問。
+   - 相關工具**未安裝** → 見下方對應工具章節的安裝指令與判斷流程引導使用者安裝；
+     使用者同意才裝，拒絕或要求先用其他方式時才退回 grep／Read，並在回覆中註明
+     「<工具> 未安裝，已改用 grep／Read」。
 
 ## codegraph
 檢查項目：CLI `codegraph`；MCP server（單一工具 `codegraph_explore`，此環境已啟用）；無 skill（沒有 npx skills 套件，靠 CLI + MCP）。

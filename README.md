@@ -141,13 +141,13 @@ HARNESS/
 ├── uninstall.py                 # 解除安裝：移除 symlink、還原備份（Python）
 ├── select-cli-tools.py          # 互動式 AI CLI 工具選擇器（Python，跨平台）
 ├── rules/
-│   ├── git.md                   # commit / MR / 憑證安全 / worktree
+│   ├── git.md                   # commit / MR / 憑證安全 / worktree / 發 MR-PR 前用 code-review-graph 產出變更影響報告
 │   ├── workflow.md              # plan.md / .issues / tree.md 流程與觸發條件
 │   ├── mattpocock-workflow.md   # 高階軟體工程實作工作流條文（Grilling/Spec/TDD/CodeReview）
 │   ├── dotnet.md                # .NET / Cucumber 開發原則
 │   ├── python.md                # Python 開發原則（uv）
 │   ├── tools.md                 # rtk / ctx7 / ticket CLI / Workspace / 寫作 skills
-│   ├── code-search.md           # 程式碼分析／搜尋工具：graphify（知識圖譜）、codegraph／codebase-memory-mcp（結構化搜尋，避免 grep）
+│   ├── code-search.md           # 程式碼分析／搜尋工具：依範圍選擇，單一專案用 codegraph、跨專案用 codebase-memory-mcp＋graphify（避免 grep）
 │   └── omc.md                   # oh-my-claudecode (OMC) 多代理協作層
 └── backup/                      # 舊版備份，僅存在本機（.gitignore 排除）
 ```
@@ -211,14 +211,3 @@ harness-install    # 安裝並配置 harness
 harness-check      # 執行健康檢查
 harness-uninstall  # 解除安裝
 ```
-
-## 變更紀錄
-
-- 2026-08-10：新增「新增工具時怎麼說」段落，提供標準提問格式與範例，方便下次直接照格式描述工具補充需求。
-- 2026-08-11：快速開始補上免 clone 安裝方式（`uv run` 直接執行 raw GitHub 上的 `install.py`），
-  並說明預設 repo 與落點、`--repo` / `--target` 覆寫方式。
-- 2026-08-15：新增 `rules/code-search.md`，把 graphify 從 `rules/tools.md` 搬過去、新增 codegraph
-  章節，訂出「分析/搜尋程式碼優先用 codegraph_explore／graphify，避免直接 grep」的判斷準則。
-- 2026-08-16：新增 `codebase-memory-mcp` 工具支持（MCP server、15 個工具、自動索引）；同步更新 CLAUDE.md
-  常駐規則及 README.md 索引表，確保三工具（graphify／codegraph／codebase-memory-mcp）並列；修復根 README.md
-  檔案樹註解及 install.py 安裝結尾提示，補全工具參考。

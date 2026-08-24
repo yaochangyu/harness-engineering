@@ -45,6 +45,32 @@
 - 認證：`gh auth login`／`glab auth login`（互動式設定），設定完成後才能用上方 credential helper 指令。
 - fallback：未安裝時改用 git 原生指令操作，credential helper 段落須改手動設定（不強制要求安裝 gh/glab）。
 
+## 發 MR/PR 前：變更影響報告（code-review-graph）
+發 MR／PR 前，先用 **code-review-graph** 針對本次變更（相對上次建圖的 diff）產出變更影響（Blast Radius）
+報告，確認波及範圍後再送出 MR／PR。
+
+檢查項目：CLI `code-review-graph`（含常駐服務 `crg-daemon`）；MCP server（是否可用視該 session 有沒有列出
+`mcp__code-review-graph__*` 系列工具，未列出就改用 CLI）；skill（7 個：`build-graph`／`review-pr`／
+`review-changes`／`review-delta`／`debug-issue`／`explore-codebase`／`refactor-safely`，本機有裝時才會列出）。
+- 官方 repo／文件：https://github.com/tirth8205/code-review-graph （首頁 https://code-review-graph.com）
+- 核心用法：
+  - `code-review-graph build`：首次對目標 repo 全量建圖（大型 repo 可能要數分鐘）。
+  - `code-review-graph update`：只重新解析上次建圖後變更過的檔案，例行維護用。
+  - `code-review-graph detect-changes`：唯讀分析目前變更的影響範圍，不重新解析——這是「發 MR/PR 前」
+    這個場景的核心指令，直接對應要產出的變更影響報告。
+  - `code-review-graph visualize --serve`：啟動本機 Web Server（預設 `http://localhost:8765`）看互動式
+    衝擊半徑拓撲圖；大型專案（5,900+ 節點）會自動切換成社群聚合視圖。
+  - `crg-daemon start`：多 repo 常駐監看，背景自動增量更新索引，不用手動重跑 `build`。
+- 安裝：
+```bash
+uv tool install code-review-graph   # 或 pip install code-review-graph
+code-review-graph install --platform claude-code   # 產出 Claude Code 用的 7 個 skill
+```
+- **使用前判斷是否已安裝**：套用 `tools-install-check.md` 通用慣例；CLI 用 `command -v code-review-graph`；
+  skill 看 `~/.claude/skills/` 底下是否有上列 7 個之一；MCP 工具看該 session 有沒有列出對應工具。
+  fallback：未安裝或該 repo 未建圖時，改用 `git diff`／`gh pr diff`／`glab mr diff` 手動看變更範圍，
+  並在回覆中註明「code-review-graph 未安裝，已改用 git diff 手動分析」。
+
 ## commit message 格式
 1. 若沒有 ticket id，詢問使用者是否需要加上 ticket id。
    - 若有 ticket id，最後一行加上 `Bundle: (ticket id)`。
