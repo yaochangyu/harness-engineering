@@ -13,13 +13,13 @@
 
 ## 安裝與使用
 - 兩套 client 可並存；優先 `nlm`，只有做不到時才換 `notebooklm`。
+- 正式安裝命令與對應 CLI 名稱：待確認；若要執行，先查對應 repo / skill，再決定是否要全域或專案安裝。
 - CLI 安裝來源：
   - `https://github.com/jacob-bd/notebooklm-mcp-cli`
   - `https://github.com/teng-lin/notebooklm-py`
 - skill 安裝來源：
   - `teng-lin/notebooklm-py@notebooklm` → `https://skills.sh/teng-lin/notebooklm-py/notebooklm`
   - `pleaseprompto/notebooklm-skill@notebooklm` → `https://skills.sh/pleaseprompto/notebooklm-skill/notebooklm`
-- 正式安裝命令與對應 CLI 名稱：待確認；若要執行，先查對應 repo / skill，再決定是否要全域或專案安裝。
 - 若要深入安裝／認證／換手條件，再看對應 repo 與 skill。
 
 ## 退出條件

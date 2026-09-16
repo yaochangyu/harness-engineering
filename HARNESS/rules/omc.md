@@ -1,10 +1,10 @@
 # OMC（oh-my-claudecode 多代理協作層）
 
-以下區塊由 oh-my-claudecode plugin 安裝／更新流程管理，勿手動改動 START/END 標記之間的內容。
-`~/.claude/CLAUDE.md` 是 symlink 指到本 repo，`/oh-my-claudecode:omc-setup --global` 的 coordinator 會拒絕跟隨 symlink 寫入，
-所以「自動更新」目前不會生效——升級 plugin 後如果要同步這段內容，需自行執行 `omc-setup --local` 產生最新內容再手動貼過來比對更新。
-
-只有在該 session 有裝 OMC plugin 時才會用到這裡提到的 agent／skill／指令；沒裝的專案可以忽略。
+- **勿手動改動 START/END 標記之間的內容**：以下區塊由 oh-my-claudecode plugin 安裝／更新流程管理。
+- 只有在該 session 有裝 OMC plugin 時才會用到這裡提到的 agent／skill／指令；沒裝的專案可以忽略。
+- **自動更新目前不會生效**：`~/.claude/CLAUDE.md` 是 symlink 指到本 repo，
+  `/oh-my-claudecode:omc-setup --global` 的 coordinator 會拒絕跟隨 symlink 寫入。
+  升級 plugin 後如果要同步這段內容，需自行執行 `omc-setup --local` 產生最新內容再手動貼過來比對更新。
 
 <!-- OMC:START -->
 <!-- OMC:VERSION:4.15.7 -->

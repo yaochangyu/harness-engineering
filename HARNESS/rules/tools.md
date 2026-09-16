@@ -6,7 +6,10 @@
 - Bash 指令已由 `rtk hook claude` 自動處理；平常不用手動背規則。
 - 需要省 token 時才加 `rtk`，要看完整輸出時改用原始指令。
 - 串接指令每段各自加前綴：`rtk git add . && rtk git commit -m "msg"`。
-- 安裝方式：優先 `brew install rtk`；Linux/macOS 也可用 `curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh`。
+
+安裝方式：
+- 優先 `brew install rtk`。
+- Linux/macOS 也可用 `curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh`。
 - 其他方式：`cargo install --git https://github.com/rtk-ai/rtk`；或從 GitHub releases 下載預編譯 binary。
 
 ## ctx7 / context7（查函式庫文件）
@@ -79,9 +82,9 @@
 - fallback 為 Microsoft Graph API 或請使用者提供 connection。
 
 ## 中文寫作 skills
+檢查項目：skill `stop-slop-zh-tw`；CLI 無。
 - skill name：`stop-slop-zh-tw` / `write-yaochangyu-style`
 - CLI name：無
-檢查項目：skill `stop-slop-zh-tw`；CLI 無。
 - 長文時再考慮 `stop-slop-zh-tw` 與 `write-yaochangyu-style`。
 - `stop-slop-zh-tw` 有公開 repo；`write-yaochangyu-style` 只檢查本機是否存在。
 - skill 安裝：`npx skills add https://github.com/kevintsengtw/stop-slop-zh-tw -s stop-slop-zh-tw [-g] -y -a '*'`
@@ -89,9 +92,9 @@
 - fallback 為略過去 AI 腔處理。
 
 ## pass（password-store）
+檢查項目：CLI `pass`。
 - skill name：無
 - CLI name：`pass`
-檢查項目：CLI `pass`。
 - 標準密碼管理器使用 `pass`。
 - `gpg-agent` 快取與權限細節維持既有設定；需要時再看原檔。
 - fallback 為手動提供密碼或憑證。

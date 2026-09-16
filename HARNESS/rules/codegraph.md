@@ -17,6 +17,7 @@ instructions——官方實測這段區塊存在與否，subagent 主動用 code
 改動這段文字前請留意這個限制。
 
 ## 已知風險：`codegraph install` / `codegraph upgrade --refresh` 會弄斷入口 symlink
+
 這兩個指令會直接改寫 agent 的全域 CLAUDE.md（例如 `~/.claude/CLAUDE.md`），寫入方式不是透過 symlink 寫入，
 而是整份檔案重建，因此會把 harness 的入口 symlink 換成一般檔案，導致路由表的 `HARNESS_DIR` 動態解析失效。
 

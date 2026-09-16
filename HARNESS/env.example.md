@@ -1,9 +1,9 @@
 # 個人環境配置（範本）
 
-> 複製本檔到 `~/.claude/env.md` 並填入實際值。
-> `~/.claude/env.md` **不納入版控**——所有內網位址、公司專案、個人路徑只能寫在那裡，
-> 不可寫回制度檔（repo 內的檔案一律用 `<佔位符>`）。
-> `install.py` 會在 `~/.claude/env.md` 不存在時自動從本範本複製一份。
+> 用法：複製本檔到 `~/.claude/env.md` 並填入實際值。
+> - `~/.claude/env.md` **不納入版控**——所有內網位址、公司專案、個人路徑只能寫在那裡，
+>   不可寫回制度檔（repo 內的檔案一律用 `<佔位符>`）。
+> - `install.py` 會在 `~/.claude/env.md` 不存在時自動從本範本複製一份。
 
 ## 內網服務
 - 自架 GitLab：`<GITLAB_HOST>`（例：`gitlab.example.com` 或內網 IP）

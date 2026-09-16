@@ -1,7 +1,7 @@
 # 維護協議：未來的模型怎麼安全地更新這套制度
 
-這套檔案是給未來所有 session（多半是比建立者弱的模型）沿用的。
 更新的原則：**寧可少改，不可改壞**。制度檔改壞的代價由之後每一個 session 承擔。
+（這套檔案是給未來所有 session 沿用的，多半是比建立者弱的模型。）
 
 ## 1. 權限分級
 
@@ -55,14 +55,16 @@
 
 ## 5. 安裝 Claude 相關工具後的固定動作
 
-任何會動到 `~/.claude/` 的安裝（框架、外掛、Claude Code 升級）做完後，跑：
-```
-uv run /home/yao/projects/harness-engineering/HARNESS/check_harness.py
-```
-它會檢查：入口 symlink 是否被覆蓋、事實來源是否被 append 汙染、
-`~/.claude/rules/` 是否冒出新的自動載入檔、制度庫關鍵檔是否齊全。
-有問題會印出對應的修復指令，照做後再跑一次確認。
-安裝器寫入的內容若有價值：搬到 `HARNESS/rules/` 新子檔＋路由表加一行，不要留在入口檔裡。
+任何會動到 `~/.claude/` 的安裝（框架、外掛、Claude Code 升級）做完後：
+
+1. 跑健康檢查：
+   ```
+   uv run /home/yao/projects/harness-engineering/HARNESS/check_harness.py
+   ```
+   它會檢查：入口 symlink 是否被覆蓋、事實來源是否被 append 汙染、
+   `~/.claude/rules/` 是否冒出新的自動載入檔、制度庫關鍵檔是否齊全。
+2. 有問題就照它印出的修復指令做，做完再跑一次確認。
+3. 安裝器寫入的內容若有價值：搬到 `HARNESS/rules/` 新子檔＋路由表加一行，不要留在入口檔裡。
 
 ## 6. 待整理區（跨專案教訓先丟這裡，滿 5 條就依第 4 節處理）
 

@@ -1,7 +1,9 @@
 # 工具安裝前判斷通用慣例（`rules/tools.md` 各工具章節共用）
 
 適用情境：`rules/tools.md` 內任何要求先裝 skill 或 CLI 才能用的工具。
-使用前一律套用下列 4 步驟；**各工具章節都要明確列出 skill name 與 CLI name**，沒有就寫 `無`。
+
+使用前一律套用下列 4 步驟。
+**各工具章節都要明確列出 skill name 與 CLI name**，沒有就寫 `無`；
 再分別寫出對應的 skill 目錄名稱、CLI 指令、專屬安裝指令與 fallback 方式，不用整段複製這 4 步驟。
 
 1. 先看工具章節有沒有宣告 skill：有才查 `ls ~/.claude/skills/<skill 名稱>`；目錄不存在 → 視為 skill 未裝。

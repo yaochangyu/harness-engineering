@@ -6,11 +6,11 @@
 
 ## 安裝
 
-### 方式選擇
+方式選擇：
 - **優先裝 skill**（觸發層）：告訴 agent 何時該用、怎麼下指令。
 - **再裝 CLI**（執行層）：底層實際執行的二進位檔。
 
-### 安裝步驟
+安裝步驟：
 
 1. 檢查是否已安裝：
    ```bash
@@ -30,19 +30,19 @@
 
 ## 認證
 
-### 登入流程
+登入流程：
 ```bash
 hackmd-cli login
 ```
 系統會引導開啟瀏覽器授權。
 
-### Token 管理
+Token 管理：
+- **注意**：**不要**寫進 repo 或用 `echo` 印出。
 - **取得方式**：hackmd.io → Setting → API → 建立 Access Token。
 - **存放位置**：`~/.claude/creds/.creds`（與其他憑證一致）。
 - **使用方式**：指令中用環境變數 `$HMD_API_ACCESS_TOKEN` 帶入。
-- **注意**：**不要**寫進 repo 或用 `echo` 印出。
 
-### 自訂 Endpoint（HackMD EE）
+自訂 Endpoint（HackMD EE）：
 - 若使用 HackMD EE（非官方 hackmd.io），API endpoint 存在 `~/.claude/env.md`。
 - 環境變數名稱：`$HMD_API_ENDPOINT_URL`。
 
@@ -60,4 +60,3 @@ hackmd-cli login
 - **預設 endpoint**：`https://api.hackmd.io/v1`
 - **認證**：token-based（同一組 access token）
 - **文件**：https://hackmd.io/@hackmd-api/developer-portal（Swagger、Postman collection、社群 SDK）
-

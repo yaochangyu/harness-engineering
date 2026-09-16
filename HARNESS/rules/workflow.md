@@ -1,6 +1,7 @@
 # 實作工作流（plan.md / .issues / tree.md）
 
 ## 觸發條件（先判斷，別對每件事都啟用整套儀式）
+
 | 情境 | 要不要啟用本流程 |
 |---|---|
 | 使用者要求實作功能，預計修改 2 個以上檔案或多步驟 | 啟用全套 |
@@ -17,15 +18,17 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 - 檢查當前目錄是否有 `*.plan.md`；有未完成項目時，詢問使用者是否繼續處理。
 
 ## 階段零：前置技能檢查
-- 啟用本流程前，先盤點這次任務會用到哪些 skill／CLI（依 `rules/tools.md`、`rules/code-search.md`、
-  `rules/web-automation.md` 等對應章節判斷；沒有明確依賴特定 skill 的任務可以跳過本節）。
-- 依 [tools-install-check.md](tools-install-check.md) 的 4 步驟逐一確認是否已安裝。
-- 有缺就主動列出該工具章節記載的安裝指令，並詢問使用者要裝全域還是專案範圍；
-  安裝指令固定用 `npx skills add`（見專案 CLAUDE.md「安裝 skill」），取得同意才實際執行。
-- 使用者明確拒絕安裝時，才改用該工具章節記載的 fallback，並在回報中註明「<工具> 未安裝，已改用替代方式」，
-  不可默默切換或跳過需求。
+
+1. 盤點這次任務會用到哪些 skill／CLI（依 `rules/tools.md`、`rules/code-search.md`、
+   `rules/web-automation.md` 等對應章節判斷；沒有明確依賴特定 skill 的任務可以跳過本節）。
+2. 依 [tools-install-check.md](tools-install-check.md) 的 4 步驟逐一確認是否已安裝。
+3. 有缺就主動列出該工具章節記載的安裝指令，並詢問使用者要裝全域還是專案範圍；
+   安裝指令固定用 `npx skills add`（見專案 CLAUDE.md「安裝 skill」），取得同意才實際執行。
+4. 使用者明確拒絕安裝時，才改用該工具章節記載的 fallback，並在回報中註明「<工具> 未安裝，已改用替代方式」，
+   不可默默切換或跳過需求。
 
 ## plan.md 流程
+
 1. 實作前先列計畫：使用 [plan-template.md](../plan-template.md) 作為起點，每步驟用表格追蹤並說明為什麼需要。
    - **只用狀態欄（⬜/🟦/✅/⚠️）追蹤進度，不混用核取方塊**
    - 每步驟的「完成條件」內才用核取方塊記錄細節
@@ -49,14 +52,15 @@ TDD 紅綠切片、雙軸審查時，才升級用 mattpocock-workflow.md（它�
 - 遇到阻塞（使用者決定項）時改為 ⚠️ 狀態，並記在「遭遇的問題」區塊
 
 ## .issues 問題紀錄（避免重複踩坑）
-- 位置：當前專案的 `.issues/` 資料夾；檔名 `{功能名稱(英文)}.issues.md`。
-- 執行計畫發生錯誤或審查出問題時記錄：失敗的方法、步驟、原因。
+
 - **動手前先讀對應的 issues 檔**，不要重複使用已失敗過的方法。
-- 格式見 maintenance-protocol.md 的「教訓格式」。
 - **強制檢查點**：plan.md 任一步驟狀態標為 ⚠️（阻塞/失敗）時，必須在同一動作內同步寫入或更新
   對應的 `.issues/{功能}.issues.md`，該步驟才算處理完畢——⚠️ 只改狀態欄、沒寫 .issues 視為未完成。
   這條規則本身不驗證是否被遵守；若日後發現某步驟標過 ⚠️ 卻查無對應 .issues 記錄，視為制度退化
   （見 letter-to-future-sessions.md），下一個發現的 session 應立即回溯補寫。
+- 位置：當前專案的 `.issues/` 資料夾；檔名 `{功能名稱(英文)}.issues.md`。
+- 執行計畫發生錯誤或審查出問題時記錄：失敗的方法、步驟、原因。
+- 格式見 maintenance-protocol.md 的「教訓格式」。
 
 ## tree.md 維護
 - 專案有 `tree.md` 時：每次新增、刪除、移動檔案或資料夾，都要更新它。

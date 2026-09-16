@@ -11,6 +11,7 @@
 - agent-browser：`command -v agent-browser`（或 `npx agent-browser --version`）
 - webwright：`python3 -c "import webwright"`（或檢查對應虛擬環境是否已裝）
 - playwright：`command -v playwright`（或 `npx playwright --version`）
+
 fallback：拒絕安裝目前優先序的工具時，才能改選下一順位的替代工具。
 
 ## 安裝方式（按工具區分，因為涉及不同生態）

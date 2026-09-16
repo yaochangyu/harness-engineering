@@ -7,7 +7,10 @@
 Claude Code 每個 session 自動載入後，依情境路由到本目錄其他檔案。
 
 ## 快速開始（新機器 / 重灌 / clone 下來之後）
-在 repo 根目錄開 Claude Code 輸入 `/harness-install`（安裝＋訪談填 env.md＋驗證），或手動：
+
+最快：在 repo 根目錄開 Claude Code 輸入 `/harness-install`（安裝＋訪談填 env.md＋驗證）。
+
+手動安裝：
 ```bash
 git clone <本 repo> fable-harness   # 或直接複製資料夾，位置隨意
 cd fable-harness
@@ -20,9 +23,14 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 ```
 預設會把官方 repo（`yaochangyu/harness-engineering`）clone 到目前目錄下的 `harness-engineering`，
 再對該份執行安裝；要換來源或落點就加 `--repo` / `--target`。已經有本機 repo 的人維持上面的做法即可。
-`install.py` 會自動：運行 AI CLI 工具選擇器、偵測 repo 實際位置並改寫 CLAUDE.md 的 HARNESS 路徑（位置變了才改）、
-備份既有的 `~/.claude/CLAUDE.md`（若有）、建立 symlink、
-`~/.claude/env.md` 不存在時從 `env.example.md` 複製一份、跑一次健康檢查。冪等，重跑安全。
+
+`install.py` 會自動做這些事（冪等，重跑安全）：
+1. 運行 AI CLI 工具選擇器。
+2. 偵測 repo 實際位置並改寫 CLAUDE.md 的 HARNESS 路徑（位置變了才改）。
+3. 備份既有的 `~/.claude/CLAUDE.md`（若有）。
+4. 建立 symlink。
+5. `~/.claude/env.md` 不存在時從 `env.example.md` 複製一份。
+6. 跑一次健康檢查。
 
 **公開 repo 紅線**：內網位址、公司專案、憑證相關資訊一律只寫 `~/.claude/env.md`（不進版控），
 制度檔內用 `<GITLAB_HOST>`、`<TICKET_CLI>`、`<WIKI_ROOT>` 這類佔位符。
@@ -31,6 +39,8 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 1. 改 `CLAUDE.md` 開頭那行 HARNESS 路徑定義為實際位置。
 2. `ln -sf {實際位置}/CLAUDE.md ~/.claude/CLAUDE.md`（或退而求其次 cp，但要記住 repo 是正本）。
 3. 驗證：`uv run HARNESS/check_harness.py` 全綠即完成。
+
+## 檔案清單
 
 | 檔案 | 內容 | 誰讀、何時讀 |
 |---|---|---|
@@ -64,5 +74,7 @@ uv run https://raw.githubusercontent.com/yaochangyu/harness-engineering/main/HAR
 | uninstall.py | 解除安裝：移除 symlink、還原備份 | 不需要 harness 時執行 |
 | backup/ | 舊版 CLAUDE.md 等備份，**不可刪**；已從版控排除（.gitignore） | 需要還原時 |
 
-搬移本目錄時：只需更新 `~/.claude/CLAUDE.md`、`~/.gemini/GEMINI.md` 或 `~/.copilot/copilot-instructions.md` 等開合的 HARNESS 路徑定義。
-還原舊制度：`ln -sf /mnt/d/lab/github-copilot/.github/copilot-instructions.md ~/.claude/CLAUDE.md`，其餘 Agent 亦同理。
+## 搬移與還原
+
+- 搬移本目錄時：只需更新 `~/.claude/CLAUDE.md`、`~/.gemini/GEMINI.md` 或 `~/.copilot/copilot-instructions.md` 等開合的 HARNESS 路徑定義。
+- 還原舊制度：`ln -sf /mnt/d/lab/github-copilot/.github/copilot-instructions.md ~/.claude/CLAUDE.md`，其餘 Agent 亦同理。
