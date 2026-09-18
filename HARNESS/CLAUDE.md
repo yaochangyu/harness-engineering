@@ -39,7 +39,7 @@
 | git commit / MR / 憑證 / worktree | rules/git.md |
 | .NET / Cucumber 開發 | rules/dotnet.md |
 | 使用 Python 開發 / 寫腳本 | rules/python.md |
-| rtk / ticket CLI / Google Workspace / LLM wiki / 中文寫作 skills | rules/tools.md |
+| rtk / ticket CLI / Google Workspace / LLM wiki / 中文寫作 skills / orca-cli 派工其他 CLI worker（如 copilot） | rules/tools.md |
 | Google Workspace | rules/google-workspace.md |
 | Gemini Notebook / NotebookLM | rules/notebooklm.md |
 | HackMD 筆記管理（安裝、認證、常用指令） | rules/hackmd.md |

@@ -67,9 +67,3 @@
 3. 安裝器寫入的內容若有價值：搬到 `HARNESS/rules/` 新子檔＋路由表加一行，不要留在入口檔裡。
 
 ## 6. 待整理區（跨專案教訓先丟這裡，滿 5 條就依第 4 節處理）
-
-- **copilot agent 的 `--model` 指不到**（2026-09-15）：`worker-start --agent copilot --model <id>`
-  沒用（官方只支援 Claude/Codex/Cursor，套用了也不報錯，默默沒生效）。
-  改用 copilot 自己的 `/model` 選單：`terminal create --command "copilot"` →
-  `wait --for tui-idle` → `send --text "/model" --enter` → `send --text "<關鍵字>"`
-  → `send --text "" --enter` 選取 → `dispatch --inject`。

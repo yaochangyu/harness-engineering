@@ -91,6 +91,16 @@
 - 安裝前先詢問使用者要裝全域還是專案，依回答決定帶不帶 `-g`。
 - fallback 為略過去 AI 腔處理。
 
+## orca-cli 派工 copilot worker
+- skill name：`orca-cli`
+- CLI name：`orca`
+- `worker-start --agent copilot --model <id>` 對 `--model` 無效（官方僅支援 Claude/Codex/Cursor，
+  套用了不報錯，但默默沒生效）。
+- 改用 copilot 自己的互動式 `/model` 選單：
+  `terminal create --command "copilot"` → `wait --for tui-idle` →
+  `send --text "/model" --enter` → `send --text "<關鍵字>"` →
+  `send --text "" --enter` 選取 → `dispatch --inject`。
+
 ## pass（password-store）
 檢查項目：CLI `pass`。
 - skill name：無
