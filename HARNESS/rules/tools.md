@@ -94,10 +94,11 @@
 ## orca-cli 派工 copilot worker
 - skill name：`orca-cli`
 - CLI name：`orca`
+- 啟動指令需帶 `--yolo` 啟用完整權限（等同 `--allow-all-tools --allow-all-paths --allow-all-urls`），避免自動化執行時卡在互動確認提示。
 - `worker-start --agent copilot --model <id>` 對 `--model` 無效（官方僅支援 Claude/Codex/Cursor，
   套用了不報錯，但默默沒生效）。
 - 改用 copilot 自己的互動式 `/model` 選單：
-  `terminal create --command "copilot"` → `wait --for tui-idle` →
+  `terminal create --command "copilot --yolo"` → `wait --for tui-idle` →
   `send --text "/model" --enter` → `send --text "<關鍵字>"` →
   `send --text "" --enter` 選取 → `dispatch --inject`。
 
