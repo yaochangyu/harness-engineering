@@ -91,16 +91,11 @@
 - 安裝前先詢問使用者要裝全域還是專案，依回答決定帶不帶 `-g`。
 - fallback 為略過去 AI 腔處理。
 
-## orca-cli 派工 copilot worker
+## orca-cli 派工非原生 CLI worker（copilot / antigravity）
 - skill name：`orca-cli`
 - CLI name：`orca`
-- 啟動指令需帶 `--yolo` 啟用完整權限（等同 `--allow-all-tools --allow-all-paths --allow-all-urls`），避免自動化執行時卡在互動確認提示。
-- `worker-start --agent copilot --model <id>` 對 `--model` 無效（官方僅支援 Claude/Codex/Cursor，
-  套用了不報錯，但默默沒生效）。
-- 改用 copilot 自己的互動式 `/model` 選單：
-  `terminal create --command "copilot --yolo"` → `wait --for tui-idle` →
-  `send --text "/model" --enter` → `send --text "<關鍵字>"` →
-  `send --text "" --enter` 選取 → `dispatch --inject`。
+- 派工 copilot、antigravity 等 Orca 非完整原生支援的 agent 時的完整流程、
+  已知限制與踩雷紀錄，見獨立檔案 `rules/orca-cli-workers.md`。
 
 ## pass（password-store）
 檢查項目：CLI `pass`。
