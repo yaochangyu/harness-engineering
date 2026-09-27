@@ -3,7 +3,11 @@
 - 遵守 SOLID 開發原則。
 - Cucumber 的步驟使用中文；Cucumber 保留字（Feature、Background、Scenario、Given、When、Then）使用英文。
 - ASP.NET Core Clean Architecture 實作可派 `project-architecture-engineer` agent（見 model-dispatch.md）。
-- .NET Core 開發原則參考：`https://github.com/yaochangyu/api.template/blob/main/CLAUDE.md`
+- **開發任何新 API 端點前，必須先問使用者 API First 或 Code First**（同一專案不可混用）。
+  完整決策依據見 `https://github.com/yaochangyu/api.template/blob/main/.claude/decision-framework.md`。
+- 其餘開發原則（Controller/Repository/錯誤處理/快取/測試策略等實作細節）：
+  **必讀**、非僅供參考 → `https://github.com/yaochangyu/api.template/blob/main/CLAUDE.md`
+  （動手寫 .NET 程式碼前必須用 WebFetch/`gh api` 實際抓取內容，不能只看到連結就略過）。
 - 排版參考：`~/.claude/editorconfig/.net/.editorconfig`
   （2026-07-03 實測本機無此檔；不存在時問使用者實際位置，勿憑記憶自訂排版規則）
 
