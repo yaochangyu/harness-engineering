@@ -70,6 +70,39 @@ pip install playwright
 **特點**: 跨平臺、多語言支援（Node.js / Python / .NET）；最廣泛使用的瀏覽器自動化工具。
 **適用**: 通用網頁測試、快速原型開發、效能分析。
 
+## Google 搜尋（例外：不套用上方優先序）
+
+Google 會擋 agent-browser 與 webwright 預設的 Firefox，回「偵測到異常流量」。已驗證可用的做法是 **Playwright 無頭 Chromium 加偽裝設定**（2026-10-26 以「雪坊優格」、「僑聲助聽器」驗證成功）。
+
+```python
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    b = p.chromium.launch(
+        headless=True,
+        executable_path=CHROMIUM_PATH,  # 見下方注意事項
+        args=["--disable-blink-features=AutomationControlled"],
+    )
+    c = b.new_context(
+        locale="zh-TW",
+        user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+    )
+    pg = c.new_page()
+    pg.goto("https://www.google.com/search?hl=zh-TW&q=" + q, timeout=30000)
+    pg.wait_for_timeout(2500)
+    print(pg.inner_text("body")[:3000])
+    b.close()
+```
+
+現成腳本：`HARNESS/google_search.py`，執行方式：
+`uv run --with playwright python HARNESS/google_search.py "查詢詞"`（印出前 3000 字搜尋結果，被擋時回傳 exit code 2）。
+
+注意事項：
+- Chromium 路徑優先讀環境變數 `CHROMIUM_PATH`；沒設定時自動取 `~/.cache/ms-playwright/chromium-*/chrome-linux64/chrome` 中最新的版本。版本號隨 Playwright 更新而變，找不到時改設 `CHROMIUM_PATH`，或先執行 `npx playwright install chromium`。
+- 查公司名可用全名（例：「南瀛農產國際行銷股份有限公司」可查到統編與官網）。
+- 回到 `/sorry/` 驗證頁（異常流量）時，**不要自行繞過驗證**，改請使用者貼結果或稍後再試。短時間內連續重試會讓限制更嚴，應先停下來。
+- 獨立執行，不要操作正在作答的瀏覽器 session。
+
 ## 實踐驗證（2026-07-16）
 三個工具並行探索 https://www.104.com.tw/ 實驗結果：
 
