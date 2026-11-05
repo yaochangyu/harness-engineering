@@ -70,11 +70,11 @@ pip install playwright
 **特點**: 跨平臺、多語言支援（Node.js / Python / .NET）；最廣泛使用的瀏覽器自動化工具。
 **適用**: 通用網頁測試、快速原型開發、效能分析。
 
-## 爬蟲與 Google 搜尋（例外：不套用上方優先序，需 stealth 隱身、偽裝）
+## 爬蟲、防阻擋與反爬處理機制（需 stealth 隱身、偽裝或指紋規避）
 
-Google 等具備反爬機制的網站會阻擋 agent-browser 與 webwright 預設的 Firefox，回傳「偵測到異常流量」。因此在進行爬蟲或搜尋時，必須採取 **stealth（隱身、偽裝）** 機制以降低被特徵偵測辨識為自動化腳本的機率。已驗證可用的做法是 **Playwright 無頭 Chromium 加 stealth 偽裝設定**（2026-10-26 以「雪坊優格」、「僑聲助聽器」驗證成功）。
+Google、Akamai、Cloudflare 等具備反爬機制的網站會針對自動化特徵進行阻擋（回傳異常流量、人機驗證或 `ERR_HTTP2_PROTOCOL_ERROR`）。在進行自動化探索或爬取時，應遵循以下防阻擋與偽裝規範：
 
-### 爬蟲 stealth（隱身、偽裝）建議做法
+### 1. 爬蟲 stealth（隱身、偽裝）建議做法
 
 1. **關閉自動化標記**：
    - Chromium 啟動參數加上 `args=["--disable-blink-features=AutomationControlled"]`，防止瀏覽器向網頁暴露 `navigator.webdriver = true` 特徵。
@@ -85,8 +85,24 @@ Google 等具備反爬機制的網站會阻擋 agent-browser 與 webwright 預�
    - 建議使用 `playwright-stealth` 套件（`pip install playwright-stealth` 或 `uv add playwright-stealth`），在 page 初始化時套用（如 `from playwright_stealth import stealth_sync; stealth_sync(page)`），自動修補 WebGL、硬體核心數、外掛清單（plugins）與各項指紋。
 4. **瀏覽器核心選型**：
    - 優先選用無頭 Chromium，避免使用已被反爬特徵標記的預設 Firefox。
-5. **合規與安全邊界**：
-   - 遇到異常流量驗證頁（如 Google 的 `/sorry/` 或 CAPTCHA）時，**嚴禁嘗試暴力破解或繞過**，應立即中斷並回報使用者。
+   - **例外（Akamai 等 TLS/H2 指紋防護網站）**：若 Chromium 連線遭遇 `ERR_HTTP2_PROTOCOL_ERROR`，改用 Playwright 原生 Firefox（`playwright.firefox.launch(headless=True)`）規避 TLS 指紋辨識。
+
+### 2. 狀態保存與擬人化互動規範
+
+1. **Session 保存（避免反覆冷啟動觸發驗證）**：
+   - 支援先於可視介面登入通過驗證，使用 `playwright-cli state-save auth.json` 保存 Cookies 與 LocalStorage，後續腳本載入 `state-load auth.json` 繼承已授權狀態。
+2. **標準解析度與截圖限制**：
+   - 統一指定標準視窗尺寸（例如 `viewport={"width": 1280, "height": 1800}`）。
+   - **嚴禁使用全頁截圖**（`page.screenshot(full_page=True)`），防止觸發防爬蟲的滾動行為分析。
+3. **互動式填表替代 Deep Link**：
+   - 避免直接拼裝帶有大量 Query String 的 URL；優先使用真實控制項（`get_by_role`、`aria-label`）逐項輸入與點擊，模擬真實使用者操作。
+
+### 3. 遇阻擋時的標準處置流程（SOP）
+
+1. **合規與安全邊界**：
+   - 遇到驗證碼、人機挑戰（如 Google `/sorry/`、Cloudflare Turnstile、reCAPTCHA）時，**嚴禁嘗試自動化暴力破解或繞過**。
+   - **處置流程**：立即中斷腳本並向使用者回報阻擋，改由使用者在可視介面（非 Headless 模式或 `playwright-cli open <URL>`）手動完成驗證，再保存狀態接續。
+   - **阻擋確認**：宣告「Access Denied」或「無控制項」前，必須透過實際 UI 截圖與 DOM 證據重複確認，不可單憑一次請求失敗即判定。
 
 ### 驗證範例程式碼
 
