@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """
-Google 搜尋（Playwright 無頭 Chromium + 偽裝設定）。
+Google 搜尋（Playwright 無頭 Chromium + stealth 隱身、偽裝設定）。
 Google 會擋 agent-browser / webwright 預設 Firefox，此腳本為已驗證可用的替代做法。
+
+核心 stealth（隱身、偽裝）建議做法：
+    - 啟動參數移除自動化特徵：--disable-blink-features=AutomationControlled
+    - 指定特定真實的 User-Agent 與 locale（如 zh-TW）
+    - 進階反爬場景可搭配 playwright-stealth 工具庫進一步修補瀏覽器指紋
 
 用法：
     uv run --with playwright python HARNESS/google_search.py "查詢詞"

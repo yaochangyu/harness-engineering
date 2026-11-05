@@ -70,9 +70,25 @@ pip install playwright
 **特點**: 跨平臺、多語言支援（Node.js / Python / .NET）；最廣泛使用的瀏覽器自動化工具。
 **適用**: 通用網頁測試、快速原型開發、效能分析。
 
-## Google 搜尋（例外：不套用上方優先序）
+## 爬蟲與 Google 搜尋（例外：不套用上方優先序，需 stealth 隱身、偽裝）
 
-Google 會擋 agent-browser 與 webwright 預設的 Firefox，回「偵測到異常流量」。已驗證可用的做法是 **Playwright 無頭 Chromium 加偽裝設定**（2026-10-26 以「雪坊優格」、「僑聲助聽器」驗證成功）。
+Google 等具備反爬機制的網站會阻擋 agent-browser 與 webwright 預設的 Firefox，回傳「偵測到異常流量」。因此在進行爬蟲或搜尋時，必須採取 **stealth（隱身、偽裝）** 機制以降低被特徵偵測辨識為自動化腳本的機率。已驗證可用的做法是 **Playwright 無頭 Chromium 加 stealth 偽裝設定**（2026-10-26 以「雪坊優格」、「僑聲助聽器」驗證成功）。
+
+### 爬蟲 stealth（隱身、偽裝）建議做法
+
+1. **關閉自動化標記**：
+   - Chromium 啟動參數加上 `args=["--disable-blink-features=AutomationControlled"]`，防止瀏覽器向網頁暴露 `navigator.webdriver = true` 特徵。
+2. **模擬真實 Context 指紋**：
+   - 指定特定且真實的 `user_agent`（例如常見桌面版 Chrome User-Agent）。
+   - 設定對應的 `locale`（如 `zh-TW`）與語言環境，避免回傳空值或預設英文指紋。
+3. **引入成熟 stealth 工具庫（進階防護）**：
+   - 建議使用 `playwright-stealth` 套件（`pip install playwright-stealth` 或 `uv add playwright-stealth`），在 page 初始化時套用（如 `from playwright_stealth import stealth_sync; stealth_sync(page)`），自動修補 WebGL、硬體核心數、外掛清單（plugins）與各項指紋。
+4. **瀏覽器核心選型**：
+   - 優先選用無頭 Chromium，避免使用已被反爬特徵標記的預設 Firefox。
+5. **合規與安全邊界**：
+   - 遇到異常流量驗證頁（如 Google 的 `/sorry/` 或 CAPTCHA）時，**嚴禁嘗試暴力破解或繞過**，應立即中斷並回報使用者。
+
+### 驗證範例程式碼
 
 ```python
 from playwright.sync_api import sync_playwright
@@ -88,6 +104,7 @@ with sync_playwright() as p:
         user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
     )
     pg = c.new_page()
+    # 選用進階套件：from playwright_stealth import stealth_sync; stealth_sync(pg)
     pg.goto("https://www.google.com/search?hl=zh-TW&q=" + q, timeout=30000)
     pg.wait_for_timeout(2500)
     print(pg.inner_text("body")[:3000])
