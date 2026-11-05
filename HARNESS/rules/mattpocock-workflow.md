@@ -14,6 +14,10 @@
 `rules/workflow.md`（單一 plan.md 追蹤）。只有當任務需要先盤問對齊設計邊界、TDD 紅綠切片、或雙軸審查時，
 才升級到本流程——本流程是在 `rules/workflow.md` 的 plan.md 機制上疊加對齊/TDD/審查階段，不是另一套平行機制。
 
+**提問方式**：本流程所有需要使用者回答的環節（安裝範圍、盤問輪次的決策、計畫確認、步驟確認），
+一律遵循 [rules/workflow.md「需要使用者回答時：一律做成選項」](workflow.md)——用 AskUserQuestion 提供 2–4 個選項，
+有建議者放第一個並標（Recommended）；答案是自由文字時才直接詢問。
+
 ---
 
 ## 端到端執行流程
@@ -61,7 +65,7 @@ sequenceDiagram
 
 1. **一次性設定檢查**：若專案尚未建立 `docs/agents/` 設定檔，應先引導執行一次 `/setup-matt-pocock-skills` 配置專案規範。
 2. **子技能檢查**：確認是否缺少所需子技能（`grill-with-docs`, `to-spec`, `to-tickets`, `tdd`, `code-review`, `domain-modeling`）。
-3. **若有缺少，必須主動打字詢問使用者選擇安裝範圍（Project 或 Global）**：
+3. **若有缺少，必須主動以選項詢問使用者選擇安裝範圍（Project 或 Global）**：
    - **Project**: `npx skills add https://github.com/mattpocock/skills -s <missing_skills> -y -a '*'`
    - **Global**: `npx skills add https://github.com/mattpocock/skills -s <missing_skills> -g -y -a '*'`
 4. **文件型輸入前處理**：若這次工作會分析 PDF / Office / 圖片等文件，先遵循 `rules/preprocess.md` 的 markitdown 規則。
@@ -72,7 +76,8 @@ sequenceDiagram
 
 ### 階段一：對齊與領域設計 (Alignment)
 1. **磨礪對齊**：
-   * 呼叫 `/grill-with-docs` 技能，使用設計樹與輪次盤問（Rounds），向使用者確認決策邊界。
+   * 呼叫 `/grill-with-docs` 技能，使用設計樹與輪次盤問（Rounds），向使用者確認決策邊界；
+     每個決策點能列出候選方案時，以選項呈現並附建議。
 2. **領域維護**：
    * 確定新術語後，立刻修改/建立 `CONTEXT.md` 作為純 Glossary。
    * 若涉及難以逆轉的權衡，於 `docs/adr/` 中建立 ADR。
@@ -95,7 +100,7 @@ sequenceDiagram
 3. **維護樹狀結構**：
    * 任何檔案結構異動，同步更新 `@tree.md`。
 4. **請示確認**：
-   * 完成該步驟後，將狀態更新為 `✅ 完成`，提供 build 輸出證據，**停下來打字請示使用者確認**，才進行下一步。
+   * 完成該步驟後，將狀態更新為 `✅ 完成`，提供 build 輸出證據，**停下來以選項請示使用者確認**（繼續下一步／調整本步驟／暫停），才進行下一步。
 
 ### 階段四：審查、提交與封存 (Review & Archive)
 1. **雙軸代碼審查**：
